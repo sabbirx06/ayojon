@@ -200,5 +200,6 @@ README.html
 .idea
 .exercism
 
-# Ignore local database credentials
+# Ignore local database credentials and seed data
 src/main/resources/application.properties
+src/main/resources/seed.json
