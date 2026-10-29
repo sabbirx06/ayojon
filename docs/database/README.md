@@ -12,6 +12,8 @@ The schema covers all 20 features in the sprint guide.
 | SQL self-test (49 checks, rolls back) | `src/test/resources/db/verify_business_rules.sql` |
 | Java integration test | `src/test/java/com/ayojon/repository/DatabaseIntegrationTest.java` |
 | One-time cleanup of old draft tables | `docs/database/drop_legacy_draft_tables.sql` |
+| Full ER diagram (PDF, all columns) | `docs/database/Ayojon_ER_Diagram.pdf` |
+| Database report (PDF) | `docs/database/Ayojon_Database_Report.pdf` |
 
 ---
 
@@ -117,6 +119,10 @@ status), call `entityManager.refresh(event)` or load the event again to see the 
   inside rolled-back transactions.
 
 ## 7. ER diagram
+
+The complete diagram with every column, key and cardinality is in
+[Ayojon_ER_Diagram.pdf](Ayojon_ER_Diagram.pdf). It was generated from the migrated database.
+The overview below shows only the relationships.
 
 ```mermaid
 erDiagram
