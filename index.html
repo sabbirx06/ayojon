@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayojon (আয়োজন) — Bangladesh Event Tracker | Frontend Design</title>
+
+  <!-- Tailwind CSS CDN (Styles compiler only, no app JavaScript) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            heritage: {
+              emerald: '#0f3d30',
+              'emerald-deep': '#08281e',
+              'emerald-light': '#1b5242',
+              cream: '#faf7f2',
+              parchment: '#f4efe4',
+              gold: '#c89d38',
+              'gold-light': '#e5b958',
+              terracotta: '#8f2d1e',
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            display: ['Cinzel', 'Times New Roman', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            script: ['Great Vibes', 'cursive']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- Custom Stylesheet (Filigree lace dividers, paper textures, radial heat spots) -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-heritage-cream text-stone-900 min-h-screen flex flex-col antialiased selection:bg-amber-200 selection:text-emerald-950">
+
+  <!-- ==========================================================================
+       TOP ANNOUNCEMENT & ROLE INDICATOR BAR
+       ========================================================================== -->
+  <header class="bg-heritage-emerald-deep text-amber-100 text-xs py-2 px-4 border-b border-amber-500/20 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <!-- Left: Cultural Banner -->
+      <div class="flex items-center gap-2">
+        <span class="text-amber-400 font-serif font-bold">স্বাগতম</span>
+        <span class="text-amber-200/50">•</span>
+        <span class="text-amber-200/80 hidden sm:inline">The Premier Verified Event, Festival & Heritage Tracker of Bangladesh</span>
+        <span class="text-amber-400 font-bold bg-emerald-900/80 px-2 py-0.5 rounded text-[11px] border border-amber-400/30">
+          Pure Frontend Design Edition
+        </span>
+      </div>
+
+      <!-- Right: Role Badges Preview -->
+      <div class="flex items-center gap-3">
+        <div class="bg-black/40 p-0.5 rounded-lg flex items-center border border-amber-400/20 text-[11px]">
+          <span class="px-2.5 py-1 rounded-md bg-amber-400 text-emerald-950 font-bold shadow-xs">
+            👤 Attendee View
+          </span>
+          <span class="px-2.5 py-1 text-stone-300 font-medium">
+            🎨 Organizer View
+          </span>
+          <span class="px-2.5 py-1 text-stone-300 font-medium">
+            🛡️ Admin Cockpit
+          </span>
+        </div>
+
+        <!-- Live Notifications Pill (Req 12) -->
+        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-900 text-amber-200 border border-amber-400/30 font-semibold text-[11px]">
+          <span>🔔 Alerts:</span>
+          <span class="bg-red-600 text-white font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">3</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       HERO BRAND HEADER & EDITORIAL BANNER (Inspired by Fine Art Moodboard)
+       ========================================================================== -->
+  <section class="relative bg-gradient-to-b from-[#09261e] via-[#0f3d30] to-[#15493a] text-amber-100 pt-12 pb-10 px-4 border-b border-amber-500/30 overflow-hidden">
+    <!-- Classical Watermark Motif Background -->
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d5a840_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
+      <!-- Monogram Medallion Crest -->
+      <div class="monogram-seal w-16 h-16 text-2xl mb-3 shadow-xl">
+        আ · A
+      </div>
+
+      <!-- Editorial Script Subtitle -->
+      <p class="font-serif italic text-amber-300/90 text-base md:text-lg tracking-widest uppercase mb-1">
+        — The Soul of Bengal • উৎসব ও সুরের আয়োজন —
+      </p>
+
+      <!-- Main Headline in Regal Serif / Cinzel -->
+      <h1 class="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-wide uppercase drop-shadow-sm">
+        আয়োজন <span class="font-serif italic font-normal text-amber-200 text-2xl sm:text-4xl md:text-5xl lowercase">ayojon</span>
+      </h1>
+
+      <p class="text-xs sm:text-sm text-stone-200 max-w-2xl mt-3 font-light leading-relaxed">
+        A cultural and modern event tracker for Bangladesh. Explore live music concerts, heritage walks, art summits, and literary festivals across Dhaka, Chattogram, Sylhet, and Cox's Bazar.
+      </p>
+
+      <!-- Decorative Lace Ribbon Divider -->
+      <div class="lace-divider max-w-xl mx-auto mt-6 mb-2"></div>
+
+      <!-- Section Navigation Jump Links -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-2 text-xs font-semibold text-amber-200/90">
+        <a href="#discover-section" class="px-3 py-1.5 rounded-xl bg-black/30 border border-amber-400/30 hover:bg-emerald-900">🌟 Discover & GPS Radius</a>
+        <a href="#heatmap-section" class="px-3 py-1.5 rounded-xl bg-black/30 border border-amber-400/30 hover:bg-emerald-900">🗺️ Radial Heat Map</a>
+        <a href="#planner-section" class="px-3 py-1.5 rounded-xl bg-black/30 border border-amber-400/30 hover:bg-emerald-900">🗓️ Weekend Schedule & Overlaps</a>
+        <a href="#rewards-section" class="px-3 py-1.5 rounded-xl bg-black/30 border border-amber-400/30 hover:bg-emerald-900">🏆 Rewards & Leaderboard</a>
+        <a href="#vouchers-section" class="px-3 py-1.5 rounded-xl bg-black/30 border border-amber-400/30 hover:bg-emerald-900">🎟️ Sponsor Vouchers</a>
+        <a href="#profile-section" class="px-3 py-1.5 rounded-xl bg-black/30 border border-amber-400/30 hover:bg-emerald-900">📋 Event Profile</a>
+        <a href="#organizer-section" class="px-3 py-1.5 rounded-xl bg-black/30 border border-amber-400/30 hover:bg-emerald-900">🎨 Organizer & Admin</a>
+        <a href="#dashboard-section" class="px-3 py-1.5 rounded-xl bg-black/30 border border-amber-400/30 hover:bg-emerald-900">📊 Attendance Dashboard</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-10 space-y-16">
+
+    <!-- ========================================================================
+         SECTION 1: DISCOVER NEARBY EVENTS WITHIN GPS RADIUS & MULTI-FACET FILTER
+         Features:
+         - Discover nearby events within selectable distance radius (Live GPS)
+         - Filter & search simultaneously by keyword, date range, area, category, ticket price
+         - Dynamically ranked trending events by weekly bookmarks
+         - Event recommendations based on bookmarked events
+         ======================================================================== -->
+    <section id="discover-section" class="space-y-8">
+      
+      <!-- Simultaneous Multi-Facet Filter & Live GPS Radius Box -->
+      <div class="vintage-card p-6 md:p-8 rounded-3xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-amber-900/10">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-emerald-600 animate-pulse"></span>
+              <h2 class="font-serif-title font-bold text-2xl text-emerald-950">
+                Discover Nearby Events within Live GPS Radius
+              </h2>
+            </div>
+            <p class="text-xs text-stone-600 mt-1 flex items-center gap-1.5">
+              <span>📍 Live GPS Coordinates: 23.7505° N, 90.3770° E</span>
+              <span>•</span>
+              <span class="font-semibold text-emerald-900">Dhanmondi Lake, Road 8/A, Dhaka-1209</span>
+            </p>
+          </div>
+
+          <!-- Selectable Distance Radius Buttons -->
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-xs font-bold text-stone-600 mr-1">Select Radius:</span>
+            <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-700">1 km</span>
+            <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-700">3 km</span>
+            <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-700">5 km</span>
+            <span class="px-3 py-1 rounded-lg border border-amber-400 bg-emerald-900 text-amber-100 text-xs font-bold shadow-xs">
+              ✓ 10 km (Active)
+            </span>
+            <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-700">25 km</span>
+            <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-700">50 km</span>
+            <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-700">All Bangladesh</span>
+          </div>
+        </div>
+
+        <!-- Multi-Facet Search & Filter Row (Simultaneous criteria) -->
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <!-- 1. Keyword -->
+          <div class="lg:col-span-2">
+            <label class="block text-xs font-bold text-emerald-950 uppercase mb-1">Simultaneous Keyword Search</label>
+            <div class="relative">
+              <input 
+                type="text" 
+                readonly 
+                value="Coke Studio, Classical, Rabindra Sarobar, ICCB" 
+                class="w-full pl-9 pr-4 py-2.5 rounded-xl border border-stone-300 text-sm bg-white shadow-xs font-medium text-stone-800"
+              />
+              <span class="absolute left-3 top-3 text-stone-400">🔍</span>
+            </div>
+          </div>
+
+          <!-- 2. Area / Hub -->
+          <div>
+            <label class="block text-xs font-bold text-emerald-950 uppercase mb-1">Area / Division</label>
+            <select disabled class="w-full px-3 py-2.5 rounded-xl border border-stone-300 text-sm bg-white shadow-xs font-medium text-stone-800">
+              <option selected>Dhanmondi, Dhaka (Within 10 km)</option>
+              <option>Shahbagh & TSC / DU</option>
+              <option>Gulshan & Banani</option>
+              <option>Bashundhara / ICCB</option>
+              <option>Old Dhaka (Lalbagh)</option>
+              <option>Chittagong (Patenga)</option>
+              <option>Sylhet (Tea Gardens)</option>
+            </select>
+          </div>
+
+          <!-- 3. Category -->
+          <div>
+            <label class="block text-xs font-bold text-emerald-950 uppercase mb-1">Category</label>
+            <select disabled class="w-full px-3 py-2.5 rounded-xl border border-stone-300 text-sm bg-white shadow-xs font-medium text-stone-800">
+              <option selected>All Categories (Music, Art, Lit)</option>
+              <option>Music & Concerts</option>
+              <option>Arts & Culture</option>
+              <option>Literature & Theatre</option>
+              <option>Food & Dining</option>
+              <option>Tech & Startups</option>
+            </select>
+          </div>
+
+          <!-- 4. Max Ticket Price Slider -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="text-xs font-bold text-emerald-950 uppercase">Max Ticket Price</label>
+              <span class="text-xs font-bold text-amber-800">৳2,500</span>
+            </div>
+            <input 
+              type="range" 
+              min="0" 
+              max="5000" 
+              value="2500" 
+              disabled 
+              class="w-full accent-emerald-900"
+            />
+            <div class="flex items-center justify-between text-[10px] text-stone-400 mt-0.5">
+              <span>Free</span>
+              <span class="font-bold text-emerald-900">৳2,500</span>
+              <span>৳5,000+</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date Range Filter Pills & Free-only toggle -->
+        <div class="mt-4 pt-4 border-t border-amber-900/10 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="font-bold text-stone-500 mr-1">Date Range:</span>
+            <span class="px-3 py-1 rounded-full border border-stone-300 bg-white text-stone-700">All Dates</span>
+            <span class="px-3 py-1 rounded-full border border-amber-400 bg-emerald-900 text-amber-100 font-bold">This Weekend (Fri - Sat)</span>
+            <span class="px-3 py-1 rounded-full border border-stone-300 bg-white text-stone-700">Today</span>
+            <span class="px-3 py-1 rounded-full border border-stone-300 bg-white text-stone-700">Next 7 Days</span>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5 font-semibold text-emerald-950">
+              <input type="checkbox" checked disabled class="accent-emerald-900 w-4 h-4 rounded"/>
+              <span>Show Free & Verified Listings</span>
+            </span>
+            <span class="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
+              Showing 6 matching events within 10 km
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Columns: Event Cards Grid (Left) + Trending Pulse (Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- Left 3 Columns: Event Cards -->
+        <div class="lg:col-span-3 space-y-6">
+          <div class="flex items-center justify-between">
+            <h3 class="font-serif-title font-bold text-xl text-emerald-950 flex items-center gap-2">
+              <span>Featured Nearby Event Cards</span>
+            </h3>
+            <span class="text-xs text-stone-500">Sorted by live GPS proximity & bookmark rank</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Card 1: Coke Studio Bangla Live -->
+            <div class="vintage-card rounded-2xl overflow-hidden flex flex-col justify-between">
+              <div class="relative h-48 w-full overflow-hidden bg-emerald-950">
+                <img 
+                  src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=900&q=80" 
+                  alt="Coke Studio Bangla Live" 
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+                
+                <div class="absolute top-3 left-3 right-3 flex justify-between items-center z-10">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-emerald-900 shadow-sm">
+                    Music & Concerts
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="trust-badge-gold px-2.5 py-0.5 rounded-full text-xs">
+                      🛡️ Verified
+                    </span>
+                    <span class="w-8 h-8 rounded-full bg-amber-400 text-emerald-950 flex items-center justify-center font-bold text-xs shadow-md">
+                      🔖
+                    </span>
+                  </div>
+                </div>
+
+                <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-amber-200 font-medium z-10">
+                  <span class="bg-black/60 px-2 py-0.5 rounded-md">📍 9.8 km away (ICCB)</span>
+                  <span class="bg-black/60 px-2 py-0.5 rounded-md">📅 Friday, 17:00 BST</span>
+                </div>
+              </div>
+
+              <div class="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 mb-1.5 text-xs text-emerald-800 font-semibold uppercase">
+                    <span>Bashundhara / ICCB</span>
+                    <span>•</span>
+                    <span class="text-amber-800 font-bold">৳500 - ৳2,800</span>
+                  </div>
+                  <h4 class="font-serif-title font-bold text-lg text-emerald-950 leading-snug">
+                    Coke Studio Bangla Live: Symphony of Rivers
+                  </h4>
+                  <p class="text-xs text-stone-600 line-clamp-2 mt-2 leading-relaxed">
+                    Uniting traditional river folk melodies with modern rhythm on a 360-degree acoustic stage at ICCB Hall 4.
+                  </p>
+                  <div class="mt-3 text-xs text-stone-500 flex items-center gap-1.5">
+                    <span>📍 Hall 4, International Convention City Bashundhara</span>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-3">
+                    <span class="text-amber-700 font-bold">★ 4.9 (184 reviews)</span>
+                    <span class="text-stone-500 font-semibold">🔥 684 bookmarks</span>
+                  </div>
+                  <span class="px-3 py-1.5 rounded-lg bg-emerald-900 text-amber-100 font-bold text-xs shadow-xs">
+                    View Details →
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Rabindra Sarobar Acoustic Twilight -->
+            <div class="vintage-card rounded-2xl overflow-hidden flex flex-col justify-between">
+              <div class="relative h-48 w-full overflow-hidden bg-emerald-950">
+                <img 
+                  src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=900&q=80" 
+                  alt="Rabindra Sarobar Acoustic" 
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+                
+                <div class="absolute top-3 left-3 right-3 flex justify-between items-center z-10">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-emerald-900 shadow-sm">
+                    Music & Concerts
+                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="trust-badge-gold px-2.5 py-0.5 rounded-full text-xs">
+                      🛡️ Verified
+                    </span>
+                    <span class="w-8 h-8 rounded-full bg-amber-400 text-emerald-950 flex items-center justify-center font-bold text-xs shadow-md">
+                      🔖
+                    </span>
+                  </div>
+                </div>
+
+                <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-amber-200 font-medium z-10">
+                  <span class="bg-black/60 px-2 py-0.5 rounded-md">📍 0.2 km away (Live GPS)</span>
+                  <span class="bg-black/60 px-2 py-0.5 rounded-md">📅 Friday, 18:00 BST</span>
+                </div>
+              </div>
+
+              <div class="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 mb-1.5 text-xs text-emerald-800 font-semibold uppercase">
+                    <span>Dhanmondi Lake</span>
+                    <span>•</span>
+                    <span class="text-emerald-700 font-bold">Free Open Air</span>
+                  </div>
+                  <h4 class="font-serif-title font-bold text-lg text-emerald-950 leading-snug">
+                    Rabindra Sarobar Twilight Acoustic & Baul Raga
+                  </h4>
+                  <p class="text-xs text-stone-600 line-clamp-2 mt-2 leading-relaxed">
+                    Soul-stirring dotara, flute, and Rabindra sangeet over Dhanmondi lake waters. Open amphitheatre seating.
+                  </p>
+                  <div class="mt-3 text-xs text-stone-500 flex items-center gap-1.5">
+                    <span>📍 Rabindra Sarobar Open Amphitheatre, Road 8/A</span>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-3">
+                    <span class="text-amber-700 font-bold">★ 4.7 (64 reviews)</span>
+                    <span class="text-stone-500 font-semibold">🔥 430 bookmarks</span>
+                  </div>
+                  <span class="px-3 py-1.5 rounded-lg bg-emerald-900 text-amber-100 font-bold text-xs shadow-xs">
+                    View Details →
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Bengal Art Summit -->
+            <div class="vintage-card rounded-2xl overflow-hidden flex flex-col justify-between">
+              <div class="relative h-48 w-full overflow-hidden bg-emerald-950">
+                <img 
+                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80" 
+                  alt="Bengal Art Summit" 
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+                
+                <div class="absolute top-3 left-3 right-3 flex justify-between items-center z-10">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-emerald-900 shadow-sm">
+                    Arts & Culture
+                  </span>
+                  <span class="trust-badge-gold px-2.5 py-0.5 rounded-full text-xs">
+                    🛡️ Verified
+                  </span>
+                </div>
+
+                <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-amber-200 font-medium z-10">
+                  <span class="bg-black/60 px-2 py-0.5 rounded-md">📍 3.2 km away (Shahbagh)</span>
+                  <span class="bg-black/60 px-2 py-0.5 rounded-md">📅 Saturday, 10:00 BST</span>
+                </div>
+              </div>
+
+              <div class="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 mb-1.5 text-xs text-emerald-800 font-semibold uppercase">
+                    <span>Shahbagh / Segunbagicha</span>
+                    <span>•</span>
+                    <span class="text-amber-800 font-bold">৳250</span>
+                  </div>
+                  <h4 class="font-serif-title font-bold text-lg text-emerald-950 leading-snug">
+                    Bengal Art Summit: Weaving the Delta
+                  </h4>
+                  <p class="text-xs text-stone-600 line-clamp-2 mt-2 leading-relaxed">
+                    Monumental contemporary installations, Jamdani weaving pavilions, terracotta sculptures at Shilpakala.
+                  </p>
+                  <div class="mt-3 text-xs text-stone-500 flex items-center gap-1.5">
+                    <span>📍 National Art Gallery, Bangladesh Shilpakala Academy</span>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-3">
+                    <span class="text-amber-700 font-bold">★ 4.9 (140 reviews)</span>
+                    <span class="text-stone-500 font-semibold">🔥 610 bookmarks</span>
+                  </div>
+                  <span class="px-3 py-1.5 rounded-lg bg-emerald-900 text-amber-100 font-bold text-xs shadow-xs">
+                    View Details →
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: Puran Dhaka Heritage Walk -->
+            <div class="vintage-card rounded-2xl overflow-hidden flex flex-col justify-between">
+              <div class="relative h-48 w-full overflow-hidden bg-emerald-950">
+                <img 
+                  src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80" 
+                  alt="Puran Dhaka Food Walk" 
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+                
+                <div class="absolute top-3 left-3 right-3 flex justify-between items-center z-10">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-emerald-900 shadow-sm">
+                    Food & Dining
+                  </span>
+                  <span class="trust-badge-gold px-2.5 py-0.5 rounded-full text-xs">
+                    🛡️ Verified
+                  </span>
+                </div>
+
+                <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-amber-200 font-medium z-10">
+                  <span class="bg-black/60 px-2 py-0.5 rounded-md">📍 4.1 km away (Lalbagh)</span>
+                  <span class="bg-black/60 px-2 py-0.5 rounded-md">📅 Saturday, 15:30 BST</span>
+                </div>
+              </div>
+
+              <div class="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 mb-1.5 text-xs text-emerald-800 font-semibold uppercase">
+                    <span>Old Dhaka (Puran Dhaka)</span>
+                    <span>•</span>
+                    <span class="text-amber-800 font-bold">৳650</span>
+                  </div>
+                  <h4 class="font-serif-title font-bold text-lg text-emerald-950 leading-snug">
+                    Puran Dhaka Heritage Food & Street Photography Walk
+                  </h4>
+                  <p class="text-xs text-stone-600 line-clamp-2 mt-2 leading-relaxed">
+                    Kacchi Biryani, Bakarkhani, brass artisans, and 350-year-old Mughal architectural history starting at Lalbagh Fort.
+                  </p>
+                  <div class="mt-3 text-xs text-stone-500 flex items-center gap-1.5">
+                    <span>📍 Lalbagh Fort North Gate, Old Dhaka</span>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+                  <div class="flex items-center gap-3">
+                    <span class="text-amber-700 font-bold">★ 4.8 (78 reviews)</span>
+                    <span class="text-stone-500 font-semibold">🔥 395 bookmarks</span>
+                  </div>
+                  <span class="px-3 py-1.5 rounded-lg bg-emerald-900 text-amber-100 font-bold text-xs shadow-xs">
+                    View Details →
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Dynamic Recommendations (Req 19: Based on bookmarked events) -->
+          <div class="mt-10 pt-6 border-t border-amber-900/10">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="text-2xl">✨</span>
+              <div>
+                <h4 class="font-serif-title font-bold text-lg text-emerald-950">
+                  Recommended For You (Based on Bookmarks)
+                </h4>
+                <p class="text-xs text-stone-600">
+                  Because you bookmarked <span class="font-bold text-emerald-900">Coke Studio Live</span> &amp; <span class="font-bold text-emerald-900">Bengal Art Summit</span>, we curated these related cultural and musical gatherings:
+                </p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="vintage-card p-4 rounded-xl flex items-center gap-3">
+                <div class="w-16 h-16 rounded-xl bg-emerald-950 overflow-hidden shrink-0">
+                  <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover" alt="Indie Rock"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-[10px] font-bold text-amber-800 uppercase">Music &bull; Dhanmondi</span>
+                  <h5 class="font-serif-title font-bold text-sm text-emerald-950 truncate">Dhanmondi Indie Rock Carnival</h5>
+                  <p class="text-xs text-stone-500">Russian Cultural Centre &bull; Sat 17:30 BST</p>
+                  <span class="text-[11px] font-bold text-emerald-900 mt-1 inline-block">৳450 Ticket</span>
+                </div>
+              </div>
+
+              <div class="vintage-card p-4 rounded-xl flex items-center gap-3">
+                <div class="w-16 h-16 rounded-xl bg-emerald-950 overflow-hidden shrink-0">
+                  <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover" alt="Lit Fest"/>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <span class="text-[10px] font-bold text-amber-800 uppercase">Literature &bull; Shahbagh</span>
+                  <h5 class="font-serif-title font-bold text-sm text-emerald-950 truncate">Dhaka Lit Fest: River of Words</h5>
+                  <p class="text-xs text-stone-500">Bangla Academy Grounds &bull; Fri 09:30 BST</p>
+                  <span class="text-[11px] font-bold text-emerald-900 mt-1 inline-block">Free Registration</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 1 Column: Trending Pulse & Followed Alerts -->
+        <div class="space-y-6">
+          
+          <!-- Trending Events (Req 8: Ranked by weekly bookmark frequency) -->
+          <div class="vintage-card p-5 rounded-2xl">
+            <div class="flex items-center justify-between mb-1">
+              <h4 class="font-serif-title font-bold text-base text-emerald-950 flex items-center gap-1.5">
+                <span>🔥 Weekly Trending Pulse</span>
+              </h4>
+              <span class="text-[10px] font-bold text-amber-800 uppercase bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                Live Rank
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-500 mb-4">
+              Ranked dynamically by weekly attendee bookmark frequency
+            </p>
+
+            <div class="space-y-2.5">
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-white border border-amber-300 shadow-2xs">
+                <div class="w-7 h-7 rounded-full bg-amber-400 text-emerald-950 flex items-center justify-center font-bold text-xs">#1</div>
+                <div class="flex-1 min-w-0">
+                  <div class="font-bold text-xs text-emerald-950 truncate">Coke Studio Bangla Live</div>
+                  <div class="text-[11px] text-stone-500">ICCB &bull; Fri 17:00</div>
+                </div>
+                <span class="text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">🔥 684</span>
+              </div>
+
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-white/70 border border-stone-200">
+                <div class="w-7 h-7 rounded-full bg-stone-300 text-stone-800 flex items-center justify-center font-bold text-xs">#2</div>
+                <div class="flex-1 min-w-0">
+                  <div class="font-bold text-xs text-emerald-950 truncate">Bengal Art Summit</div>
+                  <div class="text-[11px] text-stone-500">Shilpakala &bull; Sat 10:00</div>
+                </div>
+                <span class="text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">🔥 610</span>
+              </div>
+
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-white/70 border border-stone-200">
+                <div class="w-7 h-7 rounded-full bg-amber-700 text-amber-100 flex items-center justify-center font-bold text-xs">#3</div>
+                <div class="flex-1 min-w-0">
+                  <div class="font-bold text-xs text-emerald-950 truncate">Dhaka Lit Fest</div>
+                  <div class="text-[11px] text-stone-500">Bangla Academy &bull; Fri 09:30</div>
+                </div>
+                <span class="text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">🔥 520</span>
+              </div>
+
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-white/70 border border-stone-200">
+                <div class="w-7 h-7 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-bold text-xs">#4</div>
+                <div class="flex-1 min-w-0">
+                  <div class="font-bold text-xs text-emerald-950 truncate">Rabindra Sarobar Acoustic</div>
+                  <div class="text-[11px] text-stone-500">Dhanmondi &bull; Fri 18:00</div>
+                </div>
+                <span class="text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">🔥 430</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-Time Automated Alerts for Followed Events (Req 12) -->
+          <div class="vintage-card p-5 rounded-2xl bg-amber-50/60 border-amber-300">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-serif-title font-bold text-sm text-emerald-950 flex items-center gap-1.5">
+                <span>🔔 Automated Real-Time Alerts</span>
+              </h4>
+              <span class="text-[10px] font-bold text-emerald-900 bg-emerald-100 px-2 py-0.5 rounded-full">Followed Events</span>
+            </div>
+            <p class="text-[11px] text-stone-600 mb-3 leading-snug">
+              Instant automated notifications whenever time, venue, or status changes:
+            </p>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="p-2.5 rounded-xl bg-white border border-amber-200">
+                <div class="font-bold text-emerald-950">⚡ Gate Time Adjustment: Coke Studio</div>
+                <div class="text-stone-600 text-[11px] mt-0.5">ICCB gates open 30 mins earlier (16:30 BST) for smooth queue entry.</div>
+                <div class="text-[10px] text-stone-400 mt-1 font-mono">15 mins ago &bull; Verified Organizer Notice</div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-white border border-amber-200">
+                <div class="font-bold text-emerald-950">📍 Stage Shift: Rabindra Sarobar Acoustic</div>
+                <div class="text-stone-600 text-[11px] mt-0.5">Acoustic flute and dotara lineup shifted to Stage 2 steps by the lake.</div>
+                <div class="text-[10px] text-stone-400 mt-1 font-mono">1 hour ago &bull; City Authority Notice</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Lace Ribbon Divider -->
+    <div class="lace-divider-wide max-w-2xl mx-auto opacity-75"></div>
+
+    <!-- ========================================================================
+         SECTION 2: INTERACTIVE RADIAL GRADIENT HEAT MAP (Req 2)
+         Visualizes attended event spots rendered with radial color gradients
+         ======================================================================== -->
+    <section id="heatmap-section" class="vintage-card p-6 md:p-8 rounded-3xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-amber-900/10">
+        <div>
+          <h2 class="font-serif-title font-bold text-2xl text-emerald-950 flex items-center gap-2">
+            <span>🗺️ Attended Event Spots: Radial Color Gradient Heat Map</span>
+          </h2>
+          <p class="text-xs text-stone-600 mt-1">
+            Visualizing attendee check-in spots and cultural activity density across Dhaka and Chattogram
+          </p>
+        </div>
+
+        <!-- Heat Map Radial Gradient Intensity Legend -->
+        <div class="flex items-center gap-4 text-xs font-semibold">
+          <div class="flex items-center gap-1.5">
+            <span class="w-3.5 h-3.5 rounded-full bg-red-600 shadow-xs"></span>
+            <span>Hotspot (10+ Attended)</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-3.5 h-3.5 rounded-full bg-amber-500 shadow-xs"></span>
+            <span>Moderate (5-9)</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-3.5 h-3.5 rounded-full bg-emerald-700 shadow-xs"></span>
+            <span>Active Spot (1-4)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pure CSS & SVG Radial Color Gradient Heat Map Showcase -->
+      <div class="mt-6 relative h-[480px] w-full rounded-2xl overflow-hidden border border-amber-300 shadow-inner bg-[#f5f0e4]">
+        
+        <!-- Subtle Topographic & River Map Grid Background (Buriganga, Dhanmondi Lake, Hatirjheel) -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-20" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#c89d38" stroke-width="0.8"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#gridPattern)" />
+          <!-- Stylized Buriganga & Turag River Paths -->
+          <path d="M 50 400 Q 300 370 550 420 T 1100 390" fill="none" stroke="#0f3d30" stroke-width="18" stroke-linecap="round"/>
+          <path d="M 380 230 Q 420 200 460 230 T 520 220" fill="none" stroke="#0f3d30" stroke-width="10" stroke-linecap="round"/>
+        </svg>
+
+        <!-- Radial Color Gradient Heat Spot 1: Dhanmondi Lake & Rabindra Sarobar (Peak Hotspot) -->
+        <div class="absolute top-[48%] left-[34%] -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full heat-spot-crimson pointer-events-none"></div>
+        <div class="absolute top-[48%] left-[34%] -translate-x-1/2 -translate-y-1/2 text-center z-10">
+          <div class="w-5 h-5 mx-auto rounded-full bg-white border-2 border-red-600 shadow-md flex items-center justify-center text-[10px] font-bold text-red-700">●</div>
+          <span class="font-bold text-xs text-emerald-950 block mt-1 bg-white/90 px-2 py-0.5 rounded-md shadow-xs">
+            Dhanmondi Lake (14 Attended)
+          </span>
+          <span class="text-[10px] font-bold text-red-800 bg-red-100 px-1.5 py-0.2 rounded">Peak Intensity Hotspot</span>
+        </div>
+
+        <!-- Radial Color Gradient Heat Spot 2: Shilpakala Academy & Shahbagh / TSC -->
+        <div class="absolute top-[58%] left-[52%] -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full heat-spot-crimson pointer-events-none"></div>
+        <div class="absolute top-[58%] left-[52%] -translate-x-1/2 -translate-y-1/2 text-center z-10">
+          <div class="w-4 h-4 mx-auto rounded-full bg-white border-2 border-red-600 shadow-md flex items-center justify-center text-[9px] font-bold text-red-700">●</div>
+          <span class="font-bold text-xs text-emerald-950 block mt-1 bg-white/90 px-2 py-0.5 rounded-md shadow-xs">
+            Shahbagh / Shilpakala (9 Attended)
+          </span>
+          <span class="text-[10px] font-semibold text-amber-900 bg-amber-100 px-1.5 py-0.2 rounded">Cultural Hotspot</span>
+        </div>
+
+        <!-- Radial Color Gradient Heat Spot 3: ICCB Kuril / Bashundhara Convention City -->
+        <div class="absolute top-[26%] left-[72%] -translate-x-1/2 -translate-y-1/2 w-44 h-44 rounded-full heat-spot-amber pointer-events-none"></div>
+        <div class="absolute top-[26%] left-[72%] -translate-x-1/2 -translate-y-1/2 text-center z-10">
+          <div class="w-4 h-4 mx-auto rounded-full bg-white border-2 border-amber-600 shadow-md flex items-center justify-center text-[9px] font-bold text-amber-700">●</div>
+          <span class="font-bold text-xs text-emerald-950 block mt-1 bg-white/90 px-2 py-0.5 rounded-md shadow-xs">
+            ICCB Bashundhara (11 Attended)
+          </span>
+          <span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-1.5 py-0.2 rounded">Concert Arena</span>
+        </div>
+
+        <!-- Radial Color Gradient Heat Spot 4: Lalbagh Fort & Old Dhaka -->
+        <div class="absolute top-[75%] left-[40%] -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full heat-spot-amber pointer-events-none"></div>
+        <div class="absolute top-[75%] left-[40%] -translate-x-1/2 -translate-y-1/2 text-center z-10">
+          <div class="w-4 h-4 mx-auto rounded-full bg-white border-2 border-amber-600 shadow-md flex items-center justify-center text-[9px] font-bold text-amber-700">●</div>
+          <span class="font-bold text-xs text-emerald-950 block mt-1 bg-white/90 px-2 py-0.5 rounded-md shadow-xs">
+            Lalbagh / Puran Dhaka (6 Attended)
+          </span>
+        </div>
+
+        <!-- Radial Color Gradient Heat Spot 5: Chattogram Patenga Promenade -->
+        <div class="absolute top-[82%] left-[86%] -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full heat-spot-emerald pointer-events-none"></div>
+        <div class="absolute top-[82%] left-[86%] -translate-x-1/2 -translate-y-1/2 text-center z-10">
+          <div class="w-3.5 h-3.5 mx-auto rounded-full bg-white border-2 border-emerald-600 shadow-md flex items-center justify-center text-[8px] font-bold text-emerald-800">●</div>
+          <span class="font-bold text-xs text-emerald-950 block mt-1 bg-white/90 px-2 py-0.5 rounded-md shadow-xs">
+            Patenga, Chattogram (2 Attended)
+          </span>
+        </div>
+
+        <!-- Bottom Heat Map Info Box -->
+        <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-4 rounded-xl border border-amber-300 shadow-lg flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-6 flex-wrap">
+            <div>
+              <span class="text-[10px] text-stone-400 font-semibold uppercase">Total Spots Checked In</span>
+              <span class="font-display font-bold text-sm text-emerald-950 block">28 Verified Spots</span>
+            </div>
+            <div class="hidden sm:block border-l border-stone-200 h-8"></div>
+            <div>
+              <span class="text-[10px] text-stone-400 font-semibold uppercase">Primary Density Hub</span>
+              <span class="font-bold text-emerald-950 block">Dhanmondi Lake &amp; Rabindra Sarobar</span>
+            </div>
+            <div class="hidden sm:block border-l border-stone-200 h-8"></div>
+            <div>
+              <span class="text-[10px] text-stone-400 font-semibold uppercase">Radial Color Transitions</span>
+              <span class="font-mono text-[11px] text-amber-900 block">Crimson (#dc2626) &bull; Amber (#f59e0b) &bull; Emerald (#10b981)</span>
+            </div>
+          </div>
+
+          <span class="px-3 py-1.5 rounded-lg bg-emerald-900 text-amber-100 font-bold text-xs shadow-xs">
+            ✓ Heatmap Calibrated
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lace Ribbon Divider -->
+    <div class="lace-divider-wide max-w-2xl mx-auto opacity-75"></div>
+
+    <!-- ========================================================================
+         SECTION 3: WEEKEND SCHEDULE COMPILER & OVERLAP CONFLICT DETECTOR (Req 10, 11, 13)
+         - Compiles multiple saved events into chronological weekend schedule
+         - System detects overlapping event timestamps [Aggregator Utility]
+         - Direct calendar export to Google Calendar, .ICS (Apple/Outlook), and CSV
+         ======================================================================== -->
+    <section id="planner-section" class="vintage-card p-6 md:p-8 rounded-3xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-amber-900/10">
+        <div>
+          <h2 class="font-serif-title font-bold text-2xl text-emerald-950">
+            Chronological Weekend Schedule Compiler
+          </h2>
+          <p class="text-xs text-stone-600 mt-1">
+            Cohesive weekend schedule with automated timestamp overlap detection and direct calendar exports
+          </p>
+        </div>
+
+        <!-- Export Action Bar (Req 13) -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="px-3.5 py-2 rounded-xl bg-emerald-900 text-amber-100 text-xs font-bold shadow-xs flex items-center gap-1.5 cursor-pointer">
+            <span>📅 Add to Google Calendar</span>
+          </span>
+          <span class="px-3.5 py-2 rounded-xl bg-emerald-900 text-amber-100 text-xs font-bold shadow-xs flex items-center gap-1.5 cursor-pointer">
+            <span>📥 Export .ICS (Apple/Outlook)</span>
+          </span>
+          <span class="px-3.5 py-2 rounded-xl bg-amber-50 text-amber-950 border border-amber-300 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+            <span>📄 Export .CSV Sheet</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Overlapping Timestamp Conflict Alert Banner (Req 11: Aggregator Utility) -->
+      <div class="mt-6 p-4 bg-red-50 border-2 border-red-500 rounded-2xl shadow-sm text-red-950 flex items-start gap-3">
+        <span class="text-2xl shrink-0">⚠️</span>
+        <div class="flex-1 text-sm">
+          <div class="flex items-center gap-2">
+            <h4 class="font-bold text-red-900 text-base">Schedule Overlap Conflict Detected! [Aggregator Utility]</h4>
+            <span class="bg-red-600 text-white font-bold text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">
+              1 hr 30 min clash
+            </span>
+          </div>
+          <p class="text-xs text-red-800 leading-relaxed mt-1">
+            <strong>"Coke Studio Bangla Live"</strong> (Friday 17:00 – 22:30 BST at ICCB) and <strong>"Rabindra Sarobar Acoustic Twilight"</strong> (Friday 18:00 – 21:30 BST in Dhanmondi) have conflicting timestamps on the same date.
+          </p>
+          <div class="mt-2 text-xs font-semibold text-red-900 flex items-center gap-2">
+            <span>💡 Suggested Resolution: Stagger arrival or remove one event to maintain a seamless travel route.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chronological Itinerary Slots -->
+      <div class="mt-8 space-y-8">
+        
+        <!-- Friday Itinerary with Overlap Visual Highlight -->
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="monogram-seal w-8 h-8 text-xs font-bold">FR</div>
+            <h3 class="font-serif-title font-bold text-xl text-emerald-950">Friday Itinerary (জুম্মা ও বিকাল)</h3>
+            <span class="text-xs text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full font-semibold">2 Scheduled</span>
+          </div>
+
+          <div class="space-y-4 relative pl-6 border-l-2 border-amber-300 ml-4 timeline-stem">
+            
+            <!-- Conflicting Event A -->
+            <div class="vintage-card p-4 rounded-xl conflict-card-alert relative">
+              <div class="absolute -left-[31px] top-5 w-4 h-4 rounded-full bg-red-600 border-2 border-white shadow-sm"></div>
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 text-xs text-amber-800 font-bold mb-1">
+                    <span>⏰ 17:00 – 22:30 BST</span>
+                    <span>&bull;</span>
+                    <span>📍 Bashundhara / ICCB Hall 4</span>
+                    <span class="px-2 py-0.5 rounded bg-red-600 text-white text-[10px] font-bold tracking-wider uppercase">
+                      Clash Detected
+                    </span>
+                  </div>
+                  <h4 class="font-serif-title font-bold text-base text-emerald-950">
+                    Coke Studio Bangla Live: Symphony of Rivers
+                  </h4>
+                  <p class="text-xs text-stone-600 mt-0.5">Hall 4, International Convention City Bashundhara</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1.5 rounded-lg bg-amber-100 text-amber-900 text-xs font-bold border border-amber-300">
+                    📅 GCal Sync
+                  </span>
+                  <span class="p-1.5 rounded-lg text-stone-400 hover:text-red-700">✕</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Conflicting Event B -->
+            <div class="vintage-card p-4 rounded-xl conflict-card-alert relative">
+              <div class="absolute -left-[31px] top-5 w-4 h-4 rounded-full bg-red-600 border-2 border-white shadow-sm"></div>
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 text-xs text-amber-800 font-bold mb-1">
+                    <span>⏰ 18:00 – 21:30 BST</span>
+                    <span>&bull;</span>
+                    <span>📍 Dhanmondi Lake 8/A</span>
+                    <span class="px-2 py-0.5 rounded bg-red-600 text-white text-[10px] font-bold tracking-wider uppercase">
+                      Clash Detected
+                    </span>
+                  </div>
+                  <h4 class="font-serif-title font-bold text-base text-emerald-950">
+                    Rabindra Sarobar Twilight Acoustic &amp; Baul Raga
+                  </h4>
+                  <p class="text-xs text-stone-600 mt-0.5">Open Amphitheatre, Dhanmondi Lake Steps</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1.5 rounded-lg bg-amber-100 text-amber-900 text-xs font-bold border border-amber-300">
+                    📅 GCal Sync
+                  </span>
+                  <span class="p-1.5 rounded-lg text-stone-400 hover:text-red-700">✕</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Saturday Itinerary (Clean timeline) -->
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="monogram-seal w-8 h-8 text-xs font-bold">SA</div>
+            <h3 class="font-serif-title font-bold text-xl text-emerald-950">Saturday Itinerary (শনিবারের আড্ডা)</h3>
+            <span class="text-xs text-emerald-900 bg-emerald-100 px-2 py-0.5 rounded-full font-semibold">2 Scheduled &bull; No Conflicts</span>
+          </div>
+
+          <div class="space-y-4 relative pl-6 border-l-2 border-amber-300 ml-4 timeline-stem">
+            
+            <!-- Saturday Event 1 -->
+            <div class="vintage-card p-4 rounded-xl relative">
+              <div class="absolute -left-[31px] top-5 w-4 h-4 rounded-full bg-emerald-800 border-2 border-white shadow-sm"></div>
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 text-xs text-emerald-800 font-bold mb-1">
+                    <span>⏰ 10:00 – 14:00 BST</span>
+                    <span>&bull;</span>
+                    <span>📍 Shahbagh / Shilpakala</span>
+                  </div>
+                  <h4 class="font-serif-title font-bold text-base text-emerald-950">
+                    Bengal Art Summit: Weaving the Delta
+                  </h4>
+                  <p class="text-xs text-stone-600 mt-0.5">National Art Gallery, Bangladesh Shilpakala Academy</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1.5 rounded-lg bg-amber-100 text-amber-900 text-xs font-bold border border-amber-300">
+                    📅 GCal Sync
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Saturday Event 2 -->
+            <div class="vintage-card p-4 rounded-xl relative">
+              <div class="absolute -left-[31px] top-5 w-4 h-4 rounded-full bg-emerald-800 border-2 border-white shadow-sm"></div>
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 text-xs text-emerald-800 font-bold mb-1">
+                    <span>⏰ 15:30 – 19:30 BST</span>
+                    <span>&bull;</span>
+                    <span>📍 Old Dhaka (Lalbagh Fort Gate)</span>
+                  </div>
+                  <h4 class="font-serif-title font-bold text-base text-emerald-950">
+                    Puran Dhaka Heritage Food &amp; Shakhari Bazar Walk
+                  </h4>
+                  <p class="text-xs text-stone-600 mt-0.5">Lalbagh Fort North Gate, Old Dhaka</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1.5 rounded-lg bg-amber-100 text-amber-900 text-xs font-bold border border-amber-300">
+                    📅 GCal Sync
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Lace Ribbon Divider -->
+    <div class="lace-divider-wide max-w-2xl mx-auto opacity-75"></div>
+
+    <!-- ========================================================================
+         SECTION 4: ATTENDANCE SCORE, CHECK-IN, BADGES & COMMUNITY LEADERBOARD (Req 3)
+         ======================================================================== -->
+    <section id="rewards-section" class="space-y-8">
+      
+      <!-- Top Score & Check-In Action Card -->
+      <div class="vintage-card p-6 md:p-8 rounded-3xl bg-gradient-to-r from-white via-amber-50/40 to-white">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block">Attendee Gamification &amp; Verification</span>
+            <h2 class="font-serif-title font-bold text-2xl text-emerald-950 mt-1">
+              Attendance Score Points &amp; Milestone Badges
+            </h2>
+            <p class="text-xs text-stone-600 mt-1">
+              Earn XP points by checking into verified event geofences and unlock prestigious cultural badges.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div class="text-right">
+              <span class="text-xs text-stone-400 block font-semibold">Your Score</span>
+              <span class="font-display font-extrabold text-3xl text-emerald-950">2,850 XP</span>
+              <span class="text-[11px] text-amber-800 font-bold block">Rank #4 in Dhaka</span>
+            </div>
+            <!-- Check-in Action UI Button -->
+            <div class="p-3.5 rounded-2xl bg-emerald-900 text-amber-100 flex items-center gap-3 shadow-md">
+              <span class="text-2xl">📍</span>
+              <div>
+                <span class="text-[10px] text-amber-300 uppercase font-bold block">GPS Verification</span>
+                <span class="text-xs font-bold">Checked in (+150 XP)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone Badges Grid -->
+        <div class="mt-8">
+          <h4 class="font-serif-title font-bold text-base text-emerald-950 mb-3">Milestone Badges Collection</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            
+            <div class="vintage-card p-4 rounded-xl flex items-center gap-4 border-amber-400">
+              <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-2xl shrink-0 shadow-xs">
+                🌺
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                  <h5 class="font-serif-title font-bold text-sm text-emerald-950">Boishakhi Spirit</h5>
+                  <span class="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">+300 XP</span>
+                </div>
+                <p class="text-xs text-stone-600 mt-0.5">Checked into 3 national festivals</p>
+                <span class="text-[10px] font-bold text-amber-800 mt-1 block">✓ Unlocked April 14</span>
+              </div>
+            </div>
+
+            <div class="vintage-card p-4 rounded-xl flex items-center gap-4 border-amber-400">
+              <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-2xl shrink-0 shadow-xs">
+                🎸
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                  <h5 class="font-serif-title font-bold text-sm text-emerald-950">Indie Night Owl</h5>
+                  <span class="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">+250 XP</span>
+                </div>
+                <p class="text-xs text-stone-600 mt-0.5">Attended 5 live underground gigs</p>
+                <span class="text-[10px] font-bold text-amber-800 mt-1 block">✓ Unlocked Sept 12</span>
+              </div>
+            </div>
+
+            <div class="vintage-card p-4 rounded-xl flex items-center gap-4 border-amber-400">
+              <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-2xl shrink-0 shadow-xs">
+                🏛️
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                  <h5 class="font-serif-title font-bold text-sm text-emerald-950">Heritage Trailblazer</h5>
+                  <span class="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">+350 XP</span>
+                </div>
+                <p class="text-xs text-stone-600 mt-0.5">Explored 4 Old Dhaka landmarks</p>
+                <span class="text-[10px] font-bold text-amber-800 mt-1 block">✓ Unlocked Oct 05</span>
+              </div>
+            </div>
+
+            <div class="vintage-card p-4 rounded-xl flex items-center gap-4 border-amber-400">
+              <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-2xl shrink-0 shadow-xs">
+                💡
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                  <h5 class="font-serif-title font-bold text-sm text-emerald-950">Tech Summit Pioneer</h5>
+                  <span class="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded">+200 XP</span>
+                </div>
+                <p class="text-xs text-stone-600 mt-0.5">Checked into 3 innovation conclaves</p>
+                <span class="text-[10px] font-bold text-amber-800 mt-1 block">✓ Unlocked Oct 22</span>
+              </div>
+            </div>
+
+            <div class="vintage-card p-4 rounded-xl flex items-center gap-4 opacity-80 bg-stone-50">
+              <div class="w-12 h-12 rounded-xl bg-stone-200 flex items-center justify-center text-2xl shrink-0">
+                ☕
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                  <h5 class="font-serif-title font-bold text-sm text-emerald-950">Adda Maestro</h5>
+                  <span class="text-[10px] font-bold text-stone-500 bg-stone-200 px-1.5 py-0.5 rounded">+400 XP</span>
+                </div>
+                <p class="text-xs text-stone-600 mt-0.5">Check into 10 weekend events</p>
+                <span class="text-[10px] font-bold text-stone-500 mt-1 block">In Progress: 8 / 10 Events</span>
+              </div>
+            </div>
+
+            <div class="vintage-card p-4 rounded-xl flex items-center gap-4 opacity-80 bg-stone-50">
+              <div class="w-12 h-12 rounded-xl bg-stone-200 flex items-center justify-center text-2xl shrink-0">
+                👑
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex justify-between items-center">
+                  <h5 class="font-serif-title font-bold text-sm text-emerald-950">Century Legend</h5>
+                  <span class="text-[10px] font-bold text-stone-500 bg-stone-200 px-1.5 py-0.5 rounded">+1000 XP</span>
+                </div>
+                <p class="text-xs text-stone-600 mt-0.5">Check into 25 verified events</p>
+                <span class="text-[10px] font-bold text-stone-500 mt-1 block">In Progress: 14 / 25 Events</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Community Attendance Leaderboard Table -->
+      <div class="vintage-card p-6 md:p-8 rounded-3xl">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h3 class="font-serif-title font-bold text-xl text-emerald-950">
+              Bangladesh Event Attendance Leaderboard
+            </h3>
+            <p class="text-xs text-stone-600 mt-0.5">Live rankings calculated by verified attendance check-in points</p>
+          </div>
+          <span class="text-xs font-bold text-emerald-900 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            Dhaka Division &bull; Weekly Cycle
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="border-b border-stone-200 text-[11px] font-bold text-stone-400 uppercase tracking-wider">
+                <th class="py-3 px-4 text-center">Rank</th>
+                <th class="py-3 px-4">Attendee Profile</th>
+                <th class="py-3 px-4">Milestone Title</th>
+                <th class="py-3 px-4 text-center">Events Attended</th>
+                <th class="py-3 px-4 text-right">Attendance Score</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-stone-100">
+              <tr class="hover:bg-amber-50/40">
+                <td class="py-3.5 px-4 text-center font-display font-bold text-amber-600 text-base">#1</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-950">Farhan Kabir <span class="text-stone-400 font-normal text-xs block">Dhanmondi, Dhaka</span></td>
+                <td class="py-3.5 px-4 text-xs"><span class="bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200">Master of Dhaka Addas</span></td>
+                <td class="py-3.5 px-4 text-center font-bold">38 Events</td>
+                <td class="py-3.5 px-4 text-right font-display font-bold text-emerald-900">4,120 XP</td>
+              </tr>
+              <tr class="hover:bg-amber-50/40">
+                <td class="py-3.5 px-4 text-center font-display font-bold text-stone-400 text-base">#2</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-950">Sumaiya Anjum <span class="text-stone-400 font-normal text-xs block">Gulshan, Dhaka</span></td>
+                <td class="py-3.5 px-4 text-xs"><span class="bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200">Bengal Culture Connoisseur</span></td>
+                <td class="py-3.5 px-4 text-center font-bold">35 Events</td>
+                <td class="py-3.5 px-4 text-right font-display font-bold text-emerald-900">3,890 XP</td>
+              </tr>
+              <tr class="hover:bg-amber-50/40">
+                <td class="py-3.5 px-4 text-center font-display font-bold text-amber-800 text-base">#3</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-950">Rashedul Karim <span class="text-stone-400 font-normal text-xs block">Shahbagh, Dhaka</span></td>
+                <td class="py-3.5 px-4 text-xs"><span class="bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200">Lit Fest Trailblazer</span></td>
+                <td class="py-3.5 px-4 text-center font-bold">31 Events</td>
+                <td class="py-3.5 px-4 text-right font-display font-bold text-emerald-900">3,450 XP</td>
+              </tr>
+              <tr class="bg-amber-100/60 font-semibold border-l-4 border-amber-600">
+                <td class="py-3.5 px-4 text-center font-display font-bold text-emerald-950 text-base">#4</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-950">
+                  You (Tahsin Rahman) <span class="text-xs text-amber-900 bg-amber-200 px-1.5 py-0.2 rounded font-bold ml-1">Current User</span>
+                  <span class="text-stone-500 font-normal text-xs block">Dhanmondi Lake, Dhaka</span>
+                </td>
+                <td class="py-3.5 px-4 text-xs"><span class="bg-amber-200 text-amber-950 px-2 py-0.5 rounded-full font-bold">Cultural Explorer</span></td>
+                <td class="py-3.5 px-4 text-center font-bold text-emerald-950">28 Events</td>
+                <td class="py-3.5 px-4 text-right font-display font-extrabold text-amber-900">2,850 XP</td>
+              </tr>
+              <tr class="hover:bg-amber-50/40">
+                <td class="py-3.5 px-4 text-center font-display font-bold text-stone-600">#5</td>
+                <td class="py-3.5 px-4 font-bold text-emerald-950">Nafis Imtiaz <span class="text-stone-400 font-normal text-xs block">Chattogram</span></td>
+                <td class="py-3.5 px-4 text-xs"><span class="bg-stone-100 px-2 py-0.5 rounded-full border border-stone-200">Port City Scout</span></td>
+                <td class="py-3.5 px-4 text-center font-bold">24 Events</td>
+                <td class="py-3.5 px-4 text-right font-display font-bold text-emerald-900">2,610 XP</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lace Ribbon Divider -->
+    <div class="lace-divider-wide max-w-2xl mx-auto opacity-75"></div>
+
+    <!-- ========================================================================
+         SECTION 5: SPONSOR PROMOTIONAL DISCOUNT VOUCHERS (Req 4)
+         Perforated envelope cards for third-party event bookings
+         ======================================================================== -->
+    <section id="vouchers-section" class="vintage-card p-6 md:p-8 rounded-3xl">
+      <div class="pb-4 border-b border-amber-900/10 mb-6">
+        <h2 class="font-serif-title font-bold text-2xl text-emerald-950">
+          Sponsor Promotional Discount Vouchers
+        </h2>
+        <p class="text-xs text-stone-600 mt-1">
+          Claim discount vouchers generated from sponsor ad campaigns for third-party event tickets and commutes
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Voucher 1: bKash -->
+        <div class="envelope-card p-6 flex flex-col justify-between pl-8">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-xs font-bold text-amber-800 tracking-wider uppercase">🇧🇩 bKash Limited</span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900">
+                Official Payment Partner
+              </span>
+            </div>
+            <h4 class="font-serif-title font-bold text-lg text-emerald-950 mb-1">
+              20% Instant Cashback on Concert Tickets
+            </h4>
+            <p class="text-xs text-stone-600 mb-4 leading-relaxed">
+              Get up to ৳300 instant cashback when paying with bKash on any verified Ayojon concert booking.
+            </p>
+            <div class="p-3 bg-white/90 rounded-xl border border-amber-200 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-stone-400 uppercase font-semibold block">Voucher Promo Code</span>
+                <span class="font-mono font-bold text-sm text-emerald-900 tracking-wider">AYOJON-BKASH20</span>
+              </div>
+              <span class="font-display font-black text-amber-700 text-base">20% OFF</span>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="text-stone-500">Valid until: Nov 30, 2026</span>
+            <span class="px-4 py-2 rounded-xl bg-emerald-900 text-amber-100 font-bold shadow-xs cursor-pointer">
+              Claim Voucher
+            </span>
+          </div>
+        </div>
+
+        <!-- Voucher 2: Pathao Rides -->
+        <div class="envelope-card p-6 flex flex-col justify-between pl-8">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-xs font-bold text-amber-800 tracking-wider uppercase">🛵 Pathao Rides</span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900">
+                Commute Partner
+              </span>
+            </div>
+            <h4 class="font-serif-title font-bold text-lg text-emerald-950 mb-1">
+              ৳150 OFF Rides to ICCB &amp; Rabindra Sarobar
+            </h4>
+            <p class="text-xs text-stone-600 mb-4 leading-relaxed">
+              Avoid traffic and parking! Claim ৳150 off 2 car/bike rides to verified event venues across Dhaka.
+            </p>
+            <div class="p-3 bg-white/90 rounded-xl border border-amber-200 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-stone-400 uppercase font-semibold block">Voucher Promo Code</span>
+                <span class="font-mono font-bold text-sm text-emerald-900 tracking-wider">AYOJON-PATHAO150</span>
+              </div>
+              <span class="font-display font-black text-amber-700 text-base">৳150 OFF</span>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="text-stone-500">Valid until: Nov 15, 2026</span>
+            <span class="px-4 py-2 rounded-xl bg-emerald-900 text-amber-100 font-bold shadow-xs cursor-pointer">
+              Claim Voucher
+            </span>
+          </div>
+        </div>
+
+        <!-- Voucher 3: Aarong -->
+        <div class="envelope-card p-6 flex flex-col justify-between pl-8">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-xs font-bold text-amber-800 tracking-wider uppercase">🌿 BRAC Aarong</span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-900">
+                ✓ Claimed in Wallet
+              </span>
+            </div>
+            <h4 class="font-serif-title font-bold text-lg text-emerald-950 mb-1">
+              15% Festival Voucher on Heritage Craft Stalls
+            </h4>
+            <p class="text-xs text-stone-600 mb-4 leading-relaxed">
+              Enjoy 15% discount at official Aarong cultural craft pavilions during Bengal Art Summit.
+            </p>
+            <div class="p-3 bg-white/90 rounded-xl border border-amber-200 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-stone-400 uppercase font-semibold block">Voucher Promo Code</span>
+                <span class="font-mono font-bold text-sm text-emerald-900 tracking-wider">AARONG-HERITAGE15</span>
+              </div>
+              <span class="font-display font-black text-amber-700 text-base">15% OFF</span>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="text-stone-500">Valid until: Dec 31, 2026</span>
+            <span class="px-4 py-2 rounded-xl bg-stone-200 text-stone-700 font-bold cursor-default">
+              Active in Wallet
+            </span>
+          </div>
+        </div>
+
+        <!-- Voucher 4: GP Star -->
+        <div class="envelope-card p-6 flex flex-col justify-between pl-8">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-xs font-bold text-amber-800 tracking-wider uppercase">⭐ Grameenphone Star</span>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900">
+                Telecom Sponsor
+              </span>
+            </div>
+            <h4 class="font-serif-title font-bold text-lg text-emerald-950 mb-1">
+              Complimentary VIP Lounge Access Upgrade
+            </h4>
+            <p class="text-xs text-stone-600 mb-4 leading-relaxed">
+              Exclusive for GP Star subscribers attending tech conclaves and summits in Dhaka.
+            </p>
+            <div class="p-3 bg-white/90 rounded-xl border border-amber-200 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-stone-400 uppercase font-semibold block">Voucher Promo Code</span>
+                <span class="font-mono font-bold text-sm text-emerald-900 tracking-wider">GPSTAR-LOUNGEVIP</span>
+              </div>
+              <span class="font-display font-black text-amber-700 text-base">VIP PASS</span>
+            </div>
+          </div>
+          <div class="mt-5 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="text-stone-500">Valid until: Nov 20, 2026</span>
+            <span class="px-4 py-2 rounded-xl bg-emerald-900 text-amber-100 font-bold shadow-xs cursor-pointer">
+              Claim Voucher
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Lace Ribbon Divider -->
+    <div class="lace-divider-wide max-w-2xl mx-auto opacity-75"></div>
+
+    <!-- ========================================================================
+         SECTION 6: COMPREHENSIVE EVENT PROFILE SHOWCASE (Req 6)
+         Timings, exact venue address, ticket cost tiers, description, organizer source links
+         ======================================================================== -->
+    <section id="profile-section" class="vintage-card p-6 md:p-8 rounded-3xl">
+      <div class="mb-6 pb-4 border-b border-amber-900/10">
+        <h2 class="font-serif-title font-bold text-2xl text-emerald-950">
+          Comprehensive Event Profile (Detailed Design View)
+        </h2>
+        <p class="text-xs text-stone-600 mt-1">
+          Full profile with start/end timings, venue address, ticket cost tiers, description, and official links
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl border border-amber-300 overflow-hidden shadow-md">
+        <!-- Banner -->
+        <div class="relative h-64 md:h-72 w-full bg-emerald-950 overflow-hidden">
+          <img 
+            src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1200&q=80" 
+            alt="Coke Studio Profile" 
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+          
+          <div class="absolute bottom-5 left-6 right-6 z-10">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-emerald-900">
+                Music &amp; Concerts
+              </span>
+              <span class="trust-badge-gold px-2.5 py-0.5 rounded-full text-xs">
+                🛡️ Authenticated Verified Trust Badge
+              </span>
+            </div>
+            <h3 class="font-serif-title font-bold text-2xl md:text-3xl text-white">
+              Coke Studio Bangla Live: Symphony of Rivers
+            </h3>
+            <p class="text-xs md:text-sm text-amber-200 mt-1">
+              Uniting the traditional melodies of the delta with modern rhythm
+            </p>
+          </div>
+        </div>
+
+        <div class="p-6 md:p-8 space-y-6">
+          <!-- Quick Specs Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 bg-amber-50/70 rounded-2xl border border-amber-200 text-xs">
+            <div>
+              <span class="text-stone-400 font-semibold block uppercase text-[10px]">Start / End Timings</span>
+              <span class="font-bold text-emerald-950">Friday, Nov 06, 2026</span>
+              <div class="text-stone-600 font-semibold">17:00 – 22:30 BST</div>
+            </div>
+            <div>
+              <span class="text-stone-400 font-semibold block uppercase text-[10px]">Venue Address</span>
+              <span class="font-bold text-emerald-950">ICCB Hall 4</span>
+              <div class="text-stone-600">Kuril, Bashundhara R/A, Dhaka</div>
+            </div>
+            <div>
+              <span class="text-stone-400 font-semibold block uppercase text-[10px]">Pricing &amp; Tiers</span>
+              <span class="font-bold text-emerald-950">৳500 – ৳2,800</span>
+              <div class="text-stone-600">3 Tiers (Student/GA/VIP)</div>
+            </div>
+            <div>
+              <span class="text-stone-400 font-semibold block uppercase text-[10px]">Official Organizer</span>
+              <span class="font-bold text-emerald-950">Grey Dhaka &amp; Coke Studio</span>
+              <div class="text-emerald-800 font-bold">★ 4.9 (184 Verified Reviews)</div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <h4 class="font-serif-title font-bold text-base text-emerald-950 mb-2">Event Description</h4>
+            <p class="text-stone-700 text-sm leading-relaxed">
+              Experience the monumental sounds of Coke Studio Bangla live on an unprecedented 360-degree acoustic stage. Featuring celebrated artists from Sylhet, Chittagong, Kushtia, and the international diaspora. High-fidelity surround sound, digital stagecraft, and food courts celebrating Bangladeshi delicacies.
+            </p>
+          </div>
+
+          <!-- Ticket Cost Tiers (Req 6) -->
+          <div>
+            <h4 class="font-serif-title font-bold text-base text-emerald-950 mb-3">Ticket Cost Tiers</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 rounded-xl border border-amber-200 bg-amber-50/30">
+                <div class="flex justify-between items-start">
+                  <span class="font-bold text-xs text-emerald-950">Student Pass (Valid ID)</span>
+                  <span class="font-display font-black text-sm text-amber-800">৳500</span>
+                </div>
+                <p class="text-[11px] text-stone-500 mt-1">Standing general access arena</p>
+              </div>
+
+              <div class="p-4 rounded-xl border border-amber-200 bg-white">
+                <div class="flex justify-between items-start">
+                  <span class="font-bold text-xs text-emerald-950">General Admission</span>
+                  <span class="font-display font-black text-sm text-amber-800">৳1,200</span>
+                </div>
+                <p class="text-[11px] text-stone-500 mt-1">Main arena entry + Welcome pack</p>
+              </div>
+
+              <div class="p-4 rounded-xl border border-amber-300 bg-amber-50/70 shadow-xs">
+                <div class="flex justify-between items-start">
+                  <span class="font-bold text-xs text-emerald-950">VIP Royal Front Pit</span>
+                  <span class="font-display font-black text-sm text-amber-800">৳2,800</span>
+                </div>
+                <p class="text-[11px] text-stone-500 mt-1">Fast track entry + Backstage lounge</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Venue Coordinates & Google Maps Link -->
+          <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <span class="text-[10px] text-stone-400 font-bold uppercase block">Venue GPS Coordinates</span>
+              <span class="font-mono font-bold text-xs text-emerald-950">23.8185° N, 90.4320° E</span>
+              <p class="text-xs text-stone-600 mt-0.5">Hall 4, International Convention City Bashundhara, Kuril Flyover link, Dhaka-1229</p>
+            </div>
+            <a href="https://maps.google.com" target="_blank" class="px-4 py-2 rounded-xl bg-white border border-stone-300 text-emerald-900 font-bold text-xs shadow-xs">
+              🗺️ Open Google Maps Directions
+            </a>
+          </div>
+
+          <!-- Organizer Source Links -->
+          <div class="pt-2 border-t border-stone-200 flex flex-wrap items-center gap-4 text-xs">
+            <span class="text-emerald-900 font-bold">🔗 Organizer Official Page: facebook.com/cokestudiobangla</span>
+            <span>&bull;</span>
+            <span class="text-amber-900 font-bold">🎟️ Official Checkout: ticket.ayojon.com.bd/coke-studio</span>
+            <span>&bull;</span>
+            <span class="text-stone-600">📜 Verification Source: DMP Police Security NOC Ref #DMP-2026-992</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lace Ribbon Divider -->
+    <div class="lace-divider-wide max-w-2xl mx-auto opacity-75"></div>
+
+    <!-- ========================================================================
+         SECTION 7: CUSTOM COLLECTIONS, WISHLISTS, REVIEWS & DISPUTE REPORTING
+         - Custom categorized collections & private wishlists (Req 9)
+         - Numerical ratings and written reviews (Req 15)
+         - Structured dispute reporting flagging spam/counterfeits (Req 14)
+         ======================================================================== -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- 1. Saved Collections & Private Wishlists (Req 9) -->
+      <div class="vintage-card p-6 rounded-2xl space-y-4">
+        <div>
+          <h3 class="font-serif-title font-bold text-lg text-emerald-950">
+            Custom Collections &amp; Wishlists
+          </h3>
+          <p class="text-xs text-stone-600 mt-0.5">Organize saved events into public or private lists</p>
+        </div>
+
+        <div class="space-y-2.5 text-xs">
+          <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-300 flex items-center justify-between font-semibold">
+            <div class="flex items-center gap-2">
+              <span>📁</span>
+              <span class="text-emerald-950">🎶 Winter Concerts 2026</span>
+            </div>
+            <span class="bg-amber-200 text-amber-950 px-2 py-0.5 rounded text-[10px]">4 Events</span>
+          </div>
+
+          <div class="p-3 rounded-xl bg-white border border-stone-200 flex items-center justify-between font-semibold">
+            <div class="flex items-center gap-2">
+              <span>📁</span>
+              <span class="text-emerald-950">🎨 Heritage &amp; Art Walks</span>
+            </div>
+            <span class="bg-stone-100 text-stone-700 px-2 py-0.5 rounded text-[10px]">3 Events</span>
+          </div>
+
+          <div class="p-3 rounded-xl bg-amber-50/30 border border-amber-300 flex items-center justify-between font-semibold">
+            <div class="flex items-center gap-2">
+              <span>🔒</span>
+              <span class="text-emerald-950">Secret Weekend Escapes (Private Wishlist)</span>
+            </div>
+            <span class="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded text-[10px]">1 Event</span>
+          </div>
+        </div>
+
+        <!-- Create Collection UI Box -->
+        <div class="pt-3 border-t border-stone-200 text-xs space-y-2">
+          <label class="block font-bold text-emerald-950 uppercase text-[10px]">Create Custom Collection</label>
+          <input type="text" placeholder="e.g. Classical Music Series" class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white" readonly value="Pohela Boishakh 2027 Trail"/>
+          <label class="flex items-center gap-2 text-stone-700">
+            <input type="checkbox" checked disabled class="accent-emerald-900"/>
+            <span>🔒 Mark as Private Wishlist</span>
+          </label>
+          <span class="w-full py-2 rounded-xl bg-emerald-900 text-amber-100 font-bold block text-center cursor-pointer shadow-xs">
+            Save Collection
+          </span>
+        </div>
+      </div>
+
+      <!-- 2. Ratings & Written Reviews (Req 15) -->
+      <div class="vintage-card p-6 rounded-2xl space-y-4">
+        <div>
+          <h3 class="font-serif-title font-bold text-lg text-emerald-950">
+            Ratings &amp; Attendee Reviews
+          </h3>
+          <p class="text-xs text-stone-600 mt-0.5">Publish numerical ratings and impressions after attending</p>
+        </div>
+
+        <!-- Rating Form Mockup -->
+        <div class="p-3.5 bg-amber-50/60 rounded-xl border border-amber-200 text-xs space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-emerald-950 uppercase text-[10px]">Star Rating:</span>
+            <span class="text-amber-600 font-bold text-base">★★★★★ 5.0</span>
+          </div>
+
+          <div class="flex flex-wrap gap-1 text-[10px] font-semibold">
+            <span class="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded">✓ Top Tier Acoustics</span>
+            <span class="bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded">✓ Fast Check-in</span>
+            <span class="bg-stone-100 text-stone-600 px-2 py-0.5 rounded">Safe Security</span>
+          </div>
+
+          <textarea readonly class="w-full px-3 py-2 rounded-xl border border-stone-300 text-xs bg-white h-16 resize-none">The sound fidelity at ICCB Hall 4 was monumental. The river folk anthem brought chills!</textarea>
+          
+          <span class="w-full py-2 rounded-xl bg-emerald-900 text-amber-100 font-bold block text-center cursor-pointer shadow-xs">
+            Publish Verified Review
+          </span>
+        </div>
+
+        <!-- Published Review Card Preview -->
+        <div class="p-3 bg-white rounded-xl border border-stone-200 text-xs">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-bold text-emerald-950">Tanvir Hasan <span class="text-[9px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-bold">✓ Verified Attender</span></span>
+            <span class="text-amber-600 font-bold">★ 5.0</span>
+          </div>
+          <p class="text-stone-600 text-[11px]">Best sound engineering in Dhaka. Can't wait for next year's edition!</p>
+        </div>
+      </div>
+
+      <!-- 3. Structured Dispute Reporting Desk (Req 14) -->
+      <div class="vintage-card p-6 rounded-2xl space-y-4">
+        <div>
+          <h3 class="font-serif-title font-bold text-lg text-red-950">
+            Structured Dispute Desk
+          </h3>
+          <p class="text-xs text-stone-600 mt-0.5">Flag spam, counterfeit tickets, or fake venue details for admin review</p>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block font-bold text-stone-700 uppercase text-[10px] mb-1">Dispute Reason</label>
+            <select disabled class="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white font-medium text-stone-800">
+              <option selected>Counterfeit / Unauthorized Ticket Scam</option>
+              <option>Inaccurate Venue Coordinates</option>
+              <option>Spam or Duplicate Listing</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-stone-700 uppercase text-[10px] mb-1">Evidence &amp; Description</label>
+            <textarea readonly class="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white h-16 resize-none text-xs">Checkout link points to an unverified personal mobile banking number rather than official merchant.</textarea>
+          </div>
+
+          <span class="w-full py-2 rounded-xl bg-red-900 text-white font-bold block text-center cursor-pointer shadow-xs">
+            Submit Dispute Report
+          </span>
+
+          <!-- Active Ticket Tracker Preview -->
+          <div class="p-2.5 bg-red-50 rounded-xl border border-red-200 text-[11px]">
+            <div class="flex justify-between font-mono font-bold text-red-900">
+              <span>AYJ-DISP-8810</span>
+              <span class="text-amber-800">Under Review</span>
+            </div>
+            <p class="text-stone-600 text-[10px] mt-0.5">Investigating counterfeit VIP pass vendor</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Lace Ribbon Divider -->
+    <div class="lace-divider-wide max-w-2xl mx-auto opacity-75"></div>
+
+    <!-- ========================================================================
+         SECTION 8: ORGANIZER PORTAL & ADMIN VERIFICATION COCKPIT (Req 7, 16, 17, 18)
+         - Organizer submits new event listing with media, coordinates, tickets
+         - Organizer edits schedule or cancels event with public audit trail
+         - Admin reviews pending submissions to approve/reject/request revision
+         - Admin verifies legitimacy against official sources and issues trust badge
+         ======================================================================== -->
+    <section id="organizer-section" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Organizer Submission Form & Public Audit Trail (Req 16, 17) -->
+      <div class="vintage-card p-6 md:p-8 rounded-3xl space-y-5">
+        <div>
+          <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block">Organizer Portal</span>
+          <h3 class="font-serif-title font-bold text-xl text-emerald-950">
+            Submit New Event Listing &amp; Manage Schedule
+          </h3>
+          <p class="text-xs text-stone-600 mt-1">Submit authentic listings and maintain an immutable public audit trail</p>
+        </div>
+
+        <!-- Submission Form Fields -->
+        <div class="space-y-3.5 text-xs">
+          <div>
+            <label class="block font-bold text-emerald-950 uppercase text-[10px] mb-1">Event Title</label>
+            <input type="text" readonly value="Dhaka Classical Raga &amp; Sitar Night" class="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white font-medium"/>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-emerald-950 uppercase text-[10px] mb-1">Category Tag</label>
+              <input type="text" readonly value="Music &amp; Concerts" class="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white font-medium"/>
+            </div>
+            <div>
+              <label class="block font-bold text-emerald-950 uppercase text-[10px] mb-1">Area</label>
+              <input type="text" readonly value="Dhanmondi, Dhaka" class="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white font-medium"/>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-emerald-950 uppercase text-[10px] mb-1">Venue Coordinates (Lat, Lng)</label>
+              <input type="text" readonly value="23.7505, 90.3770" class="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white font-mono"/>
+            </div>
+            <div>
+              <label class="block font-bold text-emerald-950 uppercase text-[10px] mb-1">Official Ticket Link</label>
+              <input type="text" readonly value="https://ticket.ayojon.com.bd/raga" class="w-full px-3 py-2 rounded-xl border border-stone-300 bg-white font-mono text-emerald-800"/>
+            </div>
+          </div>
+
+          <span class="w-full py-2.5 rounded-xl bg-emerald-900 text-amber-100 font-bold block text-center cursor-pointer shadow-xs">
+            Submit Listing for Official Admin Verification
+          </span>
+        </div>
+
+        <!-- Organizer Public Audit Trail & Schedule Controls (Req 17) -->
+        <div class="pt-4 border-t border-amber-900/10 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-serif-title font-bold text-sm text-emerald-950">Public Audit Trail &amp; Schedule Edits</h4>
+            <div class="flex gap-2">
+              <span class="px-2 py-1 rounded bg-stone-100 text-stone-700 text-[10px] font-bold border border-stone-300">Edit Schedule</span>
+              <span class="px-2 py-1 rounded bg-red-100 text-red-800 text-[10px] font-bold border border-red-300">Cancel Event</span>
+            </div>
+          </div>
+
+          <!-- Public Audit Trail Timeline -->
+          <div class="space-y-2 timeline-stem pl-6 text-xs relative">
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 w-2.5 h-2.5 rounded-full bg-amber-500 border border-white"></div>
+              <span class="font-mono text-[10px] text-amber-800 font-bold">2026-10-24 14:15 BST</span>
+              <div class="font-semibold text-emerald-950 text-[11px]">Gate time revised to 16:30 BST by Organizer</div>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-600 border border-white"></div>
+              <span class="font-mono text-[10px] text-amber-800 font-bold">2026-10-18 16:00 BST</span>
+              <div class="font-semibold text-emerald-950 text-[11px]">Verified Trust Badge issued by Admin after DMP NOC check</div>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 w-2.5 h-2.5 rounded-full bg-stone-400 border border-white"></div>
+              <span class="font-mono text-[10px] text-amber-800 font-bold">2026-10-15 11:30 BST</span>
+              <div class="font-semibold text-emerald-950 text-[11px]">Initial listing created by Grey Dhaka</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Cockpit & Trust Badge Issuing (Req 7, 18) -->
+      <div class="vintage-card p-6 md:p-8 rounded-3xl space-y-5">
+        <div>
+          <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block">Admin Review Cockpit</span>
+          <h3 class="font-serif-title font-bold text-xl text-emerald-950">
+            Event Legitimacy Verification &amp; Trust Badges
+          </h3>
+          <p class="text-xs text-stone-600 mt-1">Verify official source legitimacy before issuing authenticated badges</p>
+        </div>
+
+        <!-- Pending Verification Queue Card -->
+        <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-300 space-y-3 text-xs">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="text-[10px] font-bold text-amber-800 uppercase">Pending Review</span>
+              <h4 class="font-serif-title font-bold text-base text-emerald-950">Dhaka Manga &amp; Comic Con 2026</h4>
+              <p class="text-stone-600 text-[11px]">Hall 2, ICCB &bull; Submitted by Otaku Community BD</p>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-amber-200 text-amber-950 font-bold text-[10px]">Awaiting NOC</span>
+          </div>
+
+          <!-- Official Sources Verification Checklist (Req 7) -->
+          <div class="p-3 bg-white rounded-xl border border-amber-200 space-y-1.5 text-[11px]">
+            <div class="flex items-center gap-2 text-emerald-800 font-semibold">
+              <input type="checkbox" checked disabled class="accent-emerald-800"/>
+              <span>Organizer National ID &amp; Trade License Checked</span>
+            </div>
+            <div class="flex items-center gap-2 text-emerald-800 font-semibold">
+              <input type="checkbox" checked disabled class="accent-emerald-800"/>
+              <span>Venue Booking Hall Receipt Confirmed with ICCB</span>
+            </div>
+            <div class="flex items-center gap-2 text-stone-600">
+              <input type="checkbox" disabled class="accent-emerald-800"/>
+              <span>DMP Police Crowd Control NOC Clearance</span>
+            </div>
+          </div>
+
+          <!-- Admin Action Buttons (Req 18) -->
+          <div class="flex items-center gap-2 pt-1">
+            <span class="px-3 py-1.5 rounded-xl bg-emerald-900 text-amber-100 font-bold text-xs cursor-pointer shadow-xs">
+              🛡️ Issue Verified Trust Badge
+            </span>
+            <span class="px-3 py-1.5 rounded-xl bg-white border border-stone-300 text-stone-700 font-semibold text-xs cursor-pointer">
+              Request Revision
+            </span>
+            <span class="px-3 py-1.5 rounded-xl bg-white border border-red-200 text-red-700 font-semibold text-xs cursor-pointer">
+              Reject
+            </span>
+          </div>
+        </div>
+
+        <!-- Real-Time Application Stepper Tracker (Req 18) -->
+        <div class="p-4 rounded-2xl bg-white border border-stone-200 space-y-2.5 text-xs">
+          <span class="font-bold text-emerald-950 block text-[11px] uppercase">Organizer Real-Time Application Status:</span>
+          <div class="grid grid-cols-4 gap-1 text-center text-[10px]">
+            <div class="p-1.5 rounded bg-emerald-100 text-emerald-900 font-bold">1. Submitted ✓</div>
+            <div class="p-1.5 rounded bg-amber-200 text-amber-950 font-bold animate-pulse">2. Source Check ⏳</div>
+            <div class="p-1.5 rounded bg-stone-100 text-stone-400 font-medium">3. Admin Review</div>
+            <div class="p-1.5 rounded bg-stone-100 text-stone-400 font-medium">4. Verified Badge</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Lace Ribbon Divider -->
+    <div class="lace-divider-wide max-w-2xl mx-auto opacity-75"></div>
+
+    <!-- ========================================================================
+         SECTION 9: PERSONAL ATTENDANCE ANALYTICS DASHBOARD (Req 20)
+         - Total events attended, favorite event categories
+         - Most visited areas, monthly attendance trends chart, verified ledger
+         ======================================================================== -->
+    <section id="dashboard-section" class="vintage-card p-6 md:p-8 rounded-3xl space-y-8">
+      <div>
+        <h2 class="font-serif-title font-bold text-2xl text-emerald-950">
+          Personal Attendance Analytics Dashboard
+        </h2>
+        <p class="text-xs text-stone-600 mt-1">
+          Review your participation history, favorite categories, most visited hubs, and monthly attendance trends
+        </p>
+      </div>
+
+      <!-- KPI Stat Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="vintage-card p-5 rounded-2xl bg-white">
+          <span class="text-stone-400 text-xs font-semibold uppercase block">Total Attended</span>
+          <span class="font-display font-extrabold text-3xl text-emerald-950 mt-1 block">28 Events</span>
+          <span class="text-[11px] text-emerald-800 font-semibold mt-1 block">✓ Top 5% in Dhaka</span>
+        </div>
+
+        <div class="vintage-card p-5 rounded-2xl bg-white">
+          <span class="text-stone-400 text-xs font-semibold uppercase block">Attendance Score</span>
+          <span class="font-display font-extrabold text-3xl text-amber-700 mt-1 block">2,850 XP</span>
+          <span class="text-[11px] text-amber-800 font-semibold mt-1 block">Rank #4 Leaderboard</span>
+        </div>
+
+        <div class="vintage-card p-5 rounded-2xl bg-white">
+          <span class="text-stone-400 text-xs font-semibold uppercase block">Milestones Unlocked</span>
+          <span class="font-display font-extrabold text-3xl text-emerald-950 mt-1 block">4 / 6</span>
+          <span class="text-[11px] text-stone-600 mt-1 block">Next: Adda Maestro (2 left)</span>
+        </div>
+
+        <div class="vintage-card p-5 rounded-2xl bg-white">
+          <span class="text-stone-400 text-xs font-semibold uppercase block">Sponsor Savings</span>
+          <span class="font-display font-extrabold text-3xl text-emerald-900 mt-1 block">৳3,850</span>
+          <span class="text-[11px] text-emerald-700 font-semibold mt-1 block">Via bKash &amp; Pathao</span>
+        </div>
+      </div>
+
+      <!-- Middle Row: Categories & Most Visited Areas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Favorite Categories Progress Bars -->
+        <div class="vintage-card p-6 rounded-2xl space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-serif-title font-bold text-base text-emerald-950">Favorite Event Categories</h3>
+            <span class="text-xs text-stone-500">Based on 28 check-ins</span>
+          </div>
+
+          <div class="space-y-3.5 text-xs">
+            <div>
+              <div class="flex justify-between font-semibold text-emerald-950 mb-1">
+                <span>🎶 Music &amp; Concerts</span>
+                <span>42% (12 Events)</span>
+              </div>
+              <div class="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden">
+                <div class="h-full bg-emerald-800 rounded-full" style="width: 42%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-emerald-950 mb-1">
+                <span>🎨 Arts &amp; Culture</span>
+                <span>28% (8 Events)</span>
+              </div>
+              <div class="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden">
+                <div class="h-full bg-amber-600 rounded-full" style="width: 28%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-emerald-950 mb-1">
+                <span>📖 Literature &amp; Theatre</span>
+                <span>18% (5 Events)</span>
+              </div>
+              <div class="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden">
+                <div class="h-full bg-stone-600 rounded-full" style="width: 18%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold text-emerald-950 mb-1">
+                <span>💡 Tech &amp; Startups</span>
+                <span>12% (3 Events)</span>
+              </div>
+              <div class="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden">
+                <div class="h-full bg-emerald-600 rounded-full" style="width: 12%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Most Visited Areas Breakdown -->
+        <div class="vintage-card p-6 rounded-2xl space-y-3">
+          <div class="flex justify-between items-center mb-1">
+            <h3 class="font-serif-title font-bold text-base text-emerald-950">Most Visited Event Hubs</h3>
+            <span class="text-xs text-stone-500">Dhaka &amp; Beyond</span>
+          </div>
+
+          <div class="space-y-2.5 text-xs">
+            <div class="flex items-center justify-between p-3 rounded-xl bg-amber-50/70 border border-amber-200">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🌊</span>
+                <div>
+                  <div class="font-bold text-emerald-950">Dhanmondi Lake &amp; Rabindra Sarobar</div>
+                  <div class="text-[11px] text-stone-500">Dhaka-1209</div>
+                </div>
+              </div>
+              <span class="font-display font-bold text-sm text-emerald-900">11 visits</span>
+            </div>
+
+            <div class="flex items-center justify-between p-3 rounded-xl bg-white border border-stone-200">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🏛️</span>
+                <div>
+                  <div class="font-bold text-emerald-950">Shahbagh &amp; TSC / Bangla Academy</div>
+                  <div class="text-[11px] text-stone-500">Dhaka University Area</div>
+                </div>
+              </div>
+              <span class="font-display font-bold text-sm text-emerald-900">8 visits</span>
+            </div>
+
+            <div class="flex items-center justify-between p-3 rounded-xl bg-white border border-stone-200">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🎪</span>
+                <div>
+                  <div class="font-bold text-emerald-950">ICCB Kuril / Bashundhara R/A</div>
+                  <div class="text-[11px] text-stone-500">Convention City</div>
+                </div>
+              </div>
+              <span class="font-display font-bold text-sm text-emerald-900">5 visits</span>
+            </div>
+
+            <div class="flex items-center justify-between p-3 rounded-xl bg-white border border-stone-200">
+              <div class="flex items-center gap-3">
+                <span class="text-xl">🕌</span>
+                <div>
+                  <div class="font-bold text-emerald-950">Lalbagh &amp; Puran Dhaka</div>
+                  <div class="text-[11px] text-stone-500">Mughal Heritage Quarter</div>
+                </div>
+              </div>
+              <span class="font-display font-bold text-sm text-emerald-900">4 visits</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Monthly Attendance Trend Chart (Pure HTML & CSS Bar Visualization) -->
+      <div class="vintage-card p-6 rounded-2xl space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 class="font-serif-title font-bold text-lg text-emerald-950">
+              Monthly Attendance Trends (2026)
+            </h3>
+            <p class="text-xs text-stone-500">Tracking your cultural participation across the seasons of Bengal</p>
+          </div>
+          <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            Peak: Pohela Boishakh (April) &amp; Autumn
+          </span>
+        </div>
+
+        <div class="h-44 w-full flex items-end justify-between gap-2 pt-6 px-4 pb-2 border-b border-stone-200">
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-stone-600">2</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-emerald-950 to-amber-600 rounded-t-lg shadow-xs" style="height: 33%"></div>
+            <span class="text-xs font-semibold text-stone-600">Jan</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-stone-600">3</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-emerald-950 to-amber-600 rounded-t-lg shadow-xs" style="height: 50%"></div>
+            <span class="text-xs font-semibold text-stone-600">Feb</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-stone-600">4</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-emerald-950 to-amber-600 rounded-t-lg shadow-xs" style="height: 66%"></div>
+            <span class="text-xs font-semibold text-stone-600">Mar</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-red-700">6 (Peak)</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-red-950 via-amber-600 to-amber-400 rounded-t-lg shadow-sm" style="height: 100%"></div>
+            <span class="text-xs font-bold text-amber-950">Apr</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-stone-600">2</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-emerald-950 to-amber-600 rounded-t-lg shadow-xs" style="height: 33%"></div>
+            <span class="text-xs font-semibold text-stone-600">May</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-stone-600">1</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-emerald-950 to-amber-600 rounded-t-lg shadow-xs" style="height: 18%"></div>
+            <span class="text-xs font-semibold text-stone-600">Jun</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-stone-600">2</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-emerald-950 to-amber-600 rounded-t-lg shadow-xs" style="height: 33%"></div>
+            <span class="text-xs font-semibold text-stone-600">Jul</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-stone-600">2</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-emerald-950 to-amber-600 rounded-t-lg shadow-xs" style="height: 33%"></div>
+            <span class="text-xs font-semibold text-stone-600">Aug</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-stone-600">3</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-emerald-950 to-amber-600 rounded-t-lg shadow-xs" style="height: 50%"></div>
+            <span class="text-xs font-semibold text-stone-600">Sep</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center gap-1.5">
+            <span class="text-[11px] font-bold text-stone-600">3</span>
+            <div class="w-full max-w-[36px] bg-gradient-to-t from-emerald-950 to-amber-600 rounded-t-lg shadow-xs" style="height: 50%"></div>
+            <span class="text-xs font-semibold text-stone-600">Oct</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified Attendance Ledger -->
+      <div class="vintage-card p-6 rounded-2xl space-y-3">
+        <h3 class="font-serif-title font-bold text-lg text-emerald-950">
+          Verified Attendance Ledger (History)
+        </h3>
+        <div class="divide-y divide-stone-200 text-xs">
+          <div class="py-3 flex items-center justify-between gap-4">
+            <div>
+              <div class="font-bold text-emerald-950 text-sm">Coke Studio Bangla Live: Symphony of Rivers</div>
+              <div class="text-stone-500">Hall 4, ICCB Kuril &bull; Checked in on 2026-10-24</div>
+            </div>
+            <span class="text-emerald-800 bg-emerald-50 border border-emerald-300 font-bold px-2.5 py-1 rounded-full">
+              +150 XP Verified Stamp
+            </span>
+          </div>
+
+          <div class="py-3 flex items-center justify-between gap-4">
+            <div>
+              <div class="font-bold text-emerald-950 text-sm">Bengal Art Summit: Weaving the Delta</div>
+              <div class="text-stone-500">National Art Gallery, Shilpakala Academy &bull; Checked in on 2026-10-18</div>
+            </div>
+            <span class="text-emerald-800 bg-emerald-50 border border-emerald-300 font-bold px-2.5 py-1 rounded-full">
+              +150 XP Verified Stamp
+            </span>
+          </div>
+
+          <div class="py-3 flex items-center justify-between gap-4">
+            <div>
+              <div class="font-bold text-emerald-950 text-sm">Puran Dhaka Heritage Food &amp; Shakhari Bazar Walk</div>
+              <div class="text-stone-500">Lalbagh Fort North Gate, Old Dhaka &bull; Checked in on 2026-10-10</div>
+            </div>
+            <span class="text-emerald-800 bg-emerald-50 border border-emerald-300 font-bold px-2.5 py-1 rounded-full">
+              +130 XP Verified Stamp
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="mt-16 bg-[#08241b] text-amber-100 border-t border-amber-500/20 py-12 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-stone-400">
+      <div class="flex items-center gap-3">
+        <div class="monogram-seal w-10 h-10 text-sm">আ</div>
+        <div>
+          <div class="font-display font-bold text-white text-base">AYOJON (আয়োজন)</div>
+          <div>Bangladesh Event &amp; Heritage Platform &bull; Pure HTML5 &amp; Tailwind CSS Frontend Design</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-6 flex-wrap">
+        <span>📍 Dhaka &bull; Chattogram &bull; Sylhet &bull; Cox's Bazar</span>
+        <span>🛡️ DMP &amp; City Corporation Verified</span>
+        <span>🇧🇩 0% JavaScript &bull; 100% Semantic HTML5 &amp; Tailwind CSS</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

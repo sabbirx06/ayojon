@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Events — আয়োজন Ayojon</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { heritage: { emerald: '#0f3d30', 'emerald-deep': '#08281e', 'emerald-light': '#1b5242', cream: '#faf7f2', parchment: '#f4efe4', gold: '#c89d38', 'gold-light': '#e5b958', terracotta: '#8f2d1e' } },
+          fontFamily: { serif: ['Playfair Display', 'Georgia', 'serif'], display: ['Cinzel', 'Times New Roman', 'serif'], sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'], script: ['Great Vibes', 'cursive'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-heritage-cream text-stone-900 min-h-screen flex flex-col antialiased">
+
+  <!-- NAV -->
+  <nav class="bg-white/90 backdrop-blur-md border-b border-amber-500/20 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="monogram-seal w-8 h-8 text-xs">আ</div>
+        <span class="font-display font-bold text-heritage-emerald text-sm tracking-wider">AYOJON</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 text-xs font-semibold">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:text-heritage-emerald hover:bg-amber-50 transition">Home</a>
+        <a href="discover.html" class="px-3 py-1.5 rounded-lg bg-heritage-emerald text-amber-100">Discover</a>
+        <a href="trending.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:text-heritage-emerald hover:bg-amber-50 transition">Trending</a>
+        <a href="leaderboard.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:text-heritage-emerald hover:bg-amber-50 transition">Leaderboard</a>
+        <a href="vouchers.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:text-heritage-emerald hover:bg-amber-50 transition">Vouchers</a>
+        <a href="dashboard.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:text-heritage-emerald hover:bg-amber-50 transition">Dashboard</a>
+        <a href="submit-event.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:text-heritage-emerald hover:bg-amber-50 transition">Submit Event</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="notifications.html" class="relative p-2 text-stone-400 hover:text-heritage-emerald transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+        </a>
+        <button onclick="document.getElementById('mob-menu').classList.toggle('hidden')" class="md:hidden p-2 text-stone-500">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mob-menu" class="hidden md:hidden px-4 pb-3 space-y-1 border-t border-stone-100 text-xs font-semibold">
+      <a href="index.html" class="block py-2 text-stone-600">Home</a>
+      <a href="discover.html" class="block py-2 text-heritage-emerald font-bold">Discover</a>
+      <a href="trending.html" class="block py-2 text-stone-600">Trending</a>
+      <a href="leaderboard.html" class="block py-2 text-stone-600">Leaderboard</a>
+      <a href="vouchers.html" class="block py-2 text-stone-600">Vouchers</a>
+      <a href="dashboard.html" class="block py-2 text-stone-600">Dashboard</a>
+      <a href="heatmap.html" class="block py-2 text-stone-600">Heat Map</a>
+      <a href="collections.html" class="block py-2 text-stone-600">Collections</a>
+      <a href="weekend-planner.html" class="block py-2 text-stone-600">Weekend Planner</a>
+      <a href="submit-event.html" class="block py-2 text-stone-600">Submit Event</a>
+      <a href="admin.html" class="block py-2 text-stone-600">Admin Panel</a>
+    </div>
+  </nav>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8 space-y-8">
+
+    <!-- Page Header -->
+    <div>
+      <h1 class="font-display font-bold text-2xl sm:text-3xl text-heritage-emerald tracking-wide">Discover Events</h1>
+      <p class="text-sm text-stone-600 mt-1">Filter and search simultaneously by keyword, date range, area, category, and ticket price</p>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="vintage-card p-6 rounded-3xl space-y-5">
+      <!-- Search Bar -->
+      <div class="relative">
+        <input type="text" placeholder="Search events, venues, organizers across Bangladesh..." class="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-stone-300 text-sm bg-white shadow-xs font-medium focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400" value="Coke Studio, Classical, Rabindra Sarobar"/>
+        <span class="absolute left-4 top-4 text-stone-400 text-lg">🔍</span>
+      </div>
+
+      <!-- Filter Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-heritage-emerald uppercase mb-1">Category</label>
+          <select class="w-full px-3 py-2.5 rounded-xl border border-stone-300 text-sm bg-white font-medium">
+            <option>All Categories</option>
+            <option>Music & Concerts</option>
+            <option>Arts & Culture</option>
+            <option selected>Literature & Theatre</option>
+            <option>Food & Dining</option>
+            <option>Tech & Startups</option>
+            <option>Sports & Fitness</option>
+            <option>Festivals</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-heritage-emerald uppercase mb-1">Date Range</label>
+          <select class="w-full px-3 py-2.5 rounded-xl border border-stone-300 text-sm bg-white font-medium">
+            <option>All Dates</option>
+            <option>Today</option>
+            <option selected>This Weekend</option>
+            <option>Next 7 Days</option>
+            <option>This Month</option>
+            <option>Custom Range</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-heritage-emerald uppercase mb-1">Area / District</label>
+          <select class="w-full px-3 py-2.5 rounded-xl border border-stone-300 text-sm bg-white font-medium">
+            <option selected>All Bangladesh</option>
+            <option>Dhanmondi, Dhaka</option>
+            <option>Shahbagh & TSC</option>
+            <option>Gulshan & Banani</option>
+            <option>Bashundhara / ICCB</option>
+            <option>Old Dhaka (Lalbagh)</option>
+            <option>Chittagong</option>
+            <option>Sylhet</option>
+            <option>Rajshahi</option>
+            <option>Cox's Bazar</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-heritage-emerald uppercase mb-1">Price Range</label>
+          <select class="w-full px-3 py-2.5 rounded-xl border border-stone-300 text-sm bg-white font-medium">
+            <option selected>All Prices</option>
+            <option>Free Only</option>
+            <option>Under ৳500</option>
+            <option>৳500 – ৳2,000</option>
+            <option>৳2,000+</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-heritage-emerald uppercase mb-1">Sort By</label>
+          <select class="w-full px-3 py-2.5 rounded-xl border border-stone-300 text-sm bg-white font-medium">
+            <option selected>Relevance</option>
+            <option>Date (Soonest)</option>
+            <option>Price: Low → High</option>
+            <option>Price: High → Low</option>
+            <option>Most Bookmarked</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Active filters & result count -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-amber-900/10 text-xs">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="font-semibold text-stone-500">Active Filters:</span>
+          <span class="bg-heritage-emerald text-amber-100 px-2.5 py-1 rounded-full font-bold flex items-center gap-1">This Weekend <span class="ml-1 cursor-pointer opacity-70 hover:opacity-100">✕</span></span>
+          <span class="bg-heritage-emerald text-amber-100 px-2.5 py-1 rounded-full font-bold flex items-center gap-1">Literature <span class="ml-1 cursor-pointer opacity-70 hover:opacity-100">✕</span></span>
+        </div>
+        <span class="font-bold text-amber-800 bg-amber-50 px-3 py-1 rounded-lg border border-amber-200">Showing 24 matching events</span>
+      </div>
+    </div>
+
+    <!-- Nearby GPS Toggle -->
+    <div class="vintage-card p-5 rounded-2xl bg-amber-50/50 border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+        <div>
+          <span class="font-bold text-sm text-heritage-emerald">📍 Show Nearby Events (Live GPS)</span>
+          <p class="text-xs text-stone-500">23.7505° N, 90.3770° E — Dhanmondi, Dhaka</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-xs font-bold text-stone-500">Radius:</span>
+        <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-600 cursor-pointer">1 km</span>
+        <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-600 cursor-pointer">5 km</span>
+        <span class="px-3 py-1 rounded-lg border border-amber-400 bg-heritage-emerald text-amber-100 text-xs font-bold">✓ 10 km</span>
+        <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-600 cursor-pointer">25 km</span>
+        <span class="px-2.5 py-1 rounded-lg border border-stone-300 bg-white text-xs font-medium text-stone-600 cursor-pointer">50 km</span>
+      </div>
+    </div>
+
+    <!-- Event Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Card 1 -->
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80" alt="Concert" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3 flex gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Music & Concerts</span>
+            <span class="trust-badge-gold px-2 py-0.5 rounded-full text-xs">🛡️ Verified</span>
+          </div>
+          <div class="absolute bottom-3 left-3 text-xs text-amber-200 font-medium bg-black/50 px-2 py-0.5 rounded">📍 9.8 km • ICCB</div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 text-xs text-stone-500 mb-1.5">
+            <span>📅 Friday, Nov 6 • 17:00 BST</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald leading-snug">Coke Studio Bangla Live: Symphony of Rivers</h3>
+          <p class="text-xs text-stone-500 mt-1.5 line-clamp-2">Uniting traditional river folk melodies with modern rhythm on a 360° acoustic stage.</p>
+          <div class="mt-3 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="font-bold text-amber-800">৳500 – ৳2,800</span>
+            <div class="flex items-center gap-2">
+              <span class="text-stone-500">🔥 684</span>
+              <span class="text-amber-700 font-bold">★ 4.9</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80" alt="Acoustic" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3 flex gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Music & Concerts</span>
+            <span class="trust-badge-gold px-2 py-0.5 rounded-full text-xs">🛡️ Verified</span>
+          </div>
+          <div class="absolute bottom-3 left-3 text-xs text-amber-200 font-medium bg-black/50 px-2 py-0.5 rounded">📍 0.2 km • GPS Nearby</div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 text-xs text-stone-500 mb-1.5">
+            <span>📅 Friday, Nov 6 • 18:00 BST</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald leading-snug">Rabindra Sarobar Twilight Acoustic & Baul Raga</h3>
+          <p class="text-xs text-stone-500 mt-1.5 line-clamp-2">Soul-stirring dotara, flute, and Rabindra sangeet over Dhanmondi lake waters.</p>
+          <div class="mt-3 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="font-bold text-emerald-700">Free Open Air</span>
+            <div class="flex items-center gap-2">
+              <span class="text-stone-500">🔥 430</span>
+              <span class="text-amber-700 font-bold">★ 4.7</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" alt="Art" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Arts & Culture</span>
+          </div>
+          <div class="absolute bottom-3 left-3 text-xs text-amber-200 font-medium bg-black/50 px-2 py-0.5 rounded">📍 3.2 km • Shahbagh</div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 text-xs text-stone-500 mb-1.5">
+            <span>📅 Saturday, Nov 7 • 10:00 BST</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald leading-snug">Bengal Art Summit: Weaving the Delta</h3>
+          <p class="text-xs text-stone-500 mt-1.5 line-clamp-2">Contemporary installations, Jamdani weaving pavilions, terracotta sculptures.</p>
+          <div class="mt-3 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="font-bold text-amber-800">৳250</span>
+            <div class="flex items-center gap-2">
+              <span class="text-stone-500">🔥 610</span>
+              <span class="text-amber-700 font-bold">★ 4.9</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Food" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3 flex gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Food & Dining</span>
+            <span class="trust-badge-gold px-2 py-0.5 rounded-full text-xs">🛡️ Verified</span>
+          </div>
+          <div class="absolute bottom-3 left-3 text-xs text-amber-200 font-medium bg-black/50 px-2 py-0.5 rounded">📍 4.1 km • Lalbagh</div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 text-xs text-stone-500 mb-1.5">
+            <span>📅 Saturday, Nov 7 • 15:30 BST</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald leading-snug">Puran Dhaka Heritage Food & Street Walk</h3>
+          <p class="text-xs text-stone-500 mt-1.5 line-clamp-2">Kacchi Biryani, Bakarkhani, brass artisans, 350-year-old Mughal history.</p>
+          <div class="mt-3 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="font-bold text-amber-800">৳650</span>
+            <div class="flex items-center gap-2">
+              <span class="text-stone-500">🔥 395</span>
+              <span class="text-amber-700 font-bold">★ 4.8</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 5 -->
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80" alt="Tech" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Tech & Startups</span>
+          </div>
+          <div class="absolute bottom-3 left-3 text-xs text-amber-200 font-medium bg-black/50 px-2 py-0.5 rounded">📍 7.5 km • Gulshan</div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 text-xs text-stone-500 mb-1.5">
+            <span>📅 Sunday, Nov 8 • 09:00 BST</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald leading-snug">Bangladesh Startup Summit 2026</h3>
+          <p class="text-xs text-stone-500 mt-1.5 line-clamp-2">Pitch decks, venture capital panels, and innovation workshops at Lakeshore.</p>
+          <div class="mt-3 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="font-bold text-amber-800">৳1,200</span>
+            <div class="flex items-center gap-2">
+              <span class="text-stone-500">🔥 310</span>
+              <span class="text-amber-700 font-bold">★ 4.5</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 6 -->
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=600&q=80" alt="Lit Fest" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3 flex gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Literature</span>
+            <span class="trust-badge-gold px-2 py-0.5 rounded-full text-xs">🛡️ Verified</span>
+          </div>
+          <div class="absolute bottom-3 left-3 text-xs text-amber-200 font-medium bg-black/50 px-2 py-0.5 rounded">📍 2.8 km • Shahbagh</div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 text-xs text-stone-500 mb-1.5">
+            <span>📅 Friday, Nov 6 • 09:30 BST</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald leading-snug">Dhaka Lit Fest: River of Words</h3>
+          <p class="text-xs text-stone-500 mt-1.5 line-clamp-2">Panel discussions, poetry slams, and book signings at Bangla Academy.</p>
+          <div class="mt-3 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="font-bold text-emerald-700">Free Registration</span>
+            <div class="flex items-center gap-2">
+              <span class="text-stone-500">🔥 520</span>
+              <span class="text-amber-700 font-bold">★ 4.6</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 7 -->
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80" alt="Indie Rock" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Music</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 text-xs text-stone-500 mb-1.5">
+            <span>📅 Saturday, Nov 7 • 17:30 BST</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald leading-snug">Dhanmondi Indie Rock Carnival</h3>
+          <p class="text-xs text-stone-500 mt-1.5 line-clamp-2">Underground bands, rooftop stage at Russian Cultural Centre.</p>
+          <div class="mt-3 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="font-bold text-amber-800">৳450</span>
+            <div class="flex items-center gap-2">
+              <span class="text-stone-500">🔥 245</span>
+              <span class="text-amber-700 font-bold">★ 4.4</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 8 -->
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=600&q=80" alt="Yoga" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Sports & Fitness</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 text-xs text-stone-500 mb-1.5">
+            <span>📅 Sunday, Nov 8 • 06:30 BST</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald leading-snug">সকালের যোগ উৎসব — Morning Yoga Festival</h3>
+          <p class="text-xs text-stone-500 mt-1.5 line-clamp-2">Community yoga session at the Hatirjheel promenade with guided meditation.</p>
+          <div class="mt-3 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="font-bold text-emerald-700">Free</span>
+            <div class="flex items-center gap-2">
+              <span class="text-stone-500">🔥 180</span>
+              <span class="text-amber-700 font-bold">★ 4.3</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 9 -->
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80" alt="Festival" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3 flex gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Festivals</span>
+            <span class="trust-badge-gold px-2 py-0.5 rounded-full text-xs">🛡️ Verified</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 text-xs text-stone-500 mb-1.5">
+            <span>📅 Nov 14-16 • All Day</span>
+          </div>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald leading-snug">Chittagong Hill Tracts Cultural Expo</h3>
+          <p class="text-xs text-stone-500 mt-1.5 line-clamp-2">Indigenous textile displays, bamboo crafts, and traditional tribal cuisine.</p>
+          <div class="mt-3 pt-3 border-t border-amber-900/10 flex items-center justify-between text-xs">
+            <span class="font-bold text-amber-800">৳350</span>
+            <div class="flex items-center gap-2">
+              <span class="text-stone-500">🔥 290</span>
+              <span class="text-amber-700 font-bold">★ 4.7</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex items-center justify-center gap-2 pt-6">
+      <span class="px-3 py-2 rounded-lg border border-stone-300 text-xs font-medium text-stone-400 cursor-not-allowed">← Previous</span>
+      <span class="px-3 py-2 rounded-lg bg-heritage-emerald text-amber-100 text-xs font-bold">1</span>
+      <span class="px-3 py-2 rounded-lg border border-stone-300 text-xs font-medium text-stone-700 cursor-pointer hover:bg-amber-50">2</span>
+      <span class="px-3 py-2 rounded-lg border border-stone-300 text-xs font-medium text-stone-700 cursor-pointer hover:bg-amber-50">3</span>
+      <span class="text-stone-400 text-xs">...</span>
+      <span class="px-3 py-2 rounded-lg border border-stone-300 text-xs font-medium text-stone-700 cursor-pointer hover:bg-amber-50">8</span>
+      <span class="px-3 py-2 rounded-lg border border-stone-300 text-xs font-medium text-stone-700 cursor-pointer hover:bg-amber-50">Next →</span>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-16 bg-[#08241b] text-amber-100 border-t border-amber-500/20 py-10 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-stone-400">
+      <div class="flex items-center gap-3">
+        <div class="monogram-seal w-10 h-10 text-sm">আ</div>
+        <div>
+          <div class="font-display font-bold text-white text-base">AYOJON (আয়োজন)</div>
+          <div>Bangladesh Event & Heritage Platform</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-6 flex-wrap">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="trending.html" class="hover:text-white transition">Trending</a>
+        <a href="dashboard.html" class="hover:text-white transition">Dashboard</a>
+        <a href="admin.html" class="hover:text-white transition">Admin</a>
+        <a href="report.html" class="hover:text-white transition">Report Issue</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

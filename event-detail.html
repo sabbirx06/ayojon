@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Detail — আয়োজন Ayojon</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: { heritage: { emerald: '#0f3d30', 'emerald-deep': '#08281e', 'emerald-light': '#1b5242', cream: '#faf7f2', parchment: '#f4efe4', gold: '#c89d38', 'gold-light': '#e5b958', terracotta: '#8f2d1e' } },
+        fontFamily: { serif: ['Playfair Display','Georgia','serif'], display: ['Cinzel','Times New Roman','serif'], sans: ['Plus Jakarta Sans','system-ui','sans-serif'] }
+      }}
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-heritage-cream text-stone-900 min-h-screen flex flex-col antialiased">
+
+  <!-- NAV -->
+  <nav class="bg-white/90 backdrop-blur-md border-b border-amber-500/20 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14">
+      <a href="index.html" class="flex items-center gap-2"><div class="monogram-seal w-8 h-8 text-xs">আ</div><span class="font-display font-bold text-heritage-emerald text-sm tracking-wider">AYOJON</span></a>
+      <div class="hidden md:flex items-center gap-1 text-xs font-semibold">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50 transition">Home</a>
+        <a href="discover.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50 transition">Discover</a>
+        <a href="trending.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50 transition">Trending</a>
+        <a href="leaderboard.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50 transition">Leaderboard</a>
+        <a href="vouchers.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50 transition">Vouchers</a>
+        <a href="dashboard.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50 transition">Dashboard</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="notifications.html" class="relative p-2 text-stone-400 hover:text-heritage-emerald"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span></a>
+        <button onclick="document.getElementById('mob-menu').classList.toggle('hidden')" class="md:hidden p-2 text-stone-500"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      </div>
+    </div>
+    <div id="mob-menu" class="hidden md:hidden px-4 pb-3 space-y-1 border-t border-stone-100 text-xs font-semibold">
+      <a href="index.html" class="block py-2 text-stone-600">Home</a><a href="discover.html" class="block py-2 text-stone-600">Discover</a><a href="trending.html" class="block py-2 text-stone-600">Trending</a><a href="leaderboard.html" class="block py-2 text-stone-600">Leaderboard</a><a href="dashboard.html" class="block py-2 text-stone-600">Dashboard</a><a href="submit-event.html" class="block py-2 text-stone-600">Submit Event</a><a href="admin.html" class="block py-2 text-stone-600">Admin</a>
+    </div>
+  </nav>
+
+  <main class="flex-1">
+    <!-- Hero Banner -->
+    <div class="relative h-72 md:h-96 bg-emerald-950 overflow-hidden">
+      <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1400&q=80" alt="Coke Studio" class="w-full h-full object-cover"/>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+      <div class="absolute bottom-6 left-4 right-4 sm:left-8 sm:right-8 z-10 max-w-5xl">
+        <div class="flex items-center gap-2 mb-3 flex-wrap">
+          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-white text-heritage-emerald">Music & Concerts</span>
+          <span class="trust-badge-gold px-3 py-1 rounded-full text-xs">🛡️ Authenticated Verified Trust Badge</span>
+        </div>
+        <h1 class="font-serif font-bold text-2xl sm:text-4xl text-white leading-tight">Coke Studio Bangla Live: Symphony of Rivers</h1>
+        <p class="text-sm text-amber-200 mt-2 max-w-2xl">Uniting the traditional melodies of the delta with modern rhythm on a 360° acoustic stage</p>
+      </div>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="bg-white border-b border-stone-200 sticky top-14 z-40">
+      <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4 flex-wrap">
+        <div class="flex items-center gap-4 text-xs font-semibold text-stone-600">
+          <span>📅 Fri, Nov 6 • 17:00–22:30</span>
+          <span class="hidden sm:inline">📍 ICCB Hall 4, Dhaka</span>
+          <span class="font-bold text-amber-800">৳500 – ৳2,800</span>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="px-3 py-1.5 rounded-lg bg-amber-100 text-amber-900 text-xs font-bold border border-amber-300 cursor-pointer">🔖 Bookmark</span>
+          <span class="px-3 py-1.5 rounded-lg bg-emerald-100 text-emerald-900 text-xs font-bold border border-emerald-300 cursor-pointer">🔔 Follow</span>
+          <span class="px-3 py-1.5 rounded-lg bg-stone-100 text-stone-700 text-xs font-bold border border-stone-300 cursor-pointer">↗️ Share</span>
+          <a href="report.html" class="px-3 py-1.5 rounded-lg text-red-700 text-xs font-bold hover:bg-red-50 cursor-pointer">⚠️ Report</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Main Column -->
+      <div class="lg:col-span-2 space-y-8">
+
+        <!-- Quick Specs -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="vintage-card p-4 rounded-xl text-xs">
+            <span class="text-stone-400 font-semibold block uppercase text-[10px]">Start / End</span>
+            <span class="font-bold text-heritage-emerald block mt-0.5">Nov 06, 2026</span>
+            <span class="text-stone-600">17:00 – 22:30 BST</span>
+          </div>
+          <div class="vintage-card p-4 rounded-xl text-xs">
+            <span class="text-stone-400 font-semibold block uppercase text-[10px]">Venue</span>
+            <span class="font-bold text-heritage-emerald block mt-0.5">ICCB Hall 4</span>
+            <span class="text-stone-600">Kuril, Bashundhara</span>
+          </div>
+          <div class="vintage-card p-4 rounded-xl text-xs">
+            <span class="text-stone-400 font-semibold block uppercase text-[10px]">Price Range</span>
+            <span class="font-bold text-amber-800 block mt-0.5">৳500 – ৳2,800</span>
+            <span class="text-stone-600">3 Tiers Available</span>
+          </div>
+          <div class="vintage-card p-4 rounded-xl text-xs">
+            <span class="text-stone-400 font-semibold block uppercase text-[10px]">Reviews</span>
+            <span class="font-bold text-amber-700 block mt-0.5">★ 4.9 / 5</span>
+            <span class="text-stone-600">184 Verified Reviews</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="vintage-card p-6 rounded-2xl">
+          <h2 class="font-serif font-bold text-lg text-heritage-emerald mb-3">Event Description</h2>
+          <p class="text-sm text-stone-700 leading-relaxed mb-4">
+            Experience the monumental sounds of Coke Studio Bangla live on an unprecedented 360-degree acoustic stage. Featuring celebrated artists from Sylhet, Chittagong, Kushtia, and the international diaspora. High-fidelity surround sound, digital stagecraft, and food courts celebrating Bangladeshi delicacies.
+          </p>
+          <p class="text-sm text-stone-700 leading-relaxed">
+            This edition celebrates the rivers of Bengal—Padma, Meghna, Jamuna—through a curated musical journey that blends Baul philosophy, Rabindra sangeet, modern hip-hop, and classical sitar compositions. Art installations depicting river life will flank the walkways.
+          </p>
+        </div>
+
+        <!-- Ticket Tiers -->
+        <div class="vintage-card p-6 rounded-2xl">
+          <h2 class="font-serif font-bold text-lg text-heritage-emerald mb-4">Ticket Cost Tiers</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl border border-amber-200 bg-amber-50/30">
+              <span class="font-bold text-xs text-heritage-emerald">Student Pass</span>
+              <span class="font-display font-black text-xl text-amber-800 block mt-1">৳500</span>
+              <p class="text-[11px] text-stone-500 mt-1">Standing general access • Valid student ID required</p>
+            </div>
+            <div class="p-4 rounded-xl border border-amber-200 bg-white">
+              <span class="font-bold text-xs text-heritage-emerald">General Admission</span>
+              <span class="font-display font-black text-xl text-amber-800 block mt-1">৳1,200</span>
+              <p class="text-[11px] text-stone-500 mt-1">Main arena + Welcome pack + Food court pass</p>
+            </div>
+            <div class="p-4 rounded-xl border-2 border-amber-400 bg-amber-50/60 shadow-sm relative">
+              <span class="absolute -top-2 right-3 bg-heritage-gold text-white text-[9px] font-bold px-2 py-0.5 rounded-full">POPULAR</span>
+              <span class="font-bold text-xs text-heritage-emerald">VIP Royal Front</span>
+              <span class="font-display font-black text-xl text-amber-800 block mt-1">৳2,800</span>
+              <p class="text-[11px] text-stone-500 mt-1">Fast track + Front pit + Backstage lounge access</p>
+            </div>
+          </div>
+          <div class="mt-4 text-center">
+            <span class="px-6 py-3 rounded-xl bg-heritage-emerald text-amber-100 font-bold text-sm inline-block cursor-pointer shadow-md hover:bg-heritage-emerald-light transition">🎟️ Book Tickets Now</span>
+          </div>
+        </div>
+
+        <!-- Venue -->
+        <div class="vintage-card p-6 rounded-2xl">
+          <h2 class="font-serif font-bold text-lg text-heritage-emerald mb-3">Venue & Location</h2>
+          <div class="p-4 rounded-xl bg-stone-100 border border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="font-bold text-sm text-heritage-emerald">Hall 4, International Convention City Bashundhara</span>
+              <p class="text-xs text-stone-600 mt-0.5">Kuril Flyover Link, Bashundhara R/A, Dhaka-1229</p>
+              <span class="font-mono text-xs text-stone-500 mt-1 block">📍 23.8185° N, 90.4320° E</span>
+            </div>
+            <a href="https://maps.google.com" target="_blank" class="px-4 py-2 rounded-xl bg-white border border-stone-300 text-heritage-emerald font-bold text-xs shadow-xs shrink-0">🗺️ Open Maps</a>
+          </div>
+          <!-- Map Placeholder -->
+          <div class="mt-4 h-48 rounded-xl bg-stone-200 border border-stone-300 flex items-center justify-center text-stone-400 text-sm">
+            <div class="text-center">
+              <span class="text-3xl block mb-2">🗺️</span>
+              <span>Interactive Map Placeholder</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="vintage-card p-6 rounded-2xl">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-serif font-bold text-lg text-heritage-emerald">Attendee Reviews</h2>
+            <a href="reviews.html" class="text-xs font-bold text-heritage-emerald hover:underline">View All 184 →</a>
+          </div>
+
+          <!-- Rating Overview -->
+          <div class="flex items-center gap-6 mb-6 p-4 bg-amber-50/60 rounded-xl border border-amber-200">
+            <div class="text-center">
+              <span class="font-display font-black text-4xl text-amber-700">4.9</span>
+              <div class="text-amber-500 text-lg">★★★★★</div>
+              <span class="text-xs text-stone-500">184 reviews</span>
+            </div>
+            <div class="flex-1 space-y-1.5 text-xs">
+              <div class="flex items-center gap-2"><span class="w-6">5★</span><div class="flex-1 h-2 bg-stone-200 rounded-full overflow-hidden"><div class="h-full bg-amber-500 rounded-full" style="width:72%"></div></div><span class="text-stone-500 w-8">72%</span></div>
+              <div class="flex items-center gap-2"><span class="w-6">4★</span><div class="flex-1 h-2 bg-stone-200 rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:20%"></div></div><span class="text-stone-500 w-8">20%</span></div>
+              <div class="flex items-center gap-2"><span class="w-6">3★</span><div class="flex-1 h-2 bg-stone-200 rounded-full overflow-hidden"><div class="h-full bg-amber-300 rounded-full" style="width:5%"></div></div><span class="text-stone-500 w-8">5%</span></div>
+              <div class="flex items-center gap-2"><span class="w-6">2★</span><div class="flex-1 h-2 bg-stone-200 rounded-full overflow-hidden"><div class="h-full bg-stone-300 rounded-full" style="width:2%"></div></div><span class="text-stone-500 w-8">2%</span></div>
+              <div class="flex items-center gap-2"><span class="w-6">1★</span><div class="flex-1 h-2 bg-stone-200 rounded-full overflow-hidden"><div class="h-full bg-stone-300 rounded-full" style="width:1%"></div></div><span class="text-stone-500 w-8">1%</span></div>
+            </div>
+          </div>
+
+          <!-- Sample Reviews -->
+          <div class="space-y-4">
+            <div class="p-4 bg-white rounded-xl border border-stone-200">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-xs font-bold text-heritage-emerald">TH</div>
+                  <div>
+                    <span class="font-bold text-sm text-heritage-emerald">Tanvir Hasan</span>
+                    <span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded text-[9px] font-bold ml-1">✓ Verified</span>
+                  </div>
+                </div>
+                <span class="text-amber-500 font-bold text-sm">★★★★★</span>
+              </div>
+              <p class="text-xs text-stone-600 leading-relaxed">Best sound engineering in Dhaka. The river folk anthem gave chills! The food courts were excellent too. Can't wait for next year's edition.</p>
+              <div class="mt-2 text-[11px] text-stone-400">Oct 25, 2026 • 12 found helpful</div>
+            </div>
+
+            <div class="p-4 bg-white rounded-xl border border-stone-200">
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-xs font-bold text-amber-800">SA</div>
+                  <div>
+                    <span class="font-bold text-sm text-heritage-emerald">Sumaiya Anjum</span>
+                    <span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded text-[9px] font-bold ml-1">✓ Verified</span>
+                  </div>
+                </div>
+                <span class="text-amber-500 font-bold text-sm">★★★★☆</span>
+              </div>
+              <p class="text-xs text-stone-600 leading-relaxed">Amazing atmosphere and lineup. Only deducting one star for the parking situation—Kuril traffic was brutal. Otherwise, 10/10 production value.</p>
+              <div class="mt-2 text-[11px] text-stone-400">Oct 24, 2026 • 8 found helpful</div>
+            </div>
+          </div>
+
+          <div class="mt-4 text-center">
+            <a href="reviews.html" class="px-5 py-2.5 rounded-xl bg-amber-100 text-amber-900 font-bold text-xs border border-amber-300 inline-block cursor-pointer">✍️ Write a Review</a>
+          </div>
+        </div>
+
+        <!-- Modification Audit Trail -->
+        <div class="vintage-card p-6 rounded-2xl">
+          <h2 class="font-serif font-bold text-base text-heritage-emerald mb-3">Public Modification Audit Trail</h2>
+          <div class="space-y-3 timeline-stem pl-6 text-xs relative">
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 w-2.5 h-2.5 rounded-full bg-amber-500 border border-white"></div>
+              <span class="font-mono text-[10px] text-amber-800 font-bold">2026-10-24 14:15 BST</span>
+              <div class="font-semibold text-heritage-emerald text-[11px]">Gate time revised to 16:30 BST (was 17:00). Organizer update.</div>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 w-2.5 h-2.5 rounded-full bg-emerald-600 border border-white"></div>
+              <span class="font-mono text-[10px] text-amber-800 font-bold">2026-10-18 16:00 BST</span>
+              <div class="font-semibold text-heritage-emerald text-[11px]">Verified Trust Badge issued by Admin. DMP NOC confirmed.</div>
+            </div>
+            <div class="relative">
+              <div class="absolute -left-[23px] top-1 w-2.5 h-2.5 rounded-full bg-stone-400 border border-white"></div>
+              <span class="font-mono text-[10px] text-amber-800 font-bold">2026-10-15 11:30 BST</span>
+              <div class="font-semibold text-heritage-emerald text-[11px]">Initial listing created by Grey Dhaka & Coke Studio BD.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="space-y-6">
+        <!-- Organizer -->
+        <div class="vintage-card p-5 rounded-2xl">
+          <h3 class="font-serif font-bold text-sm text-heritage-emerald mb-3">Organizer</h3>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-lg font-bold text-heritage-emerald">GD</div>
+            <div>
+              <span class="font-bold text-sm text-heritage-emerald block">Grey Dhaka & Coke Studio</span>
+              <span class="trust-badge-gold px-2 py-0.5 rounded text-[9px]">🛡️ Verified Organizer</span>
+            </div>
+          </div>
+          <div class="space-y-2 text-xs text-stone-600">
+            <div>🔗 <a href="#" class="text-heritage-emerald font-bold hover:underline">facebook.com/cokestudiobangla</a></div>
+            <div>🎟️ <a href="#" class="text-amber-800 font-bold hover:underline">ticket.ayojon.com.bd/coke-studio</a></div>
+            <div>📜 DMP Police NOC Ref: #DMP-2026-992</div>
+          </div>
+        </div>
+
+        <!-- Check-In -->
+        <div class="vintage-card p-5 rounded-2xl bg-gradient-to-br from-emerald-900 to-emerald-800 text-amber-100">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">📍</span>
+            <div>
+              <span class="text-xs text-amber-300 uppercase font-bold block">GPS Verified Check-In</span>
+              <span class="font-bold text-white">Earn +150 XP Points</span>
+            </div>
+          </div>
+          <span class="w-full py-3 rounded-xl bg-amber-500 text-heritage-emerald-deep font-bold text-center block cursor-pointer shadow-md hover:bg-amber-400 transition">✓ Check In Now</span>
+        </div>
+
+        <!-- Export -->
+        <div class="vintage-card p-5 rounded-2xl space-y-3">
+          <h3 class="font-serif font-bold text-sm text-heritage-emerald">Export to Calendar</h3>
+          <span class="w-full py-2.5 rounded-xl bg-heritage-emerald text-amber-100 font-bold text-xs block text-center cursor-pointer shadow-xs">📅 Add to Google Calendar</span>
+          <span class="w-full py-2.5 rounded-xl bg-amber-50 text-amber-900 font-bold text-xs block text-center cursor-pointer border border-amber-300">📥 Download .ICS File</span>
+          <span class="w-full py-2.5 rounded-xl bg-stone-50 text-stone-700 font-bold text-xs block text-center cursor-pointer border border-stone-300">📄 Export as CSV</span>
+        </div>
+
+        <!-- Follow -->
+        <div class="vintage-card p-5 rounded-2xl bg-amber-50/50 border-amber-300">
+          <h3 class="font-serif font-bold text-sm text-heritage-emerald mb-2">🔔 Follow for Updates</h3>
+          <p class="text-xs text-stone-600 mb-3">Get notified when time, venue, or status changes.</p>
+          <span class="w-full py-2.5 rounded-xl bg-heritage-emerald text-amber-100 font-bold text-xs block text-center cursor-pointer">✓ Following — Notifications On</span>
+        </div>
+
+        <!-- Save to Collection -->
+        <div class="vintage-card p-5 rounded-2xl space-y-3">
+          <h3 class="font-serif font-bold text-sm text-heritage-emerald">Save to Collection</h3>
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-amber-50 cursor-pointer">
+              <input type="checkbox" checked class="accent-emerald-800 w-4 h-4 rounded"/>
+              <span class="font-semibold text-heritage-emerald">🎶 Winter Concerts 2026</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-lg hover:bg-amber-50 cursor-pointer">
+              <input type="checkbox" class="accent-emerald-800 w-4 h-4 rounded"/>
+              <span class="font-semibold text-heritage-emerald">📅 Weekend Plans</span>
+            </label>
+          </div>
+          <a href="collections.html" class="text-xs text-heritage-emerald font-bold hover:underline">+ Create new collection</a>
+        </div>
+
+        <!-- Related Events -->
+        <div class="vintage-card p-5 rounded-2xl space-y-3">
+          <h3 class="font-serif font-bold text-sm text-heritage-emerald">Related Events</h3>
+          <a href="event-detail.html" class="flex items-center gap-3 p-2 rounded-xl hover:bg-amber-50 transition">
+            <div class="w-14 h-14 rounded-lg bg-emerald-950 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover"/></div>
+            <div class="min-w-0">
+              <div class="font-bold text-xs text-heritage-emerald truncate">Rabindra Sarobar Acoustic</div>
+              <div class="text-[11px] text-stone-500">Fri 18:00 • Free</div>
+            </div>
+          </a>
+          <a href="event-detail.html" class="flex items-center gap-3 p-2 rounded-xl hover:bg-amber-50 transition">
+            <div class="w-14 h-14 rounded-lg bg-emerald-950 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover"/></div>
+            <div class="min-w-0">
+              <div class="font-bold text-xs text-heritage-emerald truncate">Indie Rock Carnival</div>
+              <div class="text-[11px] text-stone-500">Sat 17:30 • ৳450</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="mt-16 bg-[#08241b] text-amber-100 border-t border-amber-500/20 py-10 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-stone-400">
+      <div class="flex items-center gap-3"><div class="monogram-seal w-10 h-10 text-sm">আ</div><div><div class="font-display font-bold text-white text-base">AYOJON (আয়োজন)</div><div>Bangladesh Event & Heritage Platform</div></div></div>
+      <div class="flex items-center gap-6 flex-wrap"><a href="index.html" class="hover:text-white transition">Home</a><a href="discover.html" class="hover:text-white transition">Discover</a><a href="dashboard.html" class="hover:text-white transition">Dashboard</a><a href="report.html" class="hover:text-white transition">Report Issue</a></div>
+    </div>
+  </footer>
+</body>
+</html>

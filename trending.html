@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trending Events — আয়োজন Ayojon</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{heritage:{emerald:'#0f3d30','emerald-deep':'#08281e','emerald-light':'#1b5242',cream:'#faf7f2',parchment:'#f4efe4',gold:'#c89d38','gold-light':'#e5b958',terracotta:'#8f2d1e'}},fontFamily:{serif:['Playfair Display','Georgia','serif'],display:['Cinzel','Times New Roman','serif'],sans:['Plus Jakarta Sans','system-ui','sans-serif']}}}}</script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-heritage-cream text-stone-900 min-h-screen flex flex-col antialiased">
+  <nav class="bg-white/90 backdrop-blur-md border-b border-amber-500/20 sticky top-0 z-50"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-14"><a href="index.html" class="flex items-center gap-2"><div class="monogram-seal w-8 h-8 text-xs">আ</div><span class="font-display font-bold text-heritage-emerald text-sm tracking-wider">AYOJON</span></a><div class="hidden md:flex items-center gap-1 text-xs font-semibold"><a href="index.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50">Home</a><a href="discover.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50">Discover</a><a href="trending.html" class="px-3 py-1.5 rounded-lg bg-heritage-emerald text-amber-100">Trending</a><a href="leaderboard.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50">Leaderboard</a><a href="vouchers.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50">Vouchers</a><a href="dashboard.html" class="px-3 py-1.5 rounded-lg text-stone-600 hover:bg-amber-50">Dashboard</a></div><div class="flex items-center gap-2"><a href="notifications.html" class="relative p-2 text-stone-400 hover:text-heritage-emerald"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span></a><button onclick="document.getElementById('mob-menu').classList.toggle('hidden')" class="md:hidden p-2 text-stone-500"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button></div></div><div id="mob-menu" class="hidden md:hidden px-4 pb-3 space-y-1 border-t border-stone-100 text-xs font-semibold"><a href="index.html" class="block py-2 text-stone-600">Home</a><a href="discover.html" class="block py-2 text-stone-600">Discover</a><a href="trending.html" class="block py-2 text-heritage-emerald font-bold">Trending</a><a href="leaderboard.html" class="block py-2 text-stone-600">Leaderboard</a><a href="vouchers.html" class="block py-2 text-stone-600">Vouchers</a><a href="dashboard.html" class="block py-2 text-stone-600">Dashboard</a><a href="heatmap.html" class="block py-2 text-stone-600">Heat Map</a><a href="collections.html" class="block py-2 text-stone-600">Collections</a><a href="weekend-planner.html" class="block py-2 text-stone-600">Weekend Planner</a><a href="submit-event.html" class="block py-2 text-stone-600">Submit Event</a><a href="admin.html" class="block py-2 text-stone-600">Admin</a></div></nav>
+
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8 space-y-8">
+    <div>
+      <h1 class="font-display font-bold text-2xl sm:text-3xl text-heritage-emerald tracking-wide">🔥 Trending Events</h1>
+      <p class="text-sm text-stone-600 mt-1">Dynamically ranked by weekly attendee bookmark frequency</p>
+    </div>
+
+    <!-- Time Filter Tabs -->
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="px-4 py-2 rounded-xl bg-heritage-emerald text-amber-100 text-xs font-bold cursor-pointer">This Week</span>
+      <span class="px-4 py-2 rounded-xl border border-stone-300 text-xs font-medium text-stone-600 cursor-pointer hover:bg-amber-50">This Month</span>
+      <span class="px-4 py-2 rounded-xl border border-stone-300 text-xs font-medium text-stone-600 cursor-pointer hover:bg-amber-50">All Time</span>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-2 text-xs font-semibold">
+      <span class="px-3 py-1.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 shrink-0">All</span>
+      <span class="px-3 py-1.5 rounded-full bg-white border border-stone-200 text-stone-600 shrink-0 cursor-pointer hover:bg-amber-50">🎵 Music</span>
+      <span class="px-3 py-1.5 rounded-full bg-white border border-stone-200 text-stone-600 shrink-0 cursor-pointer hover:bg-amber-50">🎨 Art</span>
+      <span class="px-3 py-1.5 rounded-full bg-white border border-stone-200 text-stone-600 shrink-0 cursor-pointer hover:bg-amber-50">💻 Tech</span>
+      <span class="px-3 py-1.5 rounded-full bg-white border border-stone-200 text-stone-600 shrink-0 cursor-pointer hover:bg-amber-50">🍔 Food</span>
+      <span class="px-3 py-1.5 rounded-full bg-white border border-stone-200 text-stone-600 shrink-0 cursor-pointer hover:bg-amber-50">⚽ Sports</span>
+      <span class="px-3 py-1.5 rounded-full bg-white border border-stone-200 text-stone-600 shrink-0 cursor-pointer hover:bg-amber-50">🎭 Cultural</span>
+    </div>
+
+    <!-- Top 3 Spotlight -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden border-2 border-amber-400 shadow-lg hover:shadow-xl transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3"><span class="w-10 h-10 rounded-full bg-amber-400 text-heritage-emerald-deep flex items-center justify-center font-display font-black text-lg shadow-lg">1</span></div>
+          <div class="absolute top-3 right-3"><span class="trust-badge-gold px-2 py-0.5 rounded-full text-xs">🛡️ Verified</span></div>
+        </div>
+        <div class="p-5">
+          <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded border border-amber-200">🔥 684 bookmarks</span>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald mt-2">Coke Studio Bangla Live</h3>
+          <p class="text-xs text-stone-500 mt-1">ICCB Hall 4 • Fri 17:00 BST</p>
+          <p class="text-xs text-amber-800 font-bold mt-1">৳500 – ৳2,800</p>
+        </div>
+      </a>
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden border-2 border-stone-300 shadow-md hover:shadow-xl transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3"><span class="w-10 h-10 rounded-full bg-stone-300 text-stone-800 flex items-center justify-center font-display font-black text-lg shadow-lg">2</span></div>
+        </div>
+        <div class="p-5">
+          <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded border border-amber-200">🔥 610 bookmarks</span>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald mt-2">Bengal Art Summit: Weaving the Delta</h3>
+          <p class="text-xs text-stone-500 mt-1">Shilpakala Academy • Sat 10:00 BST</p>
+          <p class="text-xs text-amber-800 font-bold mt-1">৳250</p>
+        </div>
+      </a>
+      <a href="event-detail.html" class="vintage-card rounded-2xl overflow-hidden border-2 border-amber-700/30 shadow-md hover:shadow-xl transition-shadow">
+        <div class="relative h-48 bg-emerald-950 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="absolute top-3 left-3"><span class="w-10 h-10 rounded-full bg-amber-700 text-amber-100 flex items-center justify-center font-display font-black text-lg shadow-lg">3</span></div>
+        </div>
+        <div class="p-5">
+          <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded border border-amber-200">🔥 520 bookmarks</span>
+          <h3 class="font-serif font-bold text-base text-heritage-emerald mt-2">Dhaka Lit Fest: River of Words</h3>
+          <p class="text-xs text-stone-500 mt-1">Bangla Academy • Fri 09:30 BST</p>
+          <p class="text-xs text-emerald-700 font-bold mt-1">Free Registration</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Full Ranking List (#4 - #12) -->
+    <div class="vintage-card rounded-3xl overflow-hidden">
+      <div class="p-6 pb-3 border-b border-amber-900/10">
+        <h2 class="font-serif font-bold text-lg text-heritage-emerald">Full Weekly Rankings</h2>
+      </div>
+      <div class="divide-y divide-stone-100">
+        <a href="event-detail.html" class="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition"><span class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-display font-bold text-sm shrink-0">#4</span><div class="w-14 h-14 rounded-xl bg-emerald-950 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover"/></div><div class="flex-1 min-w-0"><div class="font-bold text-sm text-heritage-emerald truncate">Rabindra Sarobar Twilight Acoustic</div><div class="text-xs text-stone-500">Dhanmondi • Fri 18:00 BST • Free</div></div><span class="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200 shrink-0">🔥 430</span></a>
+        <a href="event-detail.html" class="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition"><span class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-display font-bold text-sm shrink-0">#5</span><div class="w-14 h-14 rounded-xl bg-emerald-950 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover"/></div><div class="flex-1 min-w-0"><div class="font-bold text-sm text-heritage-emerald truncate">Puran Dhaka Heritage Food Walk</div><div class="text-xs text-stone-500">Lalbagh • Sat 15:30 BST • ৳650</div></div><span class="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200 shrink-0">🔥 395</span></a>
+        <a href="event-detail.html" class="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition"><span class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-display font-bold text-sm shrink-0">#6</span><div class="w-14 h-14 rounded-xl bg-emerald-950 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover"/></div><div class="flex-1 min-w-0"><div class="font-bold text-sm text-heritage-emerald truncate">Bangladesh Startup Summit 2026</div><div class="text-xs text-stone-500">Gulshan • Sun 09:00 BST • ৳1,200</div></div><span class="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200 shrink-0">🔥 310</span></a>
+        <a href="event-detail.html" class="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition"><span class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-display font-bold text-sm shrink-0">#7</span><div class="w-14 h-14 rounded-xl bg-emerald-950 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover"/></div><div class="flex-1 min-w-0"><div class="font-bold text-sm text-heritage-emerald truncate">Chittagong Hill Tracts Cultural Expo</div><div class="text-xs text-stone-500">Chittagong • Nov 14-16 • ৳350</div></div><span class="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200 shrink-0">🔥 290</span></a>
+        <a href="event-detail.html" class="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition"><span class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-display font-bold text-sm shrink-0">#8</span><div class="w-14 h-14 rounded-xl bg-emerald-950 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover"/></div><div class="flex-1 min-w-0"><div class="font-bold text-sm text-heritage-emerald truncate">Dhanmondi Indie Rock Carnival</div><div class="text-xs text-stone-500">Russian Cultural Centre • Sat 17:30 • ৳450</div></div><span class="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200 shrink-0">🔥 245</span></a>
+        <a href="event-detail.html" class="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition"><span class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-display font-bold text-sm shrink-0">#9</span><div class="w-14 h-14 rounded-xl bg-emerald-950 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover"/></div><div class="flex-1 min-w-0"><div class="font-bold text-sm text-heritage-emerald truncate">সকালের যোগ উৎসব — Yoga Festival</div><div class="text-xs text-stone-500">Hatirjheel • Sun 06:30 • Free</div></div><span class="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200 shrink-0">🔥 180</span></a>
+        <a href="event-detail.html" class="flex items-center gap-4 p-4 hover:bg-amber-50/50 transition"><span class="w-8 h-8 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-display font-bold text-sm shrink-0">#10</span><div class="w-14 h-14 rounded-xl bg-emerald-950 overflow-hidden shrink-0"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover"/></div><div class="flex-1 min-w-0"><div class="font-bold text-sm text-heritage-emerald truncate">Dhaka Stand-Up Comedy Night</div><div class="text-xs text-stone-500">Star Cineplex • Sat 20:00 • ৳800</div></div><span class="text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200 shrink-0">🔥 165</span></a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="mt-16 bg-[#08241b] text-amber-100 border-t border-amber-500/20 py-10 px-4"><div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-stone-400"><div class="flex items-center gap-3"><div class="monogram-seal w-10 h-10 text-sm">আ</div><div><div class="font-display font-bold text-white text-base">AYOJON (আয়োজন)</div><div>Bangladesh Event & Heritage Platform</div></div></div><div class="flex items-center gap-6 flex-wrap"><a href="index.html" class="hover:text-white">Home</a><a href="discover.html" class="hover:text-white">Discover</a><a href="dashboard.html" class="hover:text-white">Dashboard</a><a href="report.html" class="hover:text-white">Report</a></div></div></footer>
+</body>
+</html>
