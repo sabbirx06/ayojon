@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#09090b">
+    <meta name="description" content="Discover events, plan your weekend, and find your kind of gathering across Bangladesh with Ayojon.">
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/branding/ayojon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/branding/ayojon-180.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css?v=4">
+    <script type="module" src="/app.js">
+    </script>
+    <title>Meet Ayojon — Ayojon</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <!-- GLOBAL: navigation -->
+    <header class="site-header">
+      <div class="header-top container">
+        <a class="brand" href="#landing" aria-label="Ayojon home">
+          <img src="/assets/branding/ayojon-48.png" srcset="/assets/branding/ayojon-48.png 1x, /assets/branding/ayojon-96.png 2x" width="40" height="40" alt="">ayojon<span>.</span>
+        </a>
+        <label class="city-switcher" data-session-only hidden>
+          <span class="sr-only">Your city</span>
+          <span aria-hidden="true">⌖</span>
+          <select id="header-city">
+            <option value="Dhaka">Dhaka</option>
+            <option value="">All Bangladesh</option>
+            <option>Chattogram</option>
+            <option>Sylhet</option>
+            <option>Cox’s Bazar</option>
+            <option>Rajshahi</option>
+            <option>Khulna</option>
+            <option>Barishal</option>
+            <option>Rangpur</option>
+            <option>Mymensingh</option>
+          </select>
+        </label>
+        <div class="nav-row" data-session-only hidden>
+          <nav id="primary-nav" aria-label="Main navigation">
+            <a href="#events" data-nav="events">Events</a>
+            <a href="#discover" data-nav="discover">Discover</a>
+            <a href="#saved" data-nav="saved">Saved</a>
+            <a href="#planner" data-nav="planner">Planner</a>
+            <a href="#leaderboard" data-nav="leaderboard">Leaderboard</a>
+            <a href="#organizer" data-nav="organizer" data-role="ORGANIZER" class="tool-link" hidden>Organizer</a>
+            <a href="#admin" data-nav="admin" data-role="ADMIN" class="tool-link" hidden>Admin</a>
+          </nav>
+        </div>
+        <nav id="landing-nav" class="landing-nav" aria-label="About Ayojon" data-guest-only>
+          <a href="#landing?section=how-it-works">How it works</a>
+          <a href="#landing?section=for-organizers">For organizers</a>
+        </nav>
+        <div class="header-utilities">
+          <button class="notification-button btn-icon" data-dialog="notifications-modal" aria-label="Notifications, preview" data-session-only hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"/>
+              <path d="M10 21h4"/>
+            </svg>
+            <span id="unread-count" class="notification-count" aria-hidden="true">0</span>
+          </button>
+          <button id="theme-toggle" class="theme-toggle btn-icon" type="button" aria-label="Green and gold theme" aria-pressed="false" title="Switch to green and gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16Z" fill="currentColor" stroke="none"/></svg>
+          </button>
+          <div id="nav-auth" class="nav-auth">
+            <a href="#login" class="text-link">Log in</a>
+            <a href="#signup" class="btn btn-sm btn-primary">Sign up ↗</a>
+          </div>
+          <button class="menu-toggle btn-icon" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation" data-session-only hidden>☰</button>
+        </div>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <!-- ================= VIEW: LANDING ================= -->
+      <!-- Shell: presentation only; CTA uses the shared router. -->
+      <section id="landing-view" class="view-panel" aria-labelledby="landing-title">
+        <div class="landing-hero landing-section">
+          <div class="container">
+            <h1 id="landing-title">Find your next event.
+            </h1>
+            <p>Music, arts and experiences across Bangladesh.</p>
+            <a class="btn btn-primary" href="#signup">Get started ↗</a>
+            <p class="landing-login">Already a member? <a href="#login">Log in</a></p>
+          </div>
+        </div>
+        <section id="how-it-works" class="landing-section landing-how" aria-labelledby="how-it-works-title">
+          <div class="container">
+            <p class="eyebrow">HOW IT WORKS</p>
+            <h2 id="how-it-works-title">Your next gathering starts here.</h2>
+            <div class="landing-highlights">
+              <article class="card">
+                <span class="eyebrow">01</span>
+                <h3>Create your account.</h3>
+                <p>Sign up to enter Ayojon and explore the event directory.</p>
+              </article>
+              <article class="card">
+                <span class="eyebrow">02</span>
+                <h3>Find your interests.</h3>
+                <p>Discover music, arts and experiences across Bangladesh.</p>
+              </article>
+              <article class="card">
+                <span class="eyebrow">03</span>
+                <h3>Make your plans.</h3>
+                <p>Saved events, itineraries and check-in are coming soon.</p>
+              </article>
+            </div>
+            <a class="btn btn-primary" href="#signup">Get started ↗</a>
+          </div>
+        </section>
+        <section id="for-organizers" class="landing-section landing-organizers" aria-labelledby="for-organizers-title">
+          <div class="container landing-organizer-layout">
+            <div>
+              <p class="eyebrow">FOR ORGANIZERS</p>
+              <h2 id="for-organizers-title">Bring people together.</h2>
+              <p>Planning a workshop, a live show or a community gathering? Start with an organizer account.</p>
+              <a class="btn btn-primary" href="#signup?role=organizer">Get started as an organizer ↗</a>
+            </div>
+            <div class="card">
+              <h3>Hosting on Ayojon</h3>
+              <p>Choose “Organize events” when you sign up. Your account includes access to the Organizer workspace preview.</p>
+              <p>Event submissions and approval tracking are coming soon.</p>
+              <a class="text-link" href="#landing?section=how-it-works">How Ayojon works ↗</a>
+            </div>
+          </div>
+        </section>
+      </section>
+      <!-- ================= VIEW: DISCOVER ================= -->
+      <!-- Tasnia: Sprint 1 search/filtering. Nora: Sprint 2 map. Sabbir: Sprint 3 recommendations. -->
+      <section id="discover-view" class="view-panel container view-spacing" aria-labelledby="discover-title" hidden>
+        <div class="page-heading"><h1 id="discover-title">Discover</h1></div>
+        <form id="discover-filters" class="filter-panel" aria-label="Filter events">
+          <fieldset disabled>
+            <legend class="sr-only">Search and filters · Preview</legend>
+            <div class="discover-search" role="group" aria-label="Search and categories">
+              <label class="keyword-field">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                <input name="query" type="search" placeholder="Search events or places" aria-label="Search events, venues or neighbourhoods">
+              </label>
+              <div class="category-pills" aria-label="Filter by category">
+                <button type="button" data-category="" aria-pressed="true" class="active">All</button>
+                <button type="button" data-category="Music" aria-pressed="false">Music</button>
+                <button type="button" data-category="Arts" aria-pressed="false">Arts</button>
+                <button type="button" data-category="Food" aria-pressed="false">Food</button>
+                <button type="button" data-category="Outdoors" aria-pressed="false">Outdoors</button>
+                <button type="button" data-category="Learning" aria-pressed="false">Workshops</button>
+              </div>
+            </div>
+            <div class="filter-options" role="group" aria-label="Event filter options, coming soon">
+              <div class="filter-options-heading">
+                <span class="muted small">Filters · Preview</span>
+                <button type="reset" class="text-link">Clear filters</button>
+              </div>
+              <label>
+                <span class="field-label">CITY</span>
+                <select name="city" id="discover-city">
+                  <option value="">All Bangladesh</option>
+                  <option selected>Dhaka</option>
+                  <option>Chattogram</option>
+                  <option>Sylhet</option>
+                  <option>Cox’s Bazar</option>
+                  <option>Rajshahi</option>
+                  <option>Khulna</option>
+                  <option>Barishal</option>
+                  <option>Rangpur</option>
+                  <option>Mymensingh</option>
+                </select>
+              </label>
+              <label>
+                <span class="field-label">FROM</span>
+                <input type="date" name="from" aria-label="Events from date">
+              </label>
+              <label>
+                <span class="field-label">UNTIL</span>
+                <input type="date" name="until" aria-label="Events until date">
+              </label>
+              <label>
+                <span class="field-label">PRICE</span>
+                <select name="price">
+                  <option value="">Any price</option>
+                  <option value="free">Free</option>
+                  <option value="paid">Paid</option>
+                </select>
+              </label>
+              <label class="radius-field">
+                <span class="field-label">NEARBY</span>
+                <span class="radius-control">
+                  <input type="range" min="0" max="2" value="1" step="1" disabled aria-label="Proximity radius, coming soon">
+                  <output>10 km</output>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+        </form>
+        <section id="discover-map" class="map-placeholder" aria-labelledby="map-title">
+          <div class="map-grid" aria-hidden="true">
+          </div>
+          <span class="map-pin" aria-hidden="true">⌖</span>
+          <div>
+            <h2 id="map-title">Nearby events</h2>
+            <p>Map preview · Coming soon</p>
+          </div>
+          <span class="badge">⌖ Dhaka</span>
+        </section>
+        <section id="recommendations-section" class="content-section" aria-labelledby="recommendations-title">
+          <div class="section-heading"><h2 id="recommendations-title">Recommended for you</h2></div>
+          <div id="recommended-events" class="recommended-events" aria-label="Recommended events">
+            <div class="empty-state">
+              <h3>Your recommendations are coming soon.</h3>
+              <p>Browse all events while personalized picks are being prepared.</p>
+              <a class="btn btn-outline" href="#events">Browse events ↗</a>
+            </div>
+          </div>
+        </section>
+      </section>
+      <!-- ================= VIEW: EVENTS ================= -->
+      <!-- Tasnia: Sprint 2 event listings and trending feed. -->
+      <section id="events-view" class="view-panel container view-spacing" aria-labelledby="events-title" hidden>
+        <div class="page-heading"><h1 id="events-title">Events</h1></div>
+        <section id="trending-section" class="content-section" aria-labelledby="trending-title">
+          <div class="section-heading">
+            <div>
+              <h2 id="trending-title" class="sr-only">Event listings</h2>
+            </div>
+            <p id="result-count">3 sample events</p>
+          </div>
+          <p class="muted small">Preview only. Dates, prices and verification are illustrative.</p>
+          <div id="events-feedback" class="empty-state" hidden>
+          </div>
+          <div id="trending-events-grid" class="event-grid">
+            <article class="event-card">
+              <div class="event-image">
+                <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=700&q=80" alt="Microphone on a stage" width="700" height="438" loading="lazy">
+                <span class="date-chip">NOV 12 · 6 PM</span>
+                <button class="bookmark-button" type="button" disabled aria-label="Bookmark A rooftop music gathering, coming soon">♡</button>
+              </div>
+              <div class="event-card-body">
+                <span class="event-category">Music</span>
+                <h3><a class="card-link" href="#event-detail-view">A rooftop music gathering</a></h3>
+                <p class="event-location">⌖ Banani, Dhaka</p>
+                <div class="event-card-meta"><span class="event-price"><strong>৳650</strong></span><span class="trust-badge" aria-label="Verified badge, sample only">✧ Verified · Sample</span></div>
+                <div class="card-actions" aria-label="Sample event actions"><button type="button" disabled>+ Plan</button><button type="button" disabled>✓ Check In</button></div>
+              </div>
+            </article>
+            <article class="event-card">
+              <div class="event-image">
+                <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=80" alt="Creative workshop desk" width="700" height="438" loading="lazy">
+                <span class="date-chip">NOV 14 · 3 PM</span>
+                <button class="bookmark-button" type="button" disabled aria-label="Bookmark An afternoon of clay & creativity, coming soon">♡</button>
+              </div>
+              <div class="event-card-body">
+                <span class="event-category">Arts</span>
+                <h3><a class="card-link" href="#event-detail-view">An afternoon of clay & creativity</a></h3>
+                <p class="event-location">⌖ Dhanmondi, Dhaka</p>
+                <div class="event-card-meta"><span class="event-price"><strong>৳1,000</strong></span><span class="trust-badge" aria-label="Verified badge, sample only">✧ Verified · Sample</span></div>
+                <div class="card-actions" aria-label="Sample event actions"><button type="button" disabled>+ Plan</button><button type="button" disabled>✓ Check In</button></div>
+              </div>
+            </article>
+            <article class="event-card">
+              <div class="event-image">
+                <img src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=700&q=80" alt="Mountain landscape" width="700" height="438" loading="lazy">
+                <span class="date-chip">NOV 15 · 7 AM</span>
+                <button class="bookmark-button" type="button" disabled aria-label="Bookmark A little escape into the green, coming soon">♡</button>
+              </div>
+              <div class="event-card-body">
+                <span class="event-category">Outdoors</span>
+                <h3><a class="card-link" href="#event-detail-view">A little escape into the green</a></h3>
+                <p class="event-location">⌖ Sylhet</p>
+                <div class="event-card-meta"><span class="event-price"><strong>Free</strong></span><span class="trust-badge" aria-label="Verified badge, sample only">✧ Verified · Sample</span></div>
+                <div class="card-actions" aria-label="Sample event actions"><button type="button" disabled>+ Plan</button><button type="button" disabled>✓ Check In</button></div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+      <!-- ================= VIEW: EVENT DETAIL ================= -->
+      <!-- Tasnia: Sprint 1 event detail profile. Sprint 0 shows a static detail placeholder only. -->
+      <section id="event-detail-view" class="view-panel container view-spacing" aria-labelledby="event-title" hidden>
+        <a class="text-link back-link" href="#events">← Back to Events</a>
+        <div id="event-detail-feedback" class="empty-state" role="status" hidden>
+        </div>
+        <div id="event-detail-content">
+          <div class="detail-layout">
+            <article class="event-main" id="event-main-details">
+              <img id="event-poster" class="detail-poster" src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1100&q=80" alt="Friends gathering around a table, illustrative event imagery" width="1100" height="600">
+              <p id="event-category" class="eyebrow">EVENT DETAIL PREVIEW</p>
+              <h1 id="event-title">Event details</h1>
+              <div class="organizer-info card">
+                <span class="avatar" aria-hidden="true">↗</span>
+                <div>
+                  <h2>About the organizer</h2>
+                  <p>Organizer identity and verification details will appear here.</p>
+                </div>
+                <span class="badge">Verification unavailable</span>
+              </div>
+              <section aria-labelledby="event-about-title">
+                <h2 id="event-about-title">About this event</h2>
+                <p id="event-description" class="event-description">Event descriptions, organizer information and the full schedule will appear here. This is a static layout preview, not a bookable event.</p>
+              </section>
+              <dl class="event-facts">
+                <div>
+                  <dt>WHEN</dt>
+                  <dd id="event-schedule">Event date and start/end times</dd>
+                  <small>Bangladesh Standard Time · GMT+6</small>
+                </div>
+                <div>
+                  <dt>WHERE</dt>
+                  <dd id="event-venue">Venue name</dd>
+                  <p id="event-address">Neighbourhood, city, Bangladesh</p>
+                </div>
+              </dl>
+            </article>
+            <aside id="event-action-sidebar" class="event-sidebar" aria-label="Event actions">
+              <div class="card">
+                <div id="event-price" class="detail-price">Entry price</div>
+                <button class="btn full-width btn-primary" disabled>Official tickets ↗</button>
+                <p class="muted small">Ticket redirects are coming soon. No checkout is available here.</p>
+                <button class="btn btn-outline full-width" disabled>✔ Check In to Event</button>
+                <div class="sidebar-actions">
+                  <button disabled>♡ Bookmark</button>
+                  <button disabled>+ Add to Plan</button>
+                </div>
+              </div>
+              <!-- Sabbir: Sprint 2 points and sponsor vouchers. -->
+              <div id="event-voucher-box" class="card voucher-box">
+                <h2>Sponsor voucher</h2>
+                <code>AYOJON15</code>
+                <p>Sample code · 15% discount preview.<br>No active offer or claim is available.</p>
+                <button class="btn btn-outline full-width" disabled>Claim Voucher</button>
+              </div>
+              <p id="event-demo-note" class="banner-info" hidden>Demo listing · This event, venue, schedule and price are fictional. No booking is offered.</p>
+            </aside>
+          </div>
+          <!-- Nawshin: Sprint 3 reviews and ratings. -->
+          <section id="event-reviews-container" class="card content-section" aria-labelledby="reviews-title">
+            <div class="section-heading">
+              <h2 id="reviews-title">Reviews</h2>
+              <span class="muted">Ratings not available yet</span>
+            </div>
+            <div class="reviews-layout">
+              <div id="ratings-breakdown" class="ratings-breakdown" aria-label="Rating breakdown placeholder">
+                <strong>— ☆</strong>
+                <p>No review data connected.</p>
+                <div class="rating-bars" aria-hidden="true">
+                  <span>5 ━━━━━━━━━</span>
+                  <span>4 ━━━━━━━━━</span>
+                  <span>3 ━━━━━━━━━</span>
+                  <span>2 ━━━━━━━━━</span>
+                  <span>1 ━━━━━━━━━</span>
+                </div>
+              </div>
+              <form id="review-form">
+                <fieldset disabled>
+                  <legend>Share your experience · Coming soon</legend>
+                  <label>Your rating<select name="rating">
+                      <option value="">Choose a rating</option>
+                      <option>5 stars</option>
+                      <option>4 stars</option>
+                      <option>3 stars</option>
+                      <option>2 stars</option>
+                      <option>1 star</option>
+                    </select>
+                  </label>
+                  <label>Your review<textarea name="review" rows="3" placeholder="What made it memorable?">
+                    </textarea>
+                  </label>
+                  <button class="btn btn-outline" type="submit">Submit review</button>
+                </fieldset>
+              </form>
+            </div>
+          </section>
+          <button class="text-link report-link" data-dialog="dispute-modal">Report listing / flag spam</button>
+        </div>
+      </section>
+      <!-- ================= VIEW: SAVED ================= -->
+      <!-- Tasnia: Sprint 2 bookmarking, wishlists and collections in #saved-collections-container. -->
+      <section id="saved-view" class="view-panel container view-spacing" aria-labelledby="saved-title" hidden>
+        <div class="page-heading">
+          <div>
+            <h1 id="saved-title">Saved events</h1>
+            <p>Bookmarks and collections · Coming soon</p>
+          </div>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Saved events">
+          <button id="wishlist-tab" role="tab" aria-selected="true" aria-controls="wishlist-panel" tabindex="0">Saved Wishlist</button>
+          <button id="collections-tab" role="tab" aria-selected="false" aria-controls="collections-panel" tabindex="-1">Custom Collections</button>
+        </div>
+        <div id="saved-collections-container">
+          <section id="wishlist-panel" role="tabpanel" aria-labelledby="wishlist-tab">
+            <div class="empty-state">
+              <span aria-hidden="true">♡</span>
+              <h2>No saved events yet</h2>
+              <p>Your bookmarked events will live here. Saving is coming soon.</p>
+              <a class="btn btn-outline" href="#events">Browse events ↗</a>
+            </div>
+            <div id="saved-events-grid" class="event-grid">
+            </div>
+          </section>
+          <section id="collections-panel" role="tabpanel" aria-labelledby="collections-tab" hidden>
+            <div class="section-heading">
+              <h2>Your collections</h2>
+              <button class="btn btn-outline" disabled>+ New collection</button>
+            </div>
+            <div class="empty-state">
+              <span aria-hidden="true">▤</span>
+              <h2>No collections yet</h2>
+              <p>Custom collections · Coming soon</p>
+            </div>
+            <div id="collections-grid" class="collection-grid">
+            </div>
+          </section>
+        </div>
+      </section>
+      <!-- ================= VIEW: PLANNER ================= -->
+      <!-- Tasnia: Sprint 3 itinerary planner. Nawshin: Sprint 3 conflict detector. Nora: Sprint 3 calendar sync. -->
+      <section id="planner-view" class="view-panel container view-spacing" aria-labelledby="planner-title" hidden>
+        <div class="page-heading">
+          <div>
+            <h1 id="planner-title">Planner</h1>
+            <p>Weekend itinerary · Bangladesh Standard Time</p>
+          </div>
+          <details class="export-menu">
+            <!-- Nora: Sprint 3 calendar synchronization and exports. -->
+            <summary id="btn-export-calendar" class="btn btn-outline">Export to Calendar ↓</summary>
+            <div class="card">
+              <button disabled>Google Calendar ↗</button>
+              <button disabled>Download .ics</button>
+              <p class="muted small">Available when your planner is connected.</p>
+            </div>
+          </details>
+        </div>
+        <!-- Nawshin: Sprint 3 conflict detection; banner remains hidden without a real conflict. -->
+        <div id="conflict-alert-banner" class="banner-warning" role="status" hidden>
+          <strong>⚠ Time Collision Detected</strong>
+          <p>Two events overlap. Adjust your plan so you can enjoy both.</p>
+        </div>
+        <div id="itinerary-timeline" class="weekend-grid">
+          <section class="day-column" aria-labelledby="friday-title">
+            <header>
+              <span class="eyebrow">YOUR WEEKEND</span>
+              <h2 id="friday-title">Friday</h2>
+              <span class="muted small">GMT+6</span>
+            </header>
+            <div id="friday-slots" class="timeline-slots">
+              <div class="timeline-slot">
+                <time>9:00 AM</time>
+                <span>A slow start, perhaps?</span>
+              </div>
+              <div class="timeline-slot">
+                <time>1:00 PM</time>
+                <span>A little room for discovery.</span>
+              </div>
+              <div class="timeline-slot">
+                <time>6:00 PM</time>
+                <span>Let the evening unfold.</span>
+              </div>
+            </div>
+          </section>
+          <section class="day-column" aria-labelledby="saturday-title">
+            <header>
+              <span class="eyebrow">YOUR WEEKEND</span>
+              <h2 id="saturday-title">Saturday</h2>
+              <span class="muted small">GMT+6</span>
+            </header>
+            <div id="saturday-slots" class="timeline-slots">
+              <div class="timeline-slot">
+                <time>9:00 AM</time>
+                <span>Leave space for something new.</span>
+              </div>
+              <div class="timeline-slot">
+                <time>1:00 PM</time>
+                <span>Meet a friend. Make a memory.</span>
+              </div>
+              <div class="timeline-slot">
+                <time>6:00 PM</time>
+                <span>Your next story starts here.</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+      <!-- ================= VIEW: LEADERBOARD ================= -->
+      <!-- Leaderboard integration owner/sprint is not assigned in the correction; leave rankings empty. -->
+      <section id="leaderboard-view" class="view-panel container view-spacing" aria-labelledby="leaderboard-title" hidden>
+        <div class="page-heading">
+          <div>
+            <h1 id="leaderboard-title">Leaderboard</h1>
+          </div>
+        </div>
+        <div id="leaderboard-podium" hidden></div>
+        <div class="card table-scroll">
+          <table id="leaderboard-table">
+            <caption class="sr-only">Monthly rankings</caption>
+            <thead>
+              <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Name</th>
+                <th scope="col">Points</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-rankings">
+              <tr>
+                <td colspan="3" class="table-empty">No rankings yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <!-- ================= VIEW: PROFILE ================= -->
+      <!-- Existing account identity only. Nawshin: Sprint 2 badges. Sabbir: Sprint 2 points; Sprint 3 radial heat map. -->
+      <section id="profile-view" class="view-panel container view-spacing" aria-labelledby="profile-title" hidden>
+        <h1 id="profile-title">Your profile
+        </h1>
+        <label class="role-switcher" hidden>Preview role <select id="demo-role" disabled aria-describedby="role-help">
+            <option value="">Account role</option>
+            <option value="USER">Attendee</option>
+            <option value="ORGANIZER">Organizer</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+        </label>
+        <span id="role-help" class="sr-only">Changes visible scaffolds only. Does not grant account permissions.</span>
+        <div class="profile-header card">
+          <span class="avatar profile-avatar" id="profile-avatar" aria-hidden="true">A</span>
+          <div>
+            <h2 id="profile-name">Your profile</h2>
+            <p id="profile-email">Log in to see your account details.</p>
+            <span class="badge" id="profile-tier">Tier not available yet</span>
+          </div>
+          <div class="points-total">
+            <strong id="profile-points">—</strong>
+            <span>ATTENDANCE POINTS</span>
+          </div>
+          <a href="#login" id="profile-login" class="btn btn-outline">Log in ↗</a>
+        </div>
+        <!-- Sabbir: Sprint 1 attendance schema foundation; analytics remain a static slot. -->
+        <div class="stats-grid" id="attendance-analytics-container">
+          <article class="card stat-card">
+            <span class="field-label">TOTAL EVENTS ATTENDED</span>
+            <strong>—</strong>
+            <p>Attendance stats coming soon.</p>
+          </article>
+          <article class="card stat-card">
+            <span class="field-label">TOP CATEGORIES</span>
+            <strong>—</strong>
+            <p>Your favourite interests will appear here.</p>
+          </article>
+          <article class="card stat-card">
+            <span class="field-label">FAVOURITE NEIGHBOURHOODS</span>
+            <strong>—</strong>
+            <p>Discover the places you return to.</p>
+          </article>
+        </div>
+        <section class="card content-section" aria-labelledby="heat-map-title">
+          <div class="section-heading">
+            <h2 id="heat-map-title">Attendance map</h2>
+            <span class="muted small">Attendance history coming soon</span>
+          </div>
+          <!-- Sabbir: Sprint 3 radial heat map. -->
+          <div id="attendance-heat-map" class="heat-map-placeholder" role="img" aria-label="Attendance heat map placeholder; no attendance data connected">
+          </div>
+          <p class="muted small">Each square will tell a little part of your story.</p>
+        </section>
+        <section class="content-section" aria-labelledby="badges-title">
+          <div class="section-heading">
+            <h2 id="badges-title">Badges</h2>
+            <span class="badge">Badge showcase preview</span>
+          </div>
+          <!-- Nawshin: Sprint 2 milestone badges. -->
+          <div id="profile-badges-grid" class="badge-grid">
+            <article class="card badge-card">
+              <span aria-hidden="true">✧</span>
+              <h3>Unlocked badges</h3>
+              <p>Your earned badges will appear here.</p>
+            </article>
+            <article class="card badge-card badge-locked">
+              <span aria-hidden="true">♧</span>
+              <h3>First gathering</h3>
+              <p>Locked · Preview</p>
+            </article>
+            <article class="card badge-card badge-locked">
+              <span aria-hidden="true">✺</span>
+              <h3>Curious explorer</h3>
+              <p>Locked · Preview</p>
+            </article>
+            <article class="card badge-card badge-locked">
+              <span aria-hidden="true">✦</span>
+              <h3>Community spirit</h3>
+              <p>Locked · Preview</p>
+            </article>
+          </div>
+        </section>
+        <section class="card content-section" aria-labelledby="trend-title">
+          <div class="section-heading">
+            <h2 id="trend-title">Monthly attendance</h2>
+            <span class="muted small">Trend chart coming soon</span>
+          </div>
+          <div id="attendance-trend-chart" class="chart-placeholder" role="img" aria-label="Monthly attendance chart placeholder, no data">
+            <span>Good memories take a little time.</span>
+          </div>
+        </section>
+        <section class="card content-section" id="profile-rewards">
+          <h2>Your rewards</h2>
+          <p class="muted">Sponsor vouchers and claimed rewards will appear here when rewards are connected.</p>
+          <!-- Sabbir: Sprint 2 voucher claims and points. -->
+          <div id="profile-vouchers">
+          </div>
+        </section>
+      </section>
+      <!-- ================= VIEW: ORGANIZER; FORM AND LISTING SLOTS DO NOT MUTATE DATA ================= -->
+      <!-- Nora: Sprint 1 event submission. #event-submission-form is a disabled visual example. -->
+      <section id="organizer-view" class="view-panel container view-spacing" aria-labelledby="organizer-title" hidden>
+        <div class="page-heading">
+          <div>
+            <h1 id="organizer-title">Organizer</h1>
+            <p>Event submissions · Preview</p>
+          </div>
+          <span class="badge">Organizer workspace preview</span>
+        </div>
+        <p class="banner-info">Listing submission and management are coming soon. This preview does not publish events.</p>
+        <div class="workspace-grid">
+          <section class="card" aria-labelledby="submission-title">
+            <h2 id="submission-title">Create an event</h2>
+            <form id="event-submission-form">
+              <fieldset disabled>
+                <legend class="muted small">Event submission form preview</legend>
+                <label>Event title<input name="title" placeholder="Give your gathering a name">
+                </label>
+                <div class="form-grid">
+                  <label>Start date & time<input type="datetime-local" name="startTime">
+                  </label>
+                  <label>End date & time<input type="datetime-local" name="endTime">
+                  </label>
+                </div>
+                <label>Venue name<input name="venue" placeholder="Where will people meet?">
+                </label>
+                <label>Venue address<input name="address" placeholder="Neighbourhood, city, Bangladesh">
+                </label>
+                <div class="form-grid">
+                  <label>Latitude<input name="latitude" type="number" step="any" placeholder="23.8103">
+                  </label>
+                  <label>Longitude<input name="longitude" type="number" step="any" placeholder="90.4125">
+                  </label>
+                </div>
+                <label>Poster upload<input type="file" name="poster" accept="image/png,image/jpeg,image/webp">
+                </label>
+                <label>Official ticket link<input type="url" name="ticketUrl" placeholder="https://">
+                </label>
+                <label>About the experience<textarea rows="4" name="description">
+                  </textarea>
+                </label>
+                <button class="btn btn-primary" type="submit">Submit for approval ↗</button>
+              </fieldset>
+            </form>
+          </section>
+          <section class="card" aria-labelledby="submitted-title">
+            <div class="section-heading">
+              <h2 id="submitted-title">Your submitted events</h2>
+              <span class="badge">— listings</span>
+            </div>
+            <div id="organizer-listings" class="empty-state">
+              <span aria-hidden="true">↗</span>
+              <h3>A little idea can bring people together.</h3>
+              <p>Submitted events and their approval status will appear here.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+      <!-- ================= VIEW: ADMIN ================= -->
+      <!-- Nawshin: Sprint 1 approvals. Nora: Sprint 3 dispute reporting. Queues are empty placeholders. -->
+      <section id="admin-view" class="view-panel container view-spacing" aria-labelledby="admin-title" hidden>
+        <div class="page-heading">
+          <div>
+            <h1 id="admin-title">Admin</h1>
+            <p>Approvals and moderation · Preview</p>
+          </div>
+          <span class="badge">Admin workspace preview</span>
+        </div>
+        <p class="banner-info">Moderation preview only. No approval, verification, or dispute action changes database records.</p>
+        <div class="tabs" role="tablist" aria-label="Moderation queues">
+          <button id="approvals-tab" role="tab" aria-controls="approvals-panel" aria-selected="true" tabindex="0">Pending Event Approvals</button>
+          <button id="disputes-tab" role="tab" aria-controls="disputes-panel" aria-selected="false" tabindex="-1">Dispute Reports Queue</button>
+        </div>
+        <section id="approvals-panel" role="tabpanel" aria-labelledby="approvals-tab">
+          <div class="card table-scroll">
+            <table>
+              <caption>Pending events · Approval queue not connected</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Event</th>
+                  <th scope="col">Organizer</th>
+                  <th scope="col">Submitted</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="pending-approval-rows">
+                <tr>
+                  <td colspan="4" class="table-empty">Submitted listings will appear here for review.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="action-preview card">
+            <span class="muted small">Listing action placeholders</span>
+            <button class="btn btn-outline" disabled>Approve</button>
+            <button class="btn btn-outline" disabled>Reject</button>
+            <button class="btn btn-outline" disabled>✧ Issue Verified Badge</button>
+          </div>
+        </section>
+        <section id="disputes-panel" role="tabpanel" aria-labelledby="disputes-tab" hidden>
+          <div class="card table-scroll">
+            <table>
+              <caption>Flagged listings · Dispute queue not connected</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Event</th>
+                  <th scope="col">Reason</th>
+                  <th scope="col">Reported</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="dispute-report-rows">
+                <tr>
+                  <td colspan="4" class="table-empty">Community reports and review actions will appear here.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="action-preview card">
+            <span class="muted small">Report action placeholders</span>
+            <button class="btn btn-outline" disabled>Review report</button>
+            <button class="btn btn-outline" disabled>Dismiss</button>
+            <button class="btn btn-outline" disabled>Remove listing</button>
+          </div>
+        </section>
+      </section>
+      <!-- ================= VIEW: AUTHENTICATION; EXISTING API INTEGRATION ================= -->
+      <section id="auth-view" class="view-panel container auth-section" aria-labelledby="auth-title" hidden>
+        <div class="auth-story"><h1>Your Ayojon account.</h1><p>Discover, save and plan your next event.</p></div>
+        <div class="auth-card card">
+          <h2 id="auth-title">Welcome back.</h2>
+          <p id="auth-subtitle" class="muted">Your next good memory is waiting.</p>
+          <form id="auth-form">
+            <label id="name-field" hidden>Full name<input name="name" autocomplete="name" placeholder="Your name" maxlength="100" disabled>
+            </label>
+            <label>Email address<input name="email" type="email" autocomplete="email" placeholder="you@example.com" required maxlength="254">
+            </label>
+            <label>Password<span class="password-input">
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" minlength="8" maxlength="72" required>
+                <button type="button" id="show-password" aria-label="Show password" aria-pressed="false">Show</button>
+              </span>
+            </label>
+            <label id="role-field" hidden>I’m here to<select name="role" disabled>
+                <option value="user">Discover and attend events</option>
+                <option value="organizer">Organize events</option>
+              </select>
+            </label>
+            <p id="auth-feedback" role="status" class="form-error" hidden>
+            </p>
+            <button class="btn full-width btn-primary" id="auth-submit" type="submit">Log in ↗</button>
+          </form>
+          <p id="auth-switch" class="small">
+          </p>
+        </div>
+      </section>
+      <!-- Reusable example markup only; templates do not display fictional listings. -->
+      <template id="event-card-template">
+        <article class="event-card">
+          <div class="event-image"><img data-field="image" alt=""><span class="date-chip" data-field="date">Date</span><button class="bookmark-button" type="button" disabled aria-label="Bookmark, coming soon">♡</button></div>
+          <div class="event-card-body">
+            <h3><a class="card-link" data-field="link"><span data-field="title">Event title</span></a></h3>
+            <p class="event-location" data-field="venue">Venue · City</p>
+            <div class="event-card-meta"><span class="event-price" data-field="price">Entry price</span><span class="badge badge-verified">Verified</span></div>
+            <div class="card-actions"><button type="button" disabled>+ Plan</button><button type="button" disabled>✓ Check In</button></div>
+          </div>
+        </article>
+      </template>
+    </main>
+    <!-- GLOBAL: shared footer and dialogs -->
+    <footer class="site-footer">
+      <div class="container footer-top">
+        <div>
+          <a class="brand" href="#landing" aria-label="Ayojon home">
+            <img src="/assets/branding/ayojon-48.png" srcset="/assets/branding/ayojon-48.png 1x, /assets/branding/ayojon-96.png 2x" width="40" height="40" alt="">ayojon<span>.</span>
+          </a>
+          <p>Events across Bangladesh.</p>
+        </div>
+        <nav aria-label="Footer navigation" data-session-only hidden>
+          <a href="#discover">Discover</a>
+          <a href="#events">Events</a>
+          <a href="#saved">Saved</a>
+          <a href="#planner">Planner</a>
+          <a href="#leaderboard">Leaderboard</a>
+          <a href="#profile">Profile</a>
+        </nav>
+        <nav aria-label="About Ayojon" data-guest-only>
+          <a href="#landing?section=how-it-works">How it works</a>
+          <a href="#landing?section=for-organizers">For organizers</a>
+          <a href="#signup">Get started</a>
+          <a href="#login">Log in</a>
+        </nav>
+      </div>
+      <div class="container footer-bottom">
+        <span>© <span id="year">2026</span> Ayojon. All moments welcome.</span>
+        <span>Bangladesh <span class="country-dot" aria-hidden="true">
+          </span> BDT ৳ · GMT+6</span>
+        <a href="#landing" data-guest-only>Meet Ayojon ↗</a>
+      </div>
+    </footer>
+    <!-- Nora: Sprint 3 dispute reporting. -->
+    <dialog id="dispute-modal" aria-labelledby="dispute-title">
+      <div class="dialog-heading">
+        <h2 id="dispute-title">Report an event</h2>
+        <button class="btn-icon" data-close-dialog aria-label="Close report dialog">×</button>
+      </div>
+      <p class="muted">Reporting is coming soon; this form does not send a report.</p>
+      <form id="dispute-form">
+        <fieldset disabled>
+          <legend class="sr-only">Report listing form preview</legend>
+          <label>Reason<select name="reason">
+              <option>Misleading information</option>
+              <option>Spam or duplicate listing</option>
+              <option>Safety concern</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>Tell us a little more<textarea name="details" rows="4">
+            </textarea>
+          </label>
+          <button class="btn btn-primary" type="submit">Submit report</button>
+        </fieldset>
+      </form>
+    </dialog>
+    <dialog id="notifications-modal" aria-labelledby="notifications-title">
+      <div class="dialog-heading">
+        <h2 id="notifications-title">Notifications</h2>
+        <button class="btn-icon" data-close-dialog aria-label="Close notifications">×</button>
+      </div>
+      <div id="notification-list" class="empty-state">
+        <span aria-hidden="true">♧</span>
+        <p>Event updates and reminders will appear here when notifications are connected.</p>
+      </div>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden>
+    </div>
+  </body>
+</html>
