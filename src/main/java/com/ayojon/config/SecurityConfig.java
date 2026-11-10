@@ -1,8 +1,8 @@
-package com.ayojon;
+package com.ayojon.config;
 
+import com.ayojon.model.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,12 +19,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    UserDetailsService userDetailsService(JdbcTemplate jdbc) {
-        return email -> jdbc.query("SELECT email, password_hash, role FROM users WHERE email = ?",
-                (row, index) -> User.withUsername(row.getString("email"))
-                        .password(row.getString("password_hash")).roles(row.getString("role")).build(),
-                email.trim().toLowerCase(java.util.Locale.ROOT))
-                .stream().findFirst().orElseThrow(() -> new UsernameNotFoundException("Invalid credentials"));
+    UserDetailsService userDetailsService(UserRepository users) {
+        return email -> users.findByEmail(email.trim().toLowerCase(java.util.Locale.ROOT))
+                .map(user -> User.withUsername(user.email()).password(user.passwordHash()).roles(user.role()).build())
+                .orElseThrow(() -> new UsernameNotFoundException("Invalid credentials"));
     }
 
     @Bean

@@ -1,11 +1,11 @@
-package com.ayojon;
+package com.ayojon.controller;
 
+import com.ayojon.model.UserRepository;
 import java.security.Principal;
 import java.util.Locale;
 import java.util.Map;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +14,11 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private final JdbcTemplate jdbc;
+    private final UserRepository users;
     private final PasswordEncoder passwords;
 
-    public AuthController(JdbcTemplate jdbc, PasswordEncoder passwords) {
-        this.jdbc = jdbc;
+    public AuthController(UserRepository users, PasswordEncoder passwords) {
+        this.users = users;
         this.passwords = passwords;
     }
 
@@ -30,8 +30,9 @@ public class AuthController {
     @GetMapping("/me")
     public Map<String, Object> me(Principal principal) {
         if (principal == null) return Map.of("authenticated", false);
-        var users = jdbc.queryForList("SELECT user_id AS id, name, email, role, points FROM users WHERE email=?", principal.getName());
-        return users.isEmpty() ? Map.of("authenticated", false) : Map.of("authenticated", true, "user", users.getFirst());
+        return users.findByEmail(principal.getName())
+                .<Map<String, Object>>map(user -> Map.of("authenticated", true, "user", user))
+                .orElseGet(() -> Map.of("authenticated", false));
     }
 
     public record Signup(String name, String email, String password, String role) {}
@@ -54,7 +55,7 @@ public class AuthController {
         }
         String role = "organizer".equals(request.role()) ? "ORGANIZER" : "USER";
         try {
-            jdbc.update("INSERT INTO users(name,email,password_hash,role) VALUES (?,?,?,?)", name, email, passwords.encode(password), role);
+            users.create(name, email, passwords.encode(password), role);
         } catch (DuplicateKeyException exception) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "An account with this email already exists.");
         }
