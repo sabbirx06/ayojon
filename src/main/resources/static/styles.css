@@ -198,7 +198,7 @@ select option { background: var(--panel); color: var(--text); }
 .radius-field input::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #e5e5ea; }
 .radius-field input::-moz-range-thumb { width: 16px; height: 16px; border: 0; border-radius: 50%; background: #e5e5ea; }
 .radius-field output { white-space: nowrap; }
-.category-pills { display: flex; justify-content: center; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+.category-pills { display: flex; justify-content: safe center; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
 .category-pills button { flex-shrink: 0; min-height: 40px; padding: 8px 18px; border: 1px solid var(--line); border-radius: 30px; background: #ffffff04; color: var(--supporting-text); font-size: 12px; }
 .category-pills button.active { background: #ffffff16; color: white; border-color: #ffffff30; }
 .filter-panel :is(input, select, button):disabled { opacity: .72; }

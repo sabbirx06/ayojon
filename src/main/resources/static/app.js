@@ -2,6 +2,7 @@
 import { $, $$, toast } from './assets/js/shared.js';
 import { currentUser, sessionLoading, initAuth } from './assets/js/auth.js';
 import './assets/js/profile.js';
+import './assets/js/discover.js';
 
 let activeView = '';
 let eventsScroll = 0;

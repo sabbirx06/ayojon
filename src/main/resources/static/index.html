@@ -133,25 +133,21 @@
       <section id="discover-view" class="view-panel container view-spacing" aria-labelledby="discover-title" hidden>
         <div class="page-heading"><h1 id="discover-title">Discover</h1></div>
         <form id="discover-filters" class="filter-panel" aria-label="Filter events">
-          <fieldset disabled>
-            <legend class="sr-only">Search and filters · Preview</legend>
+          <fieldset>
+            <legend class="sr-only">Search and filters</legend>
             <div class="discover-search" role="group" aria-label="Search and categories">
               <label class="keyword-field">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
                 <input name="query" type="search" placeholder="Search events or places" aria-label="Search events, venues or neighbourhoods">
               </label>
               <div class="category-pills" aria-label="Filter by category">
+                <!-- The other category buttons are added from the database by discover.js -->
                 <button type="button" data-category="" aria-pressed="true" class="active">All</button>
-                <button type="button" data-category="Music" aria-pressed="false">Music</button>
-                <button type="button" data-category="Arts" aria-pressed="false">Arts</button>
-                <button type="button" data-category="Food" aria-pressed="false">Food</button>
-                <button type="button" data-category="Outdoors" aria-pressed="false">Outdoors</button>
-                <button type="button" data-category="Learning" aria-pressed="false">Workshops</button>
               </div>
             </div>
-            <div class="filter-options" role="group" aria-label="Event filter options, coming soon">
+            <div class="filter-options" role="group" aria-label="Event filter options">
               <div class="filter-options-heading">
-                <span class="muted small">Filters · Preview</span>
+                <span class="muted small">Filters</span>
                 <button type="reset" class="text-link">Clear filters</button>
               </div>
               <label>
@@ -195,6 +191,15 @@
             </div>
           </fieldset>
         </form>
+        <!-- Tasnia: Sprint 1 search results, filled by discover.js -->
+        <section id="search-results" class="content-section" aria-labelledby="search-results-title">
+          <div class="section-heading">
+            <h2 id="search-results-title">Events</h2>
+            <p id="search-count" aria-live="polite"></p>
+          </div>
+          <div id="search-feedback" class="empty-state" role="status" hidden></div>
+          <div id="search-results-grid" class="event-grid"></div>
+        </section>
         <section id="discover-map" class="map-placeholder" aria-labelledby="map-title">
           <div class="map-grid" aria-hidden="true">
           </div>
