@@ -282,9 +282,9 @@
         </section>
       </section>
       <!-- ================= VIEW: EVENT DETAIL ================= -->
-      <!-- Tasnia: Sprint 1 event detail profile. Sprint 0 shows a static detail placeholder only. -->
+      <!-- Tasnia: Sprint 1 event detail profile, filled by event-detail.js from GET /api/events/{id}. -->
       <section id="event-detail-view" class="view-panel container view-spacing" aria-labelledby="event-title" hidden>
-        <a class="text-link back-link" href="#events">← Back to Events</a>
+        <a id="event-back" class="text-link back-link" href="#events">← Back to Events</a>
         <div id="event-detail-feedback" class="empty-state" role="status" hidden>
         </div>
         <div id="event-detail-content">
@@ -297,9 +297,9 @@
                 <span class="avatar" aria-hidden="true">↗</span>
                 <div>
                   <h2>About the organizer</h2>
-                  <p>Organizer identity and verification details will appear here.</p>
+                  <p id="event-organizer">Organizer identity and verification details will appear here.</p>
                 </div>
-                <span class="badge">Verification unavailable</span>
+                <span id="event-verified" class="badge">Verification unavailable</span>
               </div>
               <section aria-labelledby="event-about-title">
                 <h2 id="event-about-title">About this event</h2>
@@ -321,8 +321,8 @@
             <aside id="event-action-sidebar" class="event-sidebar" aria-label="Event actions">
               <div class="card">
                 <div id="event-price" class="detail-price">Entry price</div>
-                <button class="btn full-width btn-primary" disabled>Official tickets ↗</button>
-                <p class="muted small">Ticket redirects are coming soon. No checkout is available here.</p>
+                <a id="event-ticket-link" class="btn full-width btn-primary" target="_blank" rel="noopener" hidden>Official tickets ↗</a>
+                <p id="event-ticket-note" class="muted small">Ticket redirects are coming soon. No checkout is available here.</p>
                 <button class="btn btn-outline full-width" disabled>✔ Check In to Event</button>
                 <div class="sidebar-actions">
                   <button disabled>♡ Bookmark</button>
