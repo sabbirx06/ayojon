@@ -315,6 +315,10 @@ th { font-weight: 500; font-size: 10px; color: var(--gold); }
 .points-total strong { display: block; font-size: 35px; font-weight: 500; color: var(--gold); }
 .points-total > span { font-size: 8px; letter-spacing: 1.4px; color: var(--muted); }
 .stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 25px; }
+.admin-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 30px; }
+@media (max-width: 800px) {
+  .admin-stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .stat-card strong { display: block; color: var(--gold); font-size: 27px; margin-top: 18px; font-weight: 500; }
 .stat-card p { font-size: 11px; color: var(--muted); }
 .heat-map-placeholder { height: 128px; background-image: linear-gradient(var(--panel) 4px, transparent 4px), linear-gradient(90deg, var(--panel) 4px, #72885d25 4px); background-size: 18px 18px; border: 1px solid var(--line); border-radius: 14px; }
@@ -533,3 +537,154 @@ dialog > p { font-size: 12px; }
   html { scroll-behavior: auto; }
   *, *:before, *:after { transition: none !important; animation: none !important; }
 }
+
+/* --- ADMIN & ORGANIZER REVIEW STYLES --- */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.status-pending {
+  background: #f59e0b22;
+  color: #fbbf24;
+  border: 1px solid #f59e0b44;
+}
+.status-approved {
+  background: #10b98122;
+  color: #34d399;
+  border: 1px solid #10b98144;
+}
+.status-rejected {
+  background: #ef444422;
+  color: #f87171;
+  border: 1px solid #ef444444;
+}
+.status-revision {
+  background: #f9731622;
+  color: #fb923c;
+  border: 1px solid #f9731644;
+}
+.status-resubmitted {
+  background: #3b82f622;
+  color: #60a5fa;
+  border: 1px solid #3b82f644;
+}
+
+.organizer-event-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.organizer-listing-card {
+  padding: 18px 20px;
+}
+.listing-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.listing-card-title {
+  margin: 4px 0 0;
+  font-size: 16px;
+}
+.listing-card-actions {
+  margin-top: 12px;
+}
+
+.review-feedback-box {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.feedback-revision {
+  background: #f9731614;
+  border: 1px solid #f9731633;
+  color: var(--text);
+}
+.feedback-revision strong {
+  color: #fb923c;
+}
+.feedback-rejected {
+  background: #ef444414;
+  border: 1px solid #ef444433;
+  color: var(--text);
+}
+.feedback-rejected strong {
+  color: #f87171;
+}
+
+.modal-lg {
+  max-width: 640px;
+  width: 90vw;
+}
+.review-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.review-description {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+.review-history-box {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+.review-history-box h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.review-history-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+}
+.review-history-note {
+  margin: 4px 0 8px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.admin-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+.btn-danger-outline {
+  color: #f87171;
+  border-color: #ef444455;
+}
+.btn-danger-outline:hover {
+  background: #ef444422;
+  border-color: #ef4444;
+}
+.action-buttons-row {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.table-event-cell {
+  display: flex;
+  flex-direction: column;
+}
+

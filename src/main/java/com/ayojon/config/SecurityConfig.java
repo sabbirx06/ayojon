@@ -31,6 +31,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/index.html", "/styles.css", "/app.js", "/favicon.ico", "/assets/branding/**", "/assets/js/**", "/error",
                                 "/api/auth/csrf", "/api/auth/signup", "/api/auth/me").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/events").hasRole("ORGANIZER")
+                        .requestMatchers(org.springframework.http.HttpMethod.PUT, "/api/events/**").hasRole("ORGANIZER")
+                        .requestMatchers("/api/events/mine").hasRole("ORGANIZER")
+                        .requestMatchers("/api/events/**").authenticated()
                         .anyRequest().authenticated())
                 .formLogin(login -> login.loginProcessingUrl("/api/auth/login").usernameParameter("email")
                         .successHandler((request, response, authentication) -> {
