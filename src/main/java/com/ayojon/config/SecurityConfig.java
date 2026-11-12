@@ -29,6 +29,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attendance/events/*/count").permitAll()
                         .requestMatchers("/", "/index.html", "/styles.css", "/app.js", "/favicon.ico", "/assets/branding/**", "/assets/js/**", "/error",
                                 "/api/auth/csrf", "/api/auth/signup", "/api/auth/me").permitAll()
                         .anyRequest().authenticated())
