@@ -614,44 +614,58 @@
       <section id="organizer-view" class="view-panel container view-spacing" aria-labelledby="organizer-title" hidden>
         <div class="page-heading">
           <div>
-            <h1 id="organizer-title">Organizer</h1>
-            <p>Event submissions · Preview</p>
+            <h1 id="organizer-title">Organizer Hub</h1>
+            <p>Submit and manage your event organizing requests</p>
           </div>
-          <span class="badge">Organizer workspace preview</span>
+          <span class="badge">Organizer workspace</span>
         </div>
-        <p class="banner-info">Listing submission and management are coming soon. This preview does not publish events.</p>
+        <div id="organizer-edit-mode" class="banner-warning" hidden>
+          <strong>Editing: <span id="editing-event-name"></span></strong>
+          <button type="button" id="cancel-edit-btn" class="text-link" style="margin-left:12px;">Cancel Edit</button>
+        </div>
         <div class="workspace-grid">
           <section class="card" aria-labelledby="submission-title">
             <h2 id="submission-title">Create an event</h2>
             <form id="event-submission-form">
-              <fieldset disabled>
-                <legend class="muted small">Event submission form preview</legend>
-                <label>Event title<input name="title" placeholder="Give your gathering a name">
+              <fieldset>
+                <legend class="muted small">Fill out event details for admin review</legend>
+                <label>Event title<input name="title" placeholder="Give your gathering a name" required maxlength="255">
                 </label>
                 <div class="form-grid">
-                  <label>Start date & time<input type="datetime-local" name="startTime">
+                  <label>Category
+                    <select name="category">
+                      <option value="Music">Music</option>
+                      <option value="Arts">Arts</option>
+                      <option value="Food">Food</option>
+                      <option value="Outdoors">Outdoors</option>
+                      <option value="Learning">Workshops</option>
+                      <option value="Community">Community</option>
+                    </select>
                   </label>
-                  <label>End date & time<input type="datetime-local" name="endTime">
+                  <label>Area / Neighbourhood<input name="area" placeholder="e.g. Banani, Dhanmondi" value="Dhaka" required>
                   </label>
                 </div>
-                <label>Venue name<input name="venue" placeholder="Where will people meet?">
+                <div class="form-grid">
+                  <label>Start date & time<input type="datetime-local" name="startTime" required>
+                  </label>
+                  <label>End date & time<input type="datetime-local" name="endTime" required>
+                  </label>
+                </div>
+                <label>Venue name<input name="venue" placeholder="Where will people meet?" required>
                 </label>
                 <label>Venue address<input name="address" placeholder="Neighbourhood, city, Bangladesh">
                 </label>
                 <div class="form-grid">
-                  <label>Latitude<input name="latitude" type="number" step="any" placeholder="23.8103">
+                  <label>Latitude<input name="latitude" type="number" step="any" placeholder="23.8103" value="23.8103">
                   </label>
-                  <label>Longitude<input name="longitude" type="number" step="any" placeholder="90.4125">
+                  <label>Longitude<input name="longitude" type="number" step="any" placeholder="90.4125" value="90.4125">
                   </label>
                 </div>
-                <label>Poster upload<input type="file" name="poster" accept="image/png,image/jpeg,image/webp">
-                </label>
                 <label>Official ticket link<input type="url" name="ticketUrl" placeholder="https://">
                 </label>
-                <label>About the experience<textarea rows="4" name="description">
-                  </textarea>
+                <label>About the experience<textarea rows="4" name="description" placeholder="Tell attendees what to expect..."></textarea>
                 </label>
-                <button class="btn btn-primary" type="submit">Submit for approval ↗</button>
+                <button class="btn btn-primary" id="event-submit-button" type="submit">Submit for approval ↗</button>
               </fieldset>
             </form>
           </section>
@@ -673,23 +687,50 @@
       <section id="admin-view" class="view-panel container view-spacing" aria-labelledby="admin-title" hidden>
         <div class="page-heading">
           <div>
-            <h1 id="admin-title">Admin</h1>
-            <p>Approvals and moderation · Preview</p>
+            <h1 id="admin-title">Admin Dashboard</h1>
+            <p>Unified platform moderation and control center</p>
           </div>
-          <span class="badge">Admin workspace preview</span>
+          <span class="badge">Admin workspace</span>
         </div>
-        <p class="banner-info">Moderation preview only. No approval, verification, or dispute action changes database records.</p>
+
+        <!-- Admin Overview Metrics -->
+        <div class="stats-grid admin-stats-grid">
+          <article class="card stat-card">
+            <span class="field-label">PENDING APPROVALS</span>
+            <strong id="stat-pending-approvals">0</strong>
+            <p>Awaiting admin decision</p>
+          </article>
+          <article class="card stat-card">
+            <span class="field-label">TOTAL EVENTS</span>
+            <strong id="stat-total-events">0</strong>
+            <p>Across all organizers</p>
+          </article>
+          <article class="card stat-card">
+            <span class="field-label">REGISTERED USERS</span>
+            <strong id="stat-total-users">0</strong>
+            <p>Attendees & organizers</p>
+          </article>
+          <article class="card stat-card">
+            <span class="field-label">OPEN DISPUTES</span>
+            <strong id="stat-open-disputes">0</strong>
+            <p>Community reports</p>
+          </article>
+        </div>
+
         <div class="tabs" role="tablist" aria-label="Moderation queues">
           <button id="approvals-tab" role="tab" aria-controls="approvals-panel" aria-selected="true" tabindex="0">Pending Event Approvals</button>
-          <button id="disputes-tab" role="tab" aria-controls="disputes-panel" aria-selected="false" tabindex="-1">Dispute Reports Queue</button>
+          <button id="all-events-tab" role="tab" aria-controls="all-events-panel" aria-selected="false" tabindex="-1">All Organizer Events</button>
+          <button id="users-tab" role="tab" aria-controls="users-panel" aria-selected="false" tabindex="-1">Users &amp; Roles</button>
+          <button id="disputes-tab" role="tab" aria-controls="disputes-panel" aria-selected="false" tabindex="-1">Dispute Reports</button>
         </div>
+
         <section id="approvals-panel" role="tabpanel" aria-labelledby="approvals-tab">
           <div class="card table-scroll">
             <table>
-              <caption>Pending events · Approval queue not connected</caption>
+              <caption>Pending event submissions awaiting admin review</caption>
               <thead>
                 <tr>
-                  <th scope="col">Event</th>
+                  <th scope="col">Event Details</th>
                   <th scope="col">Organizer</th>
                   <th scope="col">Submitted</th>
                   <th scope="col">Actions</th>
@@ -697,42 +738,74 @@
               </thead>
               <tbody id="pending-approval-rows">
                 <tr>
-                  <td colspan="4" class="table-empty">Submitted listings will appear here for review.</td>
+                  <td colspan="4" class="table-empty">Loading pending event submissions...</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="action-preview card">
-            <span class="muted small">Listing action placeholders</span>
-            <button class="btn btn-outline" disabled>Approve</button>
-            <button class="btn btn-outline" disabled>Reject</button>
-            <button class="btn btn-outline" disabled>✧ Issue Verified Badge</button>
+        </section>
+
+        <section id="all-events-panel" role="tabpanel" aria-labelledby="all-events-tab" hidden>
+          <div class="card table-scroll">
+            <table>
+              <caption>All event organizing requests across all organizers</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Event Details</th>
+                  <th scope="col">Organizer</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="all-events-rows">
+                <tr>
+                  <td colspan="4" class="table-empty">Loading all organizer events...</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </section>
+
+        <section id="users-panel" role="tabpanel" aria-labelledby="users-tab" hidden>
+          <div class="card table-scroll">
+            <table>
+              <caption>Registered users and account roles</caption>
+              <thead>
+                <tr>
+                  <th scope="col">User Name</th>
+                  <th scope="col">Email Address</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Points</th>
+                </tr>
+              </thead>
+              <tbody id="admin-user-rows">
+                <tr>
+                  <td colspan="4" class="table-empty">Loading user accounts...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <section id="disputes-panel" role="tabpanel" aria-labelledby="disputes-tab" hidden>
           <div class="card table-scroll">
             <table>
-              <caption>Flagged listings · Dispute queue not connected</caption>
+              <caption>Community flagged event listings</caption>
               <thead>
                 <tr>
                   <th scope="col">Event</th>
+                  <th scope="col">Reported By</th>
                   <th scope="col">Reason</th>
-                  <th scope="col">Reported</th>
+                  <th scope="col">Status</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody id="dispute-report-rows">
                 <tr>
-                  <td colspan="4" class="table-empty">Community reports and review actions will appear here.</td>
+                  <td colspan="5" class="table-empty">Loading dispute reports...</td>
                 </tr>
               </tbody>
             </table>
-          </div>
-          <div class="action-preview card">
-            <span class="muted small">Report action placeholders</span>
-            <button class="btn btn-outline" disabled>Review report</button>
-            <button class="btn btn-outline" disabled>Dismiss</button>
-            <button class="btn btn-outline" disabled>Remove listing</button>
           </div>
         </section>
       </section>
@@ -841,6 +914,63 @@
       <div id="notification-list" class="empty-state">
         <span aria-hidden="true">♧</span>
         <p>Event updates and reminders will appear here when notifications are connected.</p>
+      </div>
+    </dialog>
+    <dialog id="admin-review-modal" class="modal-lg" aria-labelledby="modal-event-title">
+      <div class="dialog-heading">
+        <div>
+          <span class="eyebrow" id="modal-event-category">Category</span>
+          <h2 id="modal-event-title" style="margin:0;">Event Review</h2>
+        </div>
+        <button class="btn-icon" data-close-dialog aria-label="Close review dialog">×</button>
+      </div>
+      <div class="modal-body review-modal-content">
+        <div class="review-details-grid">
+          <div>
+            <span class="field-label">ORGANIZER</span>
+            <p id="modal-event-organizer" style="margin:0; font-weight:600;"></p>
+          </div>
+          <div>
+            <span class="field-label">VENUE & AREA</span>
+            <p id="modal-event-venue" style="margin:0; font-weight:600;"></p>
+          </div>
+          <div>
+            <span class="field-label">SCHEDULE (BST)</span>
+            <p id="modal-event-schedule" style="margin:0; font-weight:600;"></p>
+          </div>
+          <div>
+            <span class="field-label">TICKET URL</span>
+            <p style="margin:0;"><a id="modal-event-tickets" href="#" target="_blank" rel="noopener"></a></p>
+          </div>
+        </div>
+        <div>
+          <span class="field-label">EVENT DESCRIPTION</span>
+          <p id="modal-event-description" class="review-description"></p>
+        </div>
+        <div id="modal-review-history" class="review-history-box" hidden></div>
+        <hr class="divider">
+        <div class="review-actions-panel">
+          <div id="review-action-selection">
+            <span class="field-label">ADMIN REVIEW DECISION</span>
+            <div class="admin-button-group">
+              <button type="button" class="btn btn-primary" id="btn-approve-event">✓ Approve & Publish</button>
+              <button type="button" class="btn btn-outline" id="btn-request-revision">⚠ Request Revision</button>
+              <button type="button" class="btn btn-outline btn-danger-outline" id="btn-reject-event">✕ Reject Event</button>
+            </div>
+          </div>
+          <form id="modal-review-form">
+            <div id="review-note-container" hidden>
+              <label>
+                <span class="field-label" id="review-note-label">Review Note</span>
+                <textarea id="review-note-input" rows="3"></textarea>
+              </label>
+              <div class="action-buttons-row">
+                <button type="button" class="btn btn-outline" id="btn-cancel-action">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="btn-confirm-action" hidden>Confirm</button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </dialog>
     <div id="toast" class="toast" role="status" hidden>

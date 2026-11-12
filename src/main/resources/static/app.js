@@ -2,6 +2,8 @@
 import { $, $$, toast } from './assets/js/shared.js';
 import { currentUser, sessionLoading, initAuth } from './assets/js/auth.js';
 import './assets/js/profile.js';
+import { initOrganizerView } from './assets/js/organizer.js';
+import { initAdminView } from './assets/js/admin.js';
 
 let activeView = '';
 let eventsScroll = 0;
@@ -23,7 +25,9 @@ function canView(view) {
   if (['landing', 'auth'].includes(view)) return true;
   if (!currentUser) return false;
   const role = effectiveRole();
-  return view === 'admin' ? Boolean(currentUser) && role === 'ADMIN' : view === 'organizer' ? Boolean(currentUser) && ['ORGANIZER', 'ADMIN'].includes(role) : true;
+  if (view === 'admin') return role === 'ADMIN';
+  if (view === 'organizer') return role === 'ORGANIZER';
+  return true;
 }
 
 function updateRoles() {
@@ -158,3 +162,5 @@ window.addEventListener('hashchange', route);
 updateRoles();
 route();
 initAuth();
+initOrganizerView();
+initAdminView();
