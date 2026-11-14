@@ -11,7 +11,10 @@ export function createAttendance(root, {request = api, getUser}) {
   let historyVersion = 0;
   const $ = selector => root.querySelector(selector);
   const current = token => token === epoch && Boolean(getUser());
-  const date = value => value ? String(value).replace('T', ' ') : 'Time unavailable';
+  const date = value => value ? `${String(value).replace('T', ' ')} BDT` : 'Time unavailable';
+  const bdt = new Intl.DateTimeFormat('en-GB', {timeZone:'Asia/Dhaka', dateStyle:'medium', timeStyle:'medium'});
+  // Database-generated check-in timestamps are UTC without an offset; event times are entered in BDT.
+  const checkInDate = value => value ? `${bdt.format(new Date(`${value}Z`))} BDT` : 'Time unavailable';
 
   function clear() {
     epoch++;
@@ -28,7 +31,7 @@ export function createAttendance(root, {request = api, getUser}) {
     const token = epoch;
     root.innerHTML = `<section class="card content-section" aria-label="Attendance check-in">
       <h2>Your attendance</h2>
-      <p>Choose a published event to check in. Times shown in Bangladesh Standard Time.</p>
+      <p>Choose a published event to check in. Times shown in Bangladesh Standard Time (BDT).</p>
       <label>Event<select data-event disabled><option value="">Loading events…</option></select></label>
       <p data-event-info></p>
       <button type="button" class="btn btn-primary" data-check-in disabled>Check in</button>
@@ -59,7 +62,7 @@ export function createAttendance(root, {request = api, getUser}) {
       if (!current(token) || version !== historyVersion) return;
       $('[data-history]').innerHTML = history.length ? history.map(row => {
         const event = events.find(item => item.id === row.eventId);
-        return `<p>${escapeHtml(event?.title || `Event #${row.eventId}`)} · ${escapeHtml(date(row.checkedInAt))}</p>`;
+        return `<p>${escapeHtml(event?.title || `Event #${row.eventId}`)} · ${escapeHtml(checkInDate(row.checkedInAt))}</p>`;
       }).join('') : '<p>No check-ins yet.</p>';
     } catch (error) {
       if (current(token) && version === historyVersion) $('[data-history]').textContent = error.message || 'History could not be loaded. Reopen Profile to retry.';
@@ -81,7 +84,12 @@ export function createAttendance(root, {request = api, getUser}) {
       $('[data-feedback]').textContent = 'Check-in recorded.';
       await loadHistory(token);
     } catch (error) {
-      if (current(token)) $('[data-feedback]').textContent = error.message;
+      if (!current(token)) return;
+      if (error.status === 409) {
+        checked = true;
+        $('[data-feedback]').textContent = 'Already checked in.';
+        await loadHistory(token);
+      } else $('[data-feedback]').textContent = error.message;
     } finally {
       if (current(token)) {
         submitting = false;
