@@ -37,6 +37,12 @@ public class AttendanceController {
         }
     }
 
+    @GetMapping("/events")
+    public List<AttendanceRepository.EventChoice> events(Principal principal) {
+        currentUserId(principal);
+        return attendance.findPublishedEvents();
+    }
+
     @GetMapping("/me")
     public List<Attendance> me(Principal principal) {
         return attendance.findByUserId(currentUserId(principal));

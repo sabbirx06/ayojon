@@ -154,6 +154,21 @@ class AttendanceControllerTests {
         verifyNoInteractions(attendance);
     }
 
+    @Test
+    void publishedChoicesRequireAnExistingAuthenticatedAccount() throws Exception {
+        mvc.perform(get("/api/attendance/events")).andExpect(status().isUnauthorized());
+        when(attendance.findPublishedEvents()).thenReturn(List.of(new AttendanceRepository.EventChoice(
+                42, "Real event", "Auditorium", LocalDateTime.of(2026, 11, 12, 10, 30))));
+        var session = authenticatedSession();
+        mvc.perform(get("/api/attendance/events").session(session))
+                .andExpect(status().isOk()).andExpect(jsonPath("$[0].id").value(42))
+                .andExpect(jsonPath("$[0].title").value("Real event"))
+                .andExpect(jsonPath("$[0].venueName").value("Auditorium"));
+        when(users.findByEmail("user@example.com")).thenReturn(Optional.empty());
+        mvc.perform(get("/api/attendance/events").session(session)).andExpect(status().isUnauthorized());
+        verify(attendance, times(1)).findPublishedEvents();
+    }
+
     private Attendance checkIn() {
         return new Attendance(3, 7, 12, LocalDateTime.of(2026, 11, 12, 10, 30));
     }
