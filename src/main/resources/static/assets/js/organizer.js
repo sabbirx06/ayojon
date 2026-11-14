@@ -108,6 +108,7 @@ function renderOrganizerCard(event) {
         <div>${statusBadge}</div>
       </div>
       <p class="muted small">⌖ ${escapeHtml(event.venueName)} — ${escapeHtml(event.startTime ? startDate : '')}</p>
+      ${event.posterUrl ? `<img src="${escapeHtml(event.posterUrl)}" alt="Event poster" loading="lazy" style="max-width:100%;border-radius:8px">` : ''}
       ${revisionBox}
       ${editBtn ? `<div class="listing-card-actions">${editBtn}</div>` : ''}
     </article>`;
@@ -130,6 +131,7 @@ function populateFormForEdit(event) {
   if (form.elements.area) form.elements.area.value = event.areaName || '';
   if (form.elements.category) form.elements.category.value = event.categoryName || 'Music';
   form.elements.ticketUrl.value = event.ticketUrl || '';
+  if (form.elements.posterUrl) form.elements.posterUrl.value = event.posterUrl || '';   // ADDED (poster)
   form.elements.description.value = event.description || '';
 
   const editBanner = $('#organizer-edit-mode');
@@ -177,6 +179,7 @@ export function initOrganizerView() {
         latitude: parseFloat(form.elements.latitude?.value) || 23.8103,
         longitude: parseFloat(form.elements.longitude?.value) || 90.4125,
         ticketUrl: form.elements.ticketUrl?.value?.trim() || null,
+        posterUrl: form.elements.posterUrl?.value?.trim() || null,   // ADDED (poster)
         description: form.elements.description?.value?.trim() || ''
       };
 

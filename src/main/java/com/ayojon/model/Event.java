@@ -5,4 +5,5 @@ public record Event(int eventId, int organizerId, String organizerName,
                     String title, String description,
                     String startTime, String endTime,
                     String ticketUrl, String status, String createdAt,
-                    String latestDecision, String latestNote) {}
+                    String latestDecision, String latestNote,
+                    String posterUrl) {}   // ADDED (poster)
