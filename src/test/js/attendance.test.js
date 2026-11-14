@@ -124,3 +124,14 @@ test('profile loads real published choices, empty history and status before enab
   assert.equal($('[data-check-in]').disabled,false);
   assert.equal(calls.some(([p])=>p==='/api/attendance/events/42/status'),true);
 });
+
+test('UTC check-in history converts to BDT across midnight while local event times stay unchanged', async () => {
+  const {$,ui} = await setup(path => path.endsWith('/events') ? choices : [
+    {eventId:42,checkedInAt:'2026-11-12T18:01:00'},
+    {eventId:42,checkedInAt:null}
+  ]);
+  await ui.activate('profile');
+  assert.match($('[data-history]').textContent, /13 Nov 2026, 00:01:00 BDT/);
+  assert.match($('[data-history]').textContent, /Time unavailable/);
+  assert.match($('select option[value="42"]').textContent, /2026-11-12 18:00:00 BDT/);
+});
