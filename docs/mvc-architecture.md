@@ -133,3 +133,9 @@ Repository unit tests (including `EventRepositoryTests`, which checks the
 search SQL, its bound values and the visibility policy) mock JDBC; these tests
 create no database rows. The existing application context test uses the
 locally configured datasource.
+
+Browser-side tests run with Node: `npm ci` once, then `npm test`. They load the
+view modules in a simulated page (happy-dom) with a fake `fetch`, so they need
+no server or database. `src/test/js/event-detail.test.js` checks that the
+event detail page ignores late responses after leaving the page or opening a
+missing or invalid id.
