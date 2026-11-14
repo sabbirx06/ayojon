@@ -275,3 +275,25 @@ erDiagram
 | Admin approval & status (F18) | event.status, event_verification |
 | Recommendations (F19) | collection_event, event, event_category |
 | Attendance dashboard (F20) | attendance, event, event_category, venue, area |
+
+## 5. Normalized design vs. the running database
+
+This diagram is the normalized design (`normalized_schema.sql`). The app's live
+database still uses the earlier flat layout in `src/main/resources/schema.sql`,
+and the code on `main` (event search and details, organizer submission, admin
+review, disputes) reads that flat layout. No schema change has been made.
+The two differ only in these places:
+
+| Normalized design (this diagram) | Running database (`schema.sql`) |
+|---|---|
+| `venue` entity (name, address, latitude, longitude) and `event.venue_id` | `event.venue_name`, `venue_address`, `latitude`, `longitude` stored on each event |
+| `area` entity and `venue.area_id` | `event.area` as text |
+| `dispute_reason` lookup and `dispute_report.reason_id` | `dispute_report.reason_category` as text |
+| Price derived from `ticket_tier` (a free event has a tier priced 0) | `event.base_price` |
+| "Verified" derived from `event_verification` (`event_verified` view) | `event.is_verified` |
+| `event_media` for images | `event.poster_url` (event_media also exists) |
+| (no sequence number) | `itinerary_item.sequence_no` |
+
+Every other table and column is the same in both. If the team moves the live
+database to the normalized schema, the queries in the `model/*Repository.java`
+files that use the flat columns above must change with it.
