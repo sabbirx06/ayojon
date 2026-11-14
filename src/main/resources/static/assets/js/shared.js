@@ -25,7 +25,7 @@ async function api(path, options = {}) {
   const body = response.status === 204 ? null : await response.json().catch(() => null);
   if (!response.ok) {
     if (response.status === 403) csrf = null;
-    throw new Error(body?.message || (response.status === 403 ? 'Your session has expired. Please try again.' : 'The request could not be completed. Please try again.'));
+    throw Object.assign(new Error(body?.message || (response.status === 403 ? 'Your session has expired. Please try again.' : 'The request could not be completed. Please try again.')), {status:response.status});
   }
   return body;
 }

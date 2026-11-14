@@ -81,7 +81,12 @@ export function createAttendance(root, {request = api, getUser}) {
       $('[data-feedback]').textContent = 'Check-in recorded.';
       await loadHistory(token);
     } catch (error) {
-      if (current(token)) $('[data-feedback]').textContent = error.message;
+      if (!current(token)) return;
+      if (error.status === 409) {
+        checked = true;
+        $('[data-feedback]').textContent = 'Already checked in.';
+        await loadHistory(token);
+      } else $('[data-feedback]').textContent = error.message;
     } finally {
       if (current(token)) {
         submitting = false;
