@@ -27,7 +27,8 @@ public class EventController {
     public record EventSubmission(String title, String description, String startTime, String endTime,
                                   String venueName, String venueAddress, String areaName,
                                   String categoryName, String ticketUrl,
-                                  Double latitude, Double longitude) {}
+                                  Double latitude, Double longitude,
+                                  String posterUrl) {}   // ADDED (poster)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -44,7 +45,8 @@ public class EventController {
                 s.venueAddress().trim(), s.areaName().trim(),
                 s.latitude(), s.longitude(),
                 s.title().trim(), s.description() == null ? "" : s.description().trim(),
-                start, end, s.ticketUrl() == null || s.ticketUrl().isBlank() ? null : s.ticketUrl().trim());
+                start, end, s.ticketUrl() == null || s.ticketUrl().isBlank() ? null : s.ticketUrl().trim(),
+                posterOrNull(s.posterUrl()));   // ADDED (poster)
         return Map.of("message", "Event submitted for review.");
     }
 
@@ -83,7 +85,8 @@ public class EventController {
                 s.venueAddress().trim(), s.areaName().trim(),
                 s.latitude(), s.longitude(),
                 s.title().trim(), s.description() == null ? "" : s.description().trim(),
-                start, end, s.ticketUrl() == null || s.ticketUrl().isBlank() ? null : s.ticketUrl().trim());
+                start, end, s.ticketUrl() == null || s.ticketUrl().isBlank() ? null : s.ticketUrl().trim(),
+                posterOrNull(s.posterUrl()));   // ADDED (poster)
         return Map.of("message", "Event updated and resubmitted for review.");
     }
 
@@ -109,6 +112,16 @@ public class EventController {
         if (s.latitude() == null || s.longitude() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Coordinates are required.");
         }
+        // ADDED (poster): the poster link is optional, but if present it must be an http(s) URL
+        if (s.posterUrl() != null && !s.posterUrl().isBlank()
+                && (!s.posterUrl().trim().matches("^https?://\\S+$") || s.posterUrl().length() > 2000)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The poster link must be a valid http(s) URL.");
+        }
+    }
+
+    // ADDED (poster)
+    private String posterOrNull(String url) {
+        return url == null || url.isBlank() ? null : url.trim();
     }
 
     private Timestamp parseTime(String value) {

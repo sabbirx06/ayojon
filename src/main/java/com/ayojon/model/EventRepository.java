@@ -22,6 +22,9 @@ public class EventRepository {
                    e.title, e.description,
                    e.start_time, e.end_time,
                    e.ticket_url, e.status, e.created_at,
+                   (SELECT m.media_url FROM event_media m
+                    WHERE m.event_id = e.event_id AND m.media_type = 'POSTER'
+                    ORDER BY m.media_id DESC LIMIT 1) AS poster_url,
                    CASE
                        WHEN cl.last_changed IS NOT NULL AND lr.verified_at IS NOT NULL AND cl.last_changed > lr.verified_at THEN 'RESUBMITTED'
                        ELSE lr.decision
@@ -59,7 +62,8 @@ public class EventRepository {
             row.getString("status"),
             row.getString("created_at"),
             row.getString("latest_decision"),
-            row.getString("latest_note"));
+            row.getString("latest_note"),
+            row.getString("poster_url"));                       // ADDED (poster)
 
     public List<Event> findByOrganizerId(int organizerId) {
         return jdbc.query(BASE_SELECT + " WHERE e.organizer_id = ? ORDER BY e.created_at DESC",
@@ -83,22 +87,27 @@ public class EventRepository {
     public void create(int organizerId, String categoryName, String venueName,
                        String venueAddress, String areaName, double latitude, double longitude,
                        String title, String description,
-                       Timestamp startTime, Timestamp endTime, String ticketUrl) {
+                       Timestamp startTime, Timestamp endTime, String ticketUrl,
+                       String posterUrl) {                      // ADDED (poster)
         int areaId = resolveArea(areaName);
         int venueId = resolveVenue(areaId, venueName, venueAddress, latitude, longitude);
         int categoryId = resolveCategory(categoryName);
 
-        jdbc.update("INSERT INTO event(organizer_id, category_id, venue_id, title, description, " +
-                        "start_time, end_time, ticket_url, status) VALUES(?,?,?,?,?,?,?,?,?)",
+        // CHANGED (poster): the INSERT now returns the new event_id so the poster can be linked to it
+        Integer eventId = jdbc.queryForObject("INSERT INTO event(organizer_id, category_id, venue_id, title, description, " +
+                        "start_time, end_time, ticket_url, status) VALUES(?,?,?,?,?,?,?,?,?) RETURNING event_id",
+                Integer.class,
                 organizerId, categoryId, venueId, title, description,
                 startTime, endTime, ticketUrl, "DRAFT");
+        savePoster(eventId, posterUrl);                         // ADDED (poster)
     }
 
     @Transactional
     public void update(int eventId, int organizerId, String categoryName, String venueName,
                        String venueAddress, String areaName, double latitude, double longitude,
                        String title, String description,
-                       Timestamp startTime, Timestamp endTime, String ticketUrl) {
+                       Timestamp startTime, Timestamp endTime, String ticketUrl,
+                       String posterUrl) {                      // ADDED (poster)
         int areaId = resolveArea(areaName);
         int venueId = resolveVenue(areaId, venueName, venueAddress, latitude, longitude);
         int categoryId = resolveCategory(categoryName);
@@ -108,10 +117,20 @@ public class EventRepository {
                 categoryId, venueId, title, description, startTime, endTime, ticketUrl, eventId);
         jdbc.update("INSERT INTO event_change_log(event_id, changed_by, change_description) VALUES(?,?,?)",
                 eventId, organizerId, "Updated event details after revision request");
+        savePoster(eventId, posterUrl);                         // ADDED (poster)
     }
 
     public void updateStatus(int eventId, String status) {
         jdbc.update("UPDATE event SET status = ? WHERE event_id = ?", status, eventId);
+    }
+
+    // ADDED (poster): keeps exactly one POSTER row per event in event_media
+    private void savePoster(int eventId, String posterUrl) {
+        jdbc.update("DELETE FROM event_media WHERE event_id = ? AND media_type = 'POSTER'", eventId);
+        if (posterUrl != null) {
+            jdbc.update("INSERT INTO event_media(event_id, media_url, media_type) VALUES (?,?,'POSTER')",
+                    eventId, posterUrl);
+        }
     }
 
     private int resolveArea(String areaName) {
