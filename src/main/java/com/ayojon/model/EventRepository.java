@@ -16,9 +16,10 @@ public class EventRepository {
         this.jdbc = jdbc;
     }
 
+    // FLAT-SCHEMA: venue name and area come straight from the event table (no venue/area joins)
     private static final String BASE_SELECT = """
             SELECT e.event_id, e.organizer_id, u.name AS organizer_name,
-                   ec.category_name, v.venue_name, a.area_name,
+                   ec.category_name, e.venue_name, e.area AS area_name,
                    e.title, e.description,
                    e.start_time, e.end_time,
                    e.ticket_url, e.status, e.created_at,
@@ -33,8 +34,6 @@ public class EventRepository {
             FROM event e
             JOIN users u ON e.organizer_id = u.user_id
             JOIN event_category ec ON e.category_id = ec.category_id
-            JOIN venue v ON e.venue_id = v.venue_id
-            JOIN area a ON v.area_id = a.area_id
             LEFT JOIN (
                 SELECT DISTINCT ON (event_id) event_id, decision, source_url, verified_at
                 FROM event_verification
@@ -63,7 +62,7 @@ public class EventRepository {
             row.getString("created_at"),
             row.getString("latest_decision"),
             row.getString("latest_note"),
-            row.getString("poster_url"));                       // ADDED (poster)
+            row.getString("poster_url"));
 
     public List<Event> findByOrganizerId(int organizerId) {
         return jdbc.query(BASE_SELECT + " WHERE e.organizer_id = ? ORDER BY e.created_at DESC",
@@ -88,18 +87,19 @@ public class EventRepository {
                        String venueAddress, String areaName, double latitude, double longitude,
                        String title, String description,
                        Timestamp startTime, Timestamp endTime, String ticketUrl,
-                       String posterUrl) {                      // ADDED (poster)
-        int areaId = resolveArea(areaName);
-        int venueId = resolveVenue(areaId, venueName, venueAddress, latitude, longitude);
+                       String posterUrl) {
         int categoryId = resolveCategory(categoryName);
 
-        // CHANGED (poster): the INSERT now returns the new event_id so the poster can be linked to it
-        Integer eventId = jdbc.queryForObject("INSERT INTO event(organizer_id, category_id, venue_id, title, description, " +
-                        "start_time, end_time, ticket_url, status) VALUES(?,?,?,?,?,?,?,?,?) RETURNING event_id",
+        // FLAT-SCHEMA: area, venue and coordinates are columns of event itself
+        Integer eventId = jdbc.queryForObject("INSERT INTO event(organizer_id, category_id, title, description, " +
+                        "area, venue_name, venue_address, latitude, longitude, " +
+                        "start_time, end_time, ticket_url, status) " +
+                        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) RETURNING event_id",
                 Integer.class,
-                organizerId, categoryId, venueId, title, description,
+                organizerId, categoryId, title, description,
+                areaName, venueName, venueAddress, latitude, longitude,
                 startTime, endTime, ticketUrl, "DRAFT");
-        savePoster(eventId, posterUrl);                         // ADDED (poster)
+        savePoster(eventId, posterUrl);
     }
 
     @Transactional
@@ -107,24 +107,25 @@ public class EventRepository {
                        String venueAddress, String areaName, double latitude, double longitude,
                        String title, String description,
                        Timestamp startTime, Timestamp endTime, String ticketUrl,
-                       String posterUrl) {                      // ADDED (poster)
-        int areaId = resolveArea(areaName);
-        int venueId = resolveVenue(areaId, venueName, venueAddress, latitude, longitude);
+                       String posterUrl) {
         int categoryId = resolveCategory(categoryName);
 
-        jdbc.update("UPDATE event SET category_id = ?, venue_id = ?, title = ?, description = ?, " +
+        // FLAT-SCHEMA: update the plain columns directly
+        jdbc.update("UPDATE event SET category_id = ?, title = ?, description = ?, " +
+                        "area = ?, venue_name = ?, venue_address = ?, latitude = ?, longitude = ?, " +
                         "start_time = ?, end_time = ?, ticket_url = ? WHERE event_id = ? AND status = 'DRAFT'",
-                categoryId, venueId, title, description, startTime, endTime, ticketUrl, eventId);
+                categoryId, title, description, areaName, venueName, venueAddress, latitude, longitude,
+                startTime, endTime, ticketUrl, eventId);
         jdbc.update("INSERT INTO event_change_log(event_id, changed_by, change_description) VALUES(?,?,?)",
                 eventId, organizerId, "Updated event details after revision request");
-        savePoster(eventId, posterUrl);                         // ADDED (poster)
+        savePoster(eventId, posterUrl);
     }
 
     public void updateStatus(int eventId, String status) {
         jdbc.update("UPDATE event SET status = ? WHERE event_id = ?", status, eventId);
     }
 
-    // ADDED (poster): keeps exactly one POSTER row per event in event_media
+    // keeps exactly one POSTER row per event in event_media
     private void savePoster(int eventId, String posterUrl) {
         jdbc.update("DELETE FROM event_media WHERE event_id = ? AND media_type = 'POSTER'", eventId);
         if (posterUrl != null) {
@@ -133,19 +134,7 @@ public class EventRepository {
         }
     }
 
-    private int resolveArea(String areaName) {
-        jdbc.update("INSERT INTO area(area_name) VALUES(?) ON CONFLICT(area_name) DO NOTHING", areaName);
-        return jdbc.queryForObject("SELECT area_id FROM area WHERE area_name = ?", Integer.class, areaName);
-    }
-
-    private int resolveVenue(int areaId, String venueName, String venueAddress,
-                             double latitude, double longitude) {
-        jdbc.update("INSERT INTO venue(area_id, venue_name, venue_address, latitude, longitude) " +
-                        "VALUES(?,?,?,?,?) ON CONFLICT(venue_name, venue_address) DO NOTHING",
-                areaId, venueName, venueAddress, latitude, longitude);
-        return jdbc.queryForObject("SELECT venue_id FROM venue WHERE venue_name = ? AND venue_address = ?",
-                Integer.class, venueName, venueAddress);
-    }
+    // FLAT-SCHEMA: resolveArea() and resolveVenue() were removed because the venue and area tables are not used
 
     private int resolveCategory(String categoryName) {
         jdbc.update("INSERT INTO event_category(category_name) VALUES(?) ON CONFLICT(category_name) DO NOTHING",
