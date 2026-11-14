@@ -23,4 +23,15 @@ public class UserRepository {
         jdbc.update("INSERT INTO users(name,email,password_hash,role) VALUES (?,?,?,?)",
                 name, email, passwordHash, role);
     }
+
+    public java.util.List<User> findAll() {
+        return jdbc.query("SELECT user_id, name, email, role, points, password_hash FROM users ORDER BY created_at DESC",
+                (row, index) -> new User(row.getInt("user_id"), row.getString("name"), row.getString("email"),
+                        row.getString("role"), row.getObject("points", Integer.class), row.getString("password_hash")));
+    }
+
+    public int count() {
+        Integer count = jdbc.queryForObject("SELECT COUNT(*) FROM users", Integer.class);
+        return count != null ? count : 0;
+    }
 }

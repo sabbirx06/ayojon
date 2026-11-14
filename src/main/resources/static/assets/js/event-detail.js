@@ -4,7 +4,18 @@ import { schedule, priceText, safeUrl } from './event-format.js';
 /* --- VIEW: event detail profile (Tasnia, Sprint 1, F6) --- */
 // Check-in, bookmark, plan, voucher and reviews on this page belong to other features and stay as they are.
 const defaultPoster = $('#event-poster').src;
+
+// Only the most recent load may change the page. Leaving the page, or opening a missing or
+// invalid id, cancels the pending load, so a late response can never replace the newer screen
+// or overwrite another page's title.
 let latestLoad = 0;
+let pending = null;
+
+function cancelPendingLoad() {
+  latestLoad++;
+  pending?.abort();
+  pending = null;
+}
 
 function showFeedback(title, message) {
   $('#event-detail-content').hidden = true;
@@ -17,7 +28,7 @@ function render(event) {
   document.title = `${event.title} — Ayojon`;
   $('#event-poster').src = safeUrl(event.posterUrl) || defaultPoster;
   $('#event-poster').alt = `Poster for ${event.title}`;
-  $('#event-category').textContent = event.status === 'CANCELLED' ? `${event.category} · Cancelled` : event.category;
+  $('#event-category').textContent = event.category;
   $('#event-title').textContent = event.title;
   $('#event-organizer').textContent = `Organized by ${event.organizerName}`;
   $('#event-verified').textContent = event.verified ? '✧ Verified' : 'Not verified yet';
@@ -39,13 +50,17 @@ function render(event) {
 }
 
 async function load(id) {
-  const request = ++latestLoad;
+  cancelPendingLoad();
+  const request = latestLoad;
+  const controller = pending = new AbortController();
   showFeedback('Loading event…');
   try {
-    const event = await api(`/api/events/${id}`);
+    const event = await api(`/api/events/${id}`, {signal:controller.signal});
     if (request === latestLoad) render(event);
   } catch (error) {
-    if (request === latestLoad) showFeedback('This event could not be shown.', error.message);
+    if (request === latestLoad && !controller.signal.aborted) showFeedback('This event could not be shown.', error.message);
+  } finally {
+    if (pending === controller) pending = null;
   }
 }
 
@@ -55,6 +70,7 @@ $('#event-poster').addEventListener('error', () => {
 });
 
 document.addEventListener('ayojon:viewchange', ({detail}) => {
+  cancelPendingLoad(); // any navigation, including leaving this page, makes an older load stale
   if (detail.view !== 'event-detail') return;
   const id = detail.params.get('id');
   $('#event-back').href = id ? '#discover' : '#events';

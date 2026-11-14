@@ -1,9 +1,9 @@
 package com.ayojon.model;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-/** One event card in the Discover search results. Times are Dhaka local time. */
-public record Event(int id, String title, String category, String area, String venueName,
-                    LocalDateTime startTime, LocalDateTime endTime, BigDecimal price,
-                    String posterUrl, boolean verified) {}
+public record Event(int eventId, int organizerId, String organizerName,
+                    String categoryName, String venueName, String areaName,
+                    String title, String description,
+                    String startTime, String endTime,
+                    String ticketUrl, String status, String createdAt,
+                    String latestDecision, String latestNote,
+                    String posterUrl) {}   // ADDED (poster)

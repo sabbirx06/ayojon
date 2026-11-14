@@ -18,7 +18,7 @@ class EventRepositoryTests {
     void searchWithoutFiltersOnlyShowsUpcomingPublishedEvents() {
         var query = EventRepository.searchQuery(new EventFilter(null, null, null, null, null, null));
         assertEquals(EventRepository.SEARCH + "\nORDER BY e.start_time, e.event_id\nLIMIT 100", query.sql());
-        assertTrue(query.args().isEmpty());
+        assertEquals(List.of("PUBLISHED"), query.args());
     }
 
     @Test
@@ -32,7 +32,7 @@ class EventRepositoryTests {
         assertTrue(query.sql().contains("AND e.start_time < ?"));
         assertTrue(query.sql().contains("AND e.base_price > 0"));
         assertFalse(query.sql().contains("jazz"), "values must never be pasted into the SQL");
-        assertEquals(List.of("%jazz%", "%jazz%", "%jazz%", "%jazz%", "%jazz%", 3, "Dhaka", "%Dhaka%",
+        assertEquals(List.of("PUBLISHED", "%jazz%", "%jazz%", "%jazz%", "%jazz%", "%jazz%", 3, "Dhaka", "%Dhaka%",
                 LocalDateTime.of(2026, 11, 20, 0, 0), LocalDateTime.of(2026, 11, 23, 0, 0)), query.args());
     }
 
@@ -46,7 +46,7 @@ class EventRepositoryTests {
     @Test
     void wildcardsTypedByUserAreMatchedLiterally() {
         var query = EventRepository.searchQuery(new EventFilter("100%_off", null, null, null, null, null));
-        assertEquals("%100\\%\\_off%", query.args().getFirst());
+        assertEquals("%100\\%\\_off%", query.args().get(1));
     }
 
     @Test
@@ -66,21 +66,37 @@ class EventRepositoryTests {
         when(row.getBigDecimal("base_price")).thenReturn(new BigDecimal("200.00"));
         when(row.getString("poster_url")).thenReturn("https://example.com/poster.jpg");
         when(row.getString("ticket_url")).thenReturn("https://example.com/tickets");
-        when(row.getString("status")).thenReturn("PUBLISHED");
         when(row.getBoolean("is_verified")).thenReturn(true);
         when(row.getString("organizer_name")).thenReturn("Dhaka Events Lab");
 
         assertEquals(new EventDetails(3, "Gulshan Street Food Carnival", "Over 40 street food stalls.",
                 "Food & Festivals", "Gulshan", "Gulshan Youth Club Grounds", "Road 113, Gulshan-2, Dhaka 1212",
                 start, end, new BigDecimal("200.00"), "https://example.com/poster.jpg",
-                "https://example.com/tickets", "PUBLISHED", true, "Dhaka Events Lab"), EventRepository.toDetails(row));
+                "https://example.com/tickets", true, "Dhaka Events Lab"), EventRepository.toDetails(row));
     }
 
     @Test
-    void findByIdBindsTheIdAndHidesDrafts() {
+    void publicDetailsOnlyFindPublishedEvents() {
         var jdbc = mock(JdbcTemplate.class);
-        assertTrue(new EventRepository(jdbc).findById(5).isEmpty());
-        verify(jdbc).query(eq(EventRepository.DETAILS), org.mockito.ArgumentMatchers.<RowMapper<EventDetails>>any(), eq(5));
-        assertTrue(EventRepository.DETAILS.contains("e.status <> 'DRAFT'"));
+        assertTrue(new EventRepository(jdbc).findPublicById(5).isEmpty());
+        verify(jdbc).query(eq(EventRepository.PUBLIC_DETAILS),
+                org.mockito.ArgumentMatchers.<RowMapper<EventDetails>>any(), eq(5), eq("PUBLISHED"));
+        assertTrue(EventRepository.PUBLIC_DETAILS.contains("e.event_id = ? AND e.status = ?"));
+    }
+
+    @Test
+    void publicQueriesUseOnlyThePublishedStatus() {
+        // DRAFT and rejected submissions (stored as CANCELLED) must never be public.
+        assertEquals("PUBLISHED", EventRepository.PUBLIC_STATUS);
+        for (String sql : List.of(EventRepository.SEARCH, EventRepository.PUBLIC_DETAILS)) {
+            assertTrue(sql.contains("e.status = ?"));
+            assertFalse(sql.contains("<>"), "visibility must be an allow-list, not 'everything except drafts'");
+        }
+    }
+
+    @Test
+    void postersComeFromTheColumnOrganizersWrite() {
+        assertTrue(EventRepository.SEARCH.contains("e.poster_url"));
+        assertTrue(EventRepository.PUBLIC_DETAILS.contains("e.poster_url"));
     }
 }
