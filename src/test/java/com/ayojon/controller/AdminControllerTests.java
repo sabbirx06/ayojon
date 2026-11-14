@@ -54,7 +54,7 @@ class AdminControllerTests {
     void adminCanFetchPendingEvents() throws Exception {
         var sampleEvent = new Event(1, 10, "Organizer A", "Music", "Rooftop Banani", "Dhaka",
                 "Concert", "Description", "2026-11-20T18:00:00", "2026-11-20T22:00:00",
-                null, "DRAFT", "2026-11-12T10:00:00", null, null);
+                null, "DRAFT", "2026-11-12T10:00:00", null, null, null);
         when(events.findPendingReview()).thenReturn(List.of(sampleEvent));
 
         mvc.perform(get("/api/admin/events/pending")
@@ -69,7 +69,7 @@ class AdminControllerTests {
     void adminCanFetchAllEvents() throws Exception {
         var sampleEvent = new Event(1, 10, "Organizer A", "Music", "Rooftop Banani", "Dhaka",
                 "Concert", "Description", "2026-11-20T18:00:00", "2026-11-20T22:00:00",
-                null, "PUBLISHED", "2026-11-12T10:00:00", "APPROVED", null);
+                null, "PUBLISHED", "2026-11-12T10:00:00", "APPROVED", null, null);
         when(events.findAll()).thenReturn(List.of(sampleEvent));
 
         mvc.perform(get("/api/admin/events")

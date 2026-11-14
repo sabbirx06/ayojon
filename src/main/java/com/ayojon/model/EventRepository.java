@@ -16,16 +16,13 @@ public class EventRepository {
         this.jdbc = jdbc;
     }
 
-    // FLAT-SCHEMA: venue name and area come straight from the event table (no venue/area joins)
+    // FLAT-SCHEMA: venue name, area and poster come straight from the event table
     private static final String BASE_SELECT = """
             SELECT e.event_id, e.organizer_id, u.name AS organizer_name,
                    ec.category_name, e.venue_name, e.area AS area_name,
                    e.title, e.description,
                    e.start_time, e.end_time,
-                   e.ticket_url, e.status, e.created_at,
-                   (SELECT m.media_url FROM event_media m
-                    WHERE m.event_id = e.event_id AND m.media_type = 'POSTER'
-                    ORDER BY m.media_id DESC LIMIT 1) AS poster_url,
+                   e.ticket_url, e.poster_url, e.status, e.created_at,
                    CASE
                        WHEN cl.last_changed IS NOT NULL AND lr.verified_at IS NOT NULL AND cl.last_changed > lr.verified_at THEN 'RESUBMITTED'
                        ELSE lr.decision
@@ -90,16 +87,13 @@ public class EventRepository {
                        String posterUrl) {
         int categoryId = resolveCategory(categoryName);
 
-        // FLAT-SCHEMA: area, venue and coordinates are columns of event itself
-        Integer eventId = jdbc.queryForObject("INSERT INTO event(organizer_id, category_id, title, description, " +
+        jdbc.update("INSERT INTO event(organizer_id, category_id, title, description, " +
                         "area, venue_name, venue_address, latitude, longitude, " +
-                        "start_time, end_time, ticket_url, status) " +
-                        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) RETURNING event_id",
-                Integer.class,
+                        "start_time, end_time, ticket_url, poster_url, status) " +
+                        "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 organizerId, categoryId, title, description,
                 areaName, venueName, venueAddress, latitude, longitude,
-                startTime, endTime, ticketUrl, "DRAFT");
-        savePoster(eventId, posterUrl);
+                startTime, endTime, ticketUrl, posterUrl, "DRAFT");
     }
 
     @Transactional
@@ -110,31 +104,28 @@ public class EventRepository {
                        String posterUrl) {
         int categoryId = resolveCategory(categoryName);
 
-        // FLAT-SCHEMA: update the plain columns directly
-        jdbc.update("UPDATE event SET category_id = ?, title = ?, description = ?, " +
+        // One draft-only UPDATE changes the details and the poster together
+        int updated = jdbc.update("UPDATE event SET category_id = ?, title = ?, description = ?, " +
                         "area = ?, venue_name = ?, venue_address = ?, latitude = ?, longitude = ?, " +
-                        "start_time = ?, end_time = ?, ticket_url = ? WHERE event_id = ? AND status = 'DRAFT'",
+                        "start_time = ?, end_time = ?, ticket_url = ?, poster_url = ? " +
+                        "WHERE event_id = ? AND status = 'DRAFT'",
                 categoryId, title, description, areaName, venueName, venueAddress, latitude, longitude,
-                startTime, endTime, ticketUrl, eventId);
+                startTime, endTime, ticketUrl, posterUrl, eventId);
+
+        // RACE FIX: if an admin already reviewed the event, no row was updated. Throwing here rolls back
+        // the whole transaction (including the category insert above), so no change log row is written
+        // and nothing else changes. The controller turns this into a 409 conflict.
+        if (updated == 0) {
+            throw new EventNotEditableException(eventId);
+        }
+
         jdbc.update("INSERT INTO event_change_log(event_id, changed_by, change_description) VALUES(?,?,?)",
                 eventId, organizerId, "Updated event details after revision request");
-        savePoster(eventId, posterUrl);
     }
 
     public void updateStatus(int eventId, String status) {
         jdbc.update("UPDATE event SET status = ? WHERE event_id = ?", status, eventId);
     }
-
-    // keeps exactly one POSTER row per event in event_media
-    private void savePoster(int eventId, String posterUrl) {
-        jdbc.update("DELETE FROM event_media WHERE event_id = ? AND media_type = 'POSTER'", eventId);
-        if (posterUrl != null) {
-            jdbc.update("INSERT INTO event_media(event_id, media_url, media_type) VALUES (?,?,'POSTER')",
-                    eventId, posterUrl);
-        }
-    }
-
-    // FLAT-SCHEMA: resolveArea() and resolveVenue() were removed because the venue and area tables are not used
 
     private int resolveCategory(String categoryName) {
         jdbc.update("INSERT INTO event_category(category_name) VALUES(?) ON CONFLICT(category_name) DO NOTHING",
