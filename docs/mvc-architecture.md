@@ -111,6 +111,13 @@ constraint to prevent duplicate check-ins, including concurrent requests. Postgr
 generates the attendance ID and timestamp; no table or column changes are needed.
 This foundation records self check-ins; it does not yet verify physical attendance.
 
+The Profile attendance panel lists published events and check-in history through
+`GET /api/attendance/events` and the attendance endpoints above. Duplicate check-in
+responses mark the event as checked in and reload history. Check-in timestamps
+from the database are UTC values without an offset; the panel converts them to
+`Asia/Dhaka` and labels them BDT. Organizer-entered event times are already local
+BDT values and are displayed without shifting them.
+
 No schema migration or new dependency is needed. Existing `/api/auth/*`
 URLs, static asset URLs, hash navigation, signup rules, and session security
 remain compatible.
