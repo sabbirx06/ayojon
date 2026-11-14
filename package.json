@@ -1,0 +1,11 @@
+{
+  "name": "ayojon-ui-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test src/test/js/*.test.js"
+  },
+  "devDependencies": {
+    "happy-dom": "21.0.4"
+  }
+}

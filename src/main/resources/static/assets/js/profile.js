@@ -1,5 +1,9 @@
 import { $ } from './shared.js';
 import { currentUser } from './auth.js';
+import { createAttendance } from './attendance.js';
+
+const attendance = createAttendance($('#profile-attendance'), {getUser: () => currentUser});
+let profileActive = false;
 
 /* --- VIEW: profile; account identity and points only --- */
 function renderProfile() {
@@ -10,7 +14,15 @@ function renderProfile() {
   $('#profile-login').hidden = Boolean(currentUser);
 }
 
-document.addEventListener('ayojon:sessionchange', renderProfile);
+document.addEventListener('ayojon:sessionchange', () => {
+  renderProfile();
+  attendance.clear();
+  if (profileActive && currentUser) attendance.activate('profile');
+});
 document.addEventListener('ayojon:viewchange', ({detail}) => {
-  if (detail.view === 'profile') renderProfile();
+  profileActive = detail.view === 'profile';
+  if (profileActive) {
+    renderProfile();
+    attendance.activate('profile');
+  } else attendance.clear();
 });

@@ -20,6 +20,14 @@ public class AttendanceRepository {
         this.jdbc = jdbc;
     }
 
+    public record EventChoice(int id, String title, String venueName, LocalDateTime startTime) {}
+
+    public List<EventChoice> findPublishedEvents() {
+        return jdbc.query("SELECT event_id, title, venue_name, start_time FROM event WHERE status = ? ORDER BY start_time DESC, event_id DESC",
+                (row, index) -> new EventChoice(row.getInt("event_id"), row.getString("title"),
+                        row.getString("venue_name"), row.getObject("start_time", LocalDateTime.class)), "PUBLISHED");
+    }
+
     public Optional<Attendance> recordCheckIn(int userId, int eventId) {
         try {
             return jdbc.query("INSERT INTO attendance(user_id, event_id) VALUES (?, ?) "

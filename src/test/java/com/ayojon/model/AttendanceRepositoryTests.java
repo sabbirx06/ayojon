@@ -89,6 +89,24 @@ class AttendanceRepositoryTests {
         assertEquals(0, repository.countByEventId(13));
     }
 
+    @Test
+    void publishedChoicesUseFlatSchemaAndBindStatus() throws Exception {
+        String sql = "SELECT event_id, title, venue_name, start_time FROM event WHERE status = ? ORDER BY start_time DESC, event_id DESC";
+        var row = mock(ResultSet.class);
+        when(row.getInt("event_id")).thenReturn(42);
+        when(row.getString("title")).thenReturn("Real event");
+        when(row.getString("venue_name")).thenReturn("Auditorium");
+        when(row.getObject("start_time", LocalDateTime.class)).thenReturn(checkedInAt);
+        when(jdbc.query(eq(sql), any(RowMapper.class), eq("PUBLISHED")))
+                .thenAnswer(call -> List.of(call.<RowMapper<?>>getArgument(1).mapRow(row, 0)));
+        var choices = repository.findPublishedEvents();
+        assertEquals(1, choices.size());
+        assertEquals(42, choices.getFirst().id());
+        assertEquals("Real event", choices.getFirst().title());
+        assertEquals("Auditorium", choices.getFirst().venueName());
+        assertEquals(checkedInAt, choices.getFirst().startTime());
+    }
+
     private ResultSet attendanceRow() throws Exception {
         var row = mock(ResultSet.class);
         when(row.getInt("attendance_id")).thenReturn(3);
