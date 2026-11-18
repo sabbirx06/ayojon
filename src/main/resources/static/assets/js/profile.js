@@ -1,6 +1,7 @@
 import { $, api, escapeHtml } from './shared.js';
 import { currentUser } from './auth.js';
 import { createAttendance } from './attendance.js';
+import { showVoucherRewards } from './vouchers.js';
 
 const attendance = createAttendance($('#profile-attendance'), {getUser: () => currentUser, historyOnly: true});
 let profileActive = false;
@@ -49,6 +50,7 @@ document.addEventListener('ayojon:sessionchange', () => {
   attendance.clear();
   if (profileActive) {
     loadRewards();
+    showVoucherRewards(currentUser);
     if (currentUser) attendance.activate('profile');
   }
 });
@@ -58,8 +60,14 @@ document.addEventListener('ayojon:viewchange', ({detail}) => {
     renderProfile();
     attendance.activate('profile');
     loadRewards();
+    showVoucherRewards(currentUser);
   } else {
     ++rewardsRequest;
+    showVoucherRewards(null);
     attendance.clear();
   }
+});
+
+document.addEventListener('ayojon:voucherclaimed', () => {
+  if (profileActive) showVoucherRewards(currentUser);
 });

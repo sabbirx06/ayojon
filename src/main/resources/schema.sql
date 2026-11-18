@@ -209,3 +209,15 @@ CREATE TABLE IF NOT EXISTS voucher_claim (
     claimed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, voucher_id)
 );
+
+-- Demo sponsor voucher (F4)
+INSERT INTO sponsor (sponsor_name)
+SELECT 'bKash Demo'
+WHERE NOT EXISTS (SELECT 1 FROM sponsor WHERE sponsor_name = 'bKash Demo');
+
+INSERT INTO voucher (sponsor_id, promo_code, discount_percent, valid_until)
+SELECT MIN(sponsor_id), 'BKASHAYOJON20', 20, TIMESTAMP 'infinity'
+FROM sponsor
+WHERE sponsor_name = 'bKash Demo'
+HAVING COUNT(*) > 0
+ON CONFLICT (promo_code) DO NOTHING;

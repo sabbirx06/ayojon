@@ -1,10 +1,11 @@
 import { $, escapeHtml, api } from './shared.js';
 import { schedule, priceText, safeUrl } from './event-format.js';
+import { hideVoucher, showVoucher } from './vouchers.js';
 
 /* --- VIEW: event detail profile (Tasnia, Sprint 1, F6) --- */
-// Bookmark, plan, voucher and reviews on this page belong to other features and stay as they are.
 const defaultPoster = $('#event-poster').src;
 let currentEvent = null;
+let demoVoucher = false;
 
 async function updateAttendanceCount(eventId) {
   try {
@@ -117,6 +118,7 @@ function render(event) {
     : 'The organizer has not added a ticket link yet.';
 
   setupCheckIn(event);
+  showVoucher();
 
   $('#event-detail-feedback').hidden = true;
   $('#event-detail-content').hidden = false;
@@ -125,6 +127,9 @@ function render(event) {
 document.addEventListener('ayojon:sessionchange', () => {
   if (currentEvent && !$('#event-detail-content').hidden) {
     setupCheckIn(currentEvent);
+    showVoucher();
+  } else if (demoVoucher) {
+    showVoucher({demo:true});
   }
 });
 
@@ -150,10 +155,19 @@ $('#event-poster').addEventListener('error', () => {
 
 document.addEventListener('ayojon:viewchange', ({detail}) => {
   cancelPendingLoad(); // any navigation, including leaving this page, makes an older load stale
+  currentEvent = null;
+  demoVoucher = false;
+  hideVoucher();
   if (detail.view !== 'event-detail') return;
   const id = detail.params.get('id');
   $('#event-back').href = id ? '#discover' : '#events';
   $('#event-back').textContent = id ? '← Back to Discover' : '← Back to Events';
+  if (!id && detail.params.get('demo') === '1') {
+    demoVoucher = true;
+    showFeedback('Demo event preview', 'Try claiming a sample sponsor voucher.');
+    showVoucher({demo:true});
+    return;
+  }
   if (!/^\d+$/.test(id || '')) {
     showFeedback('Choose an event to see its details.', 'Open an event from the Discover page.');
     return;
