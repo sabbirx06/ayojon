@@ -29,7 +29,10 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attendance/events/*/count").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attendance/events/{eventId}/count").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attendance/leaderboard").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attendance/badges").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/attendance/badges/me").authenticated()
                         .requestMatchers("/", "/index.html", "/styles.css", "/app.js", "/favicon.ico", "/assets/branding/**", "/assets/js/**", "/error",
                                 "/api/auth/csrf", "/api/auth/signup", "/api/auth/me").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

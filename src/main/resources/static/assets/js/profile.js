@@ -2,7 +2,7 @@ import { $ } from './shared.js';
 import { currentUser } from './auth.js';
 import { createAttendance } from './attendance.js';
 
-const attendance = createAttendance($('#profile-attendance'), {getUser: () => currentUser});
+const attendance = createAttendance($('#profile-attendance'), {getUser: () => currentUser, historyOnly: true});
 let profileActive = false;
 
 /* --- VIEW: profile; account identity and points only --- */

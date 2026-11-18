@@ -2,8 +2,79 @@ import { $, escapeHtml, api } from './shared.js';
 import { schedule, priceText, safeUrl } from './event-format.js';
 
 /* --- VIEW: event detail profile (Tasnia, Sprint 1, F6) --- */
-// Check-in, bookmark, plan, voucher and reviews on this page belong to other features and stay as they are.
+// Bookmark, plan, voucher and reviews on this page belong to other features and stay as they are.
 const defaultPoster = $('#event-poster').src;
+let currentEvent = null;
+
+async function updateAttendanceCount(eventId) {
+  try {
+    const countEl = $('#event-attendance-count');
+    if (!countEl) return;
+    const res = await api(`/api/attendance/events/${eventId}/count`);
+    const count = res?.attendanceCount || 0;
+    countEl.textContent = count === 1 ? '1 attendee checked in' : `${count} attendees checked in`;
+  } catch {
+    const countEl = $('#event-attendance-count');
+    if (countEl) countEl.textContent = '';
+  }
+}
+
+async function setupCheckIn(event) {
+  currentEvent = event;
+  const btn = $('#event-check-in');
+  const feedback = $('#event-check-in-feedback');
+  if (!btn) return;
+  if (feedback) feedback.textContent = '';
+  btn.onclick = null;
+
+  updateAttendanceCount(event.id);
+
+  try {
+    const status = await api(`/api/attendance/events/${event.id}/status`);
+    if (currentEvent !== event) return;
+    if (status?.checkedIn) {
+      btn.disabled = true;
+      btn.textContent = '✔ Checked In';
+      if (feedback) feedback.textContent = 'You have checked in to this event.';
+      return;
+    }
+  } catch {
+    // Not logged in or status endpoint unavailable
+  }
+
+  if (currentEvent !== event) return;
+  btn.disabled = false;
+  btn.textContent = '✔ Check In to Event';
+  btn.onclick = async () => {
+    btn.disabled = true;
+    btn.textContent = 'Checking in…';
+    if (feedback) feedback.textContent = '';
+    try {
+      await api('/api/attendance/check-in', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ eventId: event.id })
+      });
+      btn.textContent = '✔ Checked In';
+      if (feedback) feedback.textContent = 'Check-in recorded!';
+      updateAttendanceCount(event.id);
+      document.dispatchEvent(new CustomEvent('ayojon:sessionchange'));
+    } catch (err) {
+      if (err.status === 401 || (err.message && err.message.toLowerCase().includes('unauthorized'))) {
+        window.location.hash = '#login';
+        return;
+      }
+      if (err.message && err.message.includes('Already checked in')) {
+        btn.textContent = '✔ Checked In';
+        if (feedback) feedback.textContent = 'You have already checked in.';
+      } else {
+        btn.disabled = false;
+        btn.textContent = '✔ Check In to Event';
+        if (feedback) feedback.textContent = err.message || 'Check-in failed. Please try again.';
+      }
+    }
+  };
+}
 
 // Only the most recent load may change the page. Leaving the page, or opening a missing or
 // invalid id, cancels the pending load, so a late response can never replace the newer screen
@@ -45,9 +116,17 @@ function render(event) {
     ? 'Tickets are sold on the organizer’s official page.'
     : 'The organizer has not added a ticket link yet.';
 
+  setupCheckIn(event);
+
   $('#event-detail-feedback').hidden = true;
   $('#event-detail-content').hidden = false;
 }
+
+document.addEventListener('ayojon:sessionchange', () => {
+  if (currentEvent && !$('#event-detail-content').hidden) {
+    setupCheckIn(currentEvent);
+  }
+});
 
 async function load(id) {
   cancelPendingLoad();
