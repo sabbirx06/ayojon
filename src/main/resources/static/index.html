@@ -244,7 +244,7 @@
               </div>
               <div class="event-card-body">
                 <span class="event-category">Music</span>
-                <h3><a class="card-link" href="#event-detail-view">A rooftop music gathering</a></h3>
+                <h3><a class="card-link" href="#event-detail?demo=1">A rooftop music gathering</a></h3>
                 <p class="event-location">⌖ Banani, Dhaka</p>
                 <div class="event-card-meta"><span class="event-price"><strong>৳650</strong></span><span class="trust-badge" aria-label="Verified badge, sample only">✧ Verified · Sample</span></div>
                 <div class="card-actions" aria-label="Sample event actions"><button type="button" disabled>+ Plan</button><button type="button" disabled>✓ Check In</button></div>
@@ -258,7 +258,7 @@
               </div>
               <div class="event-card-body">
                 <span class="event-category">Arts</span>
-                <h3><a class="card-link" href="#event-detail-view">An afternoon of clay & creativity</a></h3>
+                <h3><a class="card-link" href="#event-detail?demo=1">An afternoon of clay & creativity</a></h3>
                 <p class="event-location">⌖ Dhanmondi, Dhaka</p>
                 <div class="event-card-meta"><span class="event-price"><strong>৳1,000</strong></span><span class="trust-badge" aria-label="Verified badge, sample only">✧ Verified · Sample</span></div>
                 <div class="card-actions" aria-label="Sample event actions"><button type="button" disabled>+ Plan</button><button type="button" disabled>✓ Check In</button></div>
@@ -272,7 +272,7 @@
               </div>
               <div class="event-card-body">
                 <span class="event-category">Outdoors</span>
-                <h3><a class="card-link" href="#event-detail-view">A little escape into the green</a></h3>
+                <h3><a class="card-link" href="#event-detail?demo=1">A little escape into the green</a></h3>
                 <p class="event-location">⌖ Sylhet</p>
                 <div class="event-card-meta"><span class="event-price"><strong>Free</strong></span><span class="trust-badge" aria-label="Verified badge, sample only">✧ Verified · Sample</span></div>
                 <div class="card-actions" aria-label="Sample event actions"><button type="button" disabled>+ Plan</button><button type="button" disabled>✓ Check In</button></div>
@@ -332,11 +332,11 @@
                 </div>
               </div>
               <!-- Sabbir: Sprint 2 points and sponsor vouchers. -->
-              <div id="event-voucher-box" class="card voucher-box">
+              <div id="event-voucher-box" class="card voucher-box" hidden>
                 <h2>Sponsor voucher</h2>
-                <code>AYOJON15</code>
-                <p>Sample code · 15% discount preview.<br>No active offer or claim is available.</p>
-                <button class="btn btn-outline full-width" disabled>Claim Voucher</button>
+                <p data-voucher-description></p>
+                <button class="btn btn-outline full-width" type="button" disabled>Claim Voucher</button>
+                <p class="muted small" role="status"></p>
               </div>
               <p id="event-demo-note" class="banner-info" hidden>Demo listing · This event, venue, schedule and price are fictional. No booking is offered.</p>
             </aside>
@@ -584,10 +584,7 @@
         </section>
         <section class="card content-section" id="profile-rewards">
           <h2>Your rewards</h2>
-          <p class="muted">Sponsor vouchers and claimed rewards will appear here when rewards are connected.</p>
-          <!-- Sabbir: Sprint 2 voucher claims and points. -->
-          <div id="profile-vouchers">
-          </div>
+          <div id="profile-vouchers" aria-live="polite"></div>
         </section>
       </section>
       <!-- ================= VIEW: ORGANIZER; FORM AND LISTING SLOTS DO NOT MUTATE DATA ================= -->
