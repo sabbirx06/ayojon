@@ -2,6 +2,8 @@
 import { $, $$, toast } from './assets/js/shared.js';
 import { currentUser, sessionLoading, initAuth } from './assets/js/auth.js';
 import './assets/js/profile.js';
+import './assets/js/discover.js';
+import './assets/js/event-detail.js';
 import { initOrganizerView } from './assets/js/organizer.js';
 import { initAdminView } from './assets/js/admin.js';
 

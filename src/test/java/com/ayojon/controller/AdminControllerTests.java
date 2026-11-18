@@ -99,7 +99,7 @@ class AdminControllerTests {
     void adminCanApprovePendingEvent() throws Exception {
         var sampleEvent = new Event(1, 10, "Organizer A", "Music", "Rooftop Banani", "Dhaka",
                 "Concert", "Description", "2026-11-20T18:00:00", "2026-11-20T22:00:00",
-                null, "DRAFT", "2026-11-12T10:00:00", null, null);
+                null, "DRAFT", "2026-11-12T10:00:00", null, null, null);
         when(events.findById(1)).thenReturn(Optional.of(sampleEvent));
         when(users.findByEmail("admin@example.com")).thenReturn(Optional.of(
                 new User(99, "Admin User", "admin@example.com", "ADMIN", 0, "hash")));
@@ -124,7 +124,7 @@ class AdminControllerTests {
     void adminCanRequestRevision() throws Exception {
         var sampleEvent = new Event(1, 10, "Organizer A", "Music", "Rooftop Banani", "Dhaka",
                 "Concert", "Description", "2026-11-20T18:00:00", "2026-11-20T22:00:00",
-                null, "DRAFT", "2026-11-12T10:00:00", null, null);
+                null, "DRAFT", "2026-11-12T10:00:00", null, null, null);
         when(events.findById(1)).thenReturn(Optional.of(sampleEvent));
         when(users.findByEmail("admin@example.com")).thenReturn(Optional.of(
                 new User(99, "Admin User", "admin@example.com", "ADMIN", 0, "hash")));
@@ -148,7 +148,7 @@ class AdminControllerTests {
     void adminCanRejectEvent() throws Exception {
         var sampleEvent = new Event(1, 10, "Organizer A", "Music", "Rooftop Banani", "Dhaka",
                 "Concert", "Description", "2026-11-20T18:00:00", "2026-11-20T22:00:00",
-                null, "DRAFT", "2026-11-12T10:00:00", null, null);
+                null, "DRAFT", "2026-11-12T10:00:00", null, null, null);
         when(events.findById(1)).thenReturn(Optional.of(sampleEvent));
         when(users.findByEmail("admin@example.com")).thenReturn(Optional.of(
                 new User(99, "Admin User", "admin@example.com", "ADMIN", 0, "hash")));
