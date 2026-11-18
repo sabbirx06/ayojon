@@ -1,5 +1,5 @@
 package com.ayojon.controller;
-
+import com.ayojon.model.EventNotEditableException;
 import com.ayojon.model.Event;
 import com.ayojon.model.EventRepository;
 import com.ayojon.model.UserRepository;
@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
 
 @RestController
 @RequestMapping("/api/events")
@@ -27,7 +28,8 @@ public class EventController {
     public record EventSubmission(String title, String description, String startTime, String endTime,
                                   String venueName, String venueAddress, String areaName,
                                   String categoryName, String ticketUrl,
-                                  Double latitude, Double longitude) {}
+                                  Double latitude, Double longitude,
+                                  String posterUrl) {}   // ADDED (poster)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -44,7 +46,8 @@ public class EventController {
                 s.venueAddress().trim(), s.areaName().trim(),
                 s.latitude(), s.longitude(),
                 s.title().trim(), s.description() == null ? "" : s.description().trim(),
-                start, end, s.ticketUrl() == null || s.ticketUrl().isBlank() ? null : s.ticketUrl().trim());
+                start, end, s.ticketUrl() == null || s.ticketUrl().isBlank() ? null : s.ticketUrl().trim(),
+                posterOrNull(s.posterUrl()));   // ADDED (poster)
         return Map.of("message", "Event submitted for review.");
     }
 
@@ -79,12 +82,17 @@ public class EventController {
         if (!end.after(start)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "End time must be after start time.");
         }
-        events.update(id, organizer.id(), s.categoryName().trim(), s.venueName().trim(),
-                s.venueAddress().trim(), s.areaName().trim(),
-                s.latitude(), s.longitude(),
-                s.title().trim(), s.description() == null ? "" : s.description().trim(),
-                start, end, s.ticketUrl() == null || s.ticketUrl().isBlank() ? null : s.ticketUrl().trim());
-        return Map.of("message", "Event updated and resubmitted for review.");
+        try {
+            events.update(id, organizer.id(), s.categoryName().trim(), s.venueName().trim(),
+                    s.venueAddress().trim(), s.areaName().trim(),
+                    s.latitude(), s.longitude(),
+                    s.title().trim(), s.description() == null ? "" : s.description().trim(),
+                    start, end, s.ticketUrl() == null || s.ticketUrl().isBlank() ? null : s.ticketUrl().trim(),
+                    posterOrNull(s.posterUrl()));
+        } catch (EventNotEditableException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "This event was already reviewed and can no longer be edited.");
+        }
     }
 
     private void validate(EventSubmission s) {
@@ -109,6 +117,16 @@ public class EventController {
         if (s.latitude() == null || s.longitude() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Coordinates are required.");
         }
+        // ADDED (poster): the poster link is optional, but if present it must be an http(s) URL
+        if (s.posterUrl() != null && !s.posterUrl().isBlank()
+                && (!s.posterUrl().trim().matches("^https?://\\S+$") || s.posterUrl().length() > 2000)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The poster link must be a valid http(s) URL.");
+        }
+    }
+
+    // ADDED (poster)
+    private String posterOrNull(String url) {
+        return url == null || url.isBlank() ? null : url.trim();
     }
 
     private Timestamp parseTime(String value) {
