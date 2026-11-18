@@ -490,17 +490,16 @@
         </div>
       </section>
       <!-- ================= VIEW: LEADERBOARD ================= -->
-      <!-- Leaderboard integration owner/sprint is not assigned in the correction; leave rankings empty. -->
       <section id="leaderboard-view" class="view-panel container view-spacing" aria-labelledby="leaderboard-title" hidden>
         <div class="page-heading">
           <div>
             <h1 id="leaderboard-title">Leaderboard</h1>
           </div>
         </div>
-        <div id="leaderboard-podium" hidden></div>
+        <p id="leaderboard-status" role="status"></p>
         <div class="card table-scroll">
           <table id="leaderboard-table">
-            <caption class="sr-only">Monthly rankings</caption>
+            <caption class="sr-only">All-time attendance rankings</caption>
             <thead>
               <tr>
                 <th scope="col">Rank</th>
@@ -508,11 +507,7 @@
                 <th scope="col">Points</th>
               </tr>
             </thead>
-            <tbody id="leaderboard-rankings">
-              <tr>
-                <td colspan="3" class="table-empty">No rankings yet.</td>
-              </tr>
-            </tbody>
+            <tbody id="leaderboard-rankings"></tbody>
           </table>
         </div>
       </section>
@@ -574,31 +569,9 @@
         <section class="content-section" aria-labelledby="badges-title">
           <div class="section-heading">
             <h2 id="badges-title">Badges</h2>
-            <span class="badge">Badge showcase preview</span>
           </div>
-          <!-- Nawshin: Sprint 2 milestone badges. -->
-          <div id="profile-badges-grid" class="badge-grid">
-            <article class="card badge-card">
-              <span aria-hidden="true">✧</span>
-              <h3>Unlocked badges</h3>
-              <p>Your earned badges will appear here.</p>
-            </article>
-            <article class="card badge-card badge-locked">
-              <span aria-hidden="true">♧</span>
-              <h3>First gathering</h3>
-              <p>Locked · Preview</p>
-            </article>
-            <article class="card badge-card badge-locked">
-              <span aria-hidden="true">✺</span>
-              <h3>Curious explorer</h3>
-              <p>Locked · Preview</p>
-            </article>
-            <article class="card badge-card badge-locked">
-              <span aria-hidden="true">✦</span>
-              <h3>Community spirit</h3>
-              <p>Locked · Preview</p>
-            </article>
-          </div>
+          <p id="profile-badges-status" role="status"></p>
+          <div id="profile-badges-grid" class="badge-grid"></div>
         </section>
         <section class="card content-section" aria-labelledby="trend-title">
           <div class="section-heading">

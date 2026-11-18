@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,21 +37,23 @@ public class AttendanceController {
 
     public record CheckIn(Integer eventId) {}
 
+    @Transactional
     @PostMapping("/check-in")
     @ResponseStatus(HttpStatus.CREATED)
     public Attendance checkIn(@RequestBody CheckIn request, Principal principal) {
         validateEventId(request.eventId());
         int userId = currentUserId(principal);
+        Attendance record;
         try {
-            Attendance record = attendance.recordCheckIn(userId, request.eventId())
+            record = attendance.recordCheckIn(userId, request.eventId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.CONFLICT, "Already checked in."));
-            if (badges != null) {
-                badges.awardAttendancePointsAndBadges(userId, record.id());
-            }
-            return record;
         } catch (DataIntegrityViolationException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The user or event no longer exists.");
         }
+        if (badges != null) {
+            badges.awardAttendancePointsAndBadges(userId, record.id());
+        }
+        return record;
     }
 
     @GetMapping("/leaderboard")

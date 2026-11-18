@@ -36,7 +36,7 @@ public class BadgeRepository {
                         + "FROM users u LEFT JOIN attendance a ON a.user_id = u.user_id "
                         + "WHERE u.role = 'USER' "
                         + "GROUP BY u.user_id, u.name, u.points "
-                        + "ORDER BY points DESC, check_in_count DESC LIMIT ?",
+                        + "ORDER BY points DESC, check_in_count DESC, u.user_id ASC LIMIT ?",
                 (row, index) -> new LeaderboardEntry(
                         row.getInt("user_id"),
                         row.getString("name"),
@@ -47,13 +47,9 @@ public class BadgeRepository {
 
     public void awardAttendancePointsAndBadges(int userId, int attendanceId) {
         jdbc.update("UPDATE users SET points = COALESCE(points, 0) + 50 WHERE user_id = ?", userId);
-        try {
-            jdbc.update("INSERT INTO user_badge (user_id, badge_id, attendance_id) "
-                    + "SELECT ?, b.badge_id, ? FROM badge b JOIN users u ON u.user_id = ? "
-                    + "WHERE u.points >= b.milestone_points "
-                    + "ON CONFLICT (user_id, badge_id) DO NOTHING", userId, attendanceId, userId);
-        } catch (Exception ignored) {
-            // Graceful fallback if table is unseeded
-        }
+        jdbc.update("INSERT INTO user_badge (user_id, badge_id, attendance_id) "
+                + "SELECT ?, b.badge_id, ? FROM badge b JOIN users u ON u.user_id = ? "
+                + "WHERE u.points >= b.milestone_points "
+                + "ON CONFLICT (user_id, badge_id) DO NOTHING", userId, attendanceId, userId);
     }
 }

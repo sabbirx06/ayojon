@@ -172,6 +172,21 @@ CREATE TABLE IF NOT EXISTS user_badge (
     PRIMARY KEY (user_id, badge_id)
 );
 
+-- Attendance milestones for F3 (50 points per check-in)
+INSERT INTO badge (badge_name, milestone_points, description) VALUES
+    ('First gathering', 50, 'Earn 50 attendance points.'),
+    ('Curious explorer', 250, 'Earn 250 attendance points.'),
+    ('Community spirit', 500, 'Earn 500 attendance points.')
+ON CONFLICT (badge_name) DO NOTHING;
+
+-- Grant milestones to users who already earned enough attendance points.
+INSERT INTO user_badge (user_id, badge_id)
+SELECT u.user_id, b.badge_id
+FROM users u
+JOIN badge b ON u.points >= b.milestone_points
+WHERE b.badge_name IN ('First gathering', 'Curious explorer', 'Community spirit')
+ON CONFLICT (user_id, badge_id) DO NOTHING;
+
 -- 19. Sponsors
 CREATE TABLE IF NOT EXISTS sponsor (
     sponsor_id SERIAL PRIMARY KEY,
