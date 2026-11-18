@@ -1,7 +1,7 @@
 import {api, escapeHtml} from './shared.js';
 
 // One mounted panel; epochs discard responses from a previous route/session.
-export function createAttendance(root, {request = api, getUser}) {
+export function createAttendance(root, {request = api, getUser, historyOnly = false}) {
   let epoch = 0;
   let selection = 0;
   let selected = null;
@@ -29,28 +29,37 @@ export function createAttendance(root, {request = api, getUser}) {
     clear();
     if (!getUser()) return;
     const token = epoch;
-    root.innerHTML = `<section class="card content-section" aria-label="Attendance check-in">
-      <h2>Your attendance</h2>
-      <p>Choose a published event to check in. Times shown in Bangladesh Standard Time (BDT).</p>
-      <label>Event<select data-event disabled><option value="">Loading events…</option></select></label>
-      <p data-event-info></p>
-      <button type="button" class="btn btn-primary" data-check-in disabled>Check in</button>
-      <p data-feedback role="status" aria-live="polite">Loading events…</p>
-      <h3>Check-in history</h3>
-      <div data-history aria-live="polite">Loading history…</div>
-    </section>`;
+    if (historyOnly) {
+      root.innerHTML = `<section class="card content-section" aria-label="Attendance history">
+        <h2>Your attendance history</h2>
+        <div data-history aria-live="polite">Loading history…</div>
+      </section>`;
+    } else {
+      root.innerHTML = `<section class="card content-section" aria-label="Attendance check-in">
+        <h2>Your attendance</h2>
+        <p>Choose a published event to check in. Times shown in Bangladesh Standard Time (BDT).</p>
+        <label>Event<select data-event disabled><option value="">Loading events…</option></select></label>
+        <p data-event-info></p>
+        <button type="button" class="btn btn-primary" data-check-in disabled>Check in</button>
+        <p data-feedback role="status" aria-live="polite">Loading events…</p>
+        <h3>Check-in history</h3>
+        <div data-history aria-live="polite">Loading history…</div>
+      </section>`;
+    }
     try {
       const result = await request('/api/attendance/events');
       if (!current(token)) return;
       events = result;
-      $('[data-event]').innerHTML = '<option value="">Choose an event</option>' + events.map(event =>
-        `<option value="${event.id}">${escapeHtml(event.title)} — ${escapeHtml(event.venueName)} · ${escapeHtml(date(event.startTime))}</option>`).join('');
-      $('[data-event]').disabled = false;
-      $('[data-feedback]').textContent = events.length ? 'Choose an event to see your check-in status.' : 'No published events available.';
-      $('[data-event]').addEventListener('change', () => select(events.find(event => String(event.id) === $('[data-event]').value), token));
-      $('[data-check-in]').addEventListener('click', () => checkIn(token));
+      if (!historyOnly) {
+        $('[data-event]').innerHTML = '<option value="">Choose an event</option>' + events.map(event =>
+          `<option value="${event.id}">${escapeHtml(event.title)} — ${escapeHtml(event.venueName)} · ${escapeHtml(date(event.startTime))}</option>`).join('');
+        $('[data-event]').disabled = false;
+        $('[data-feedback]').textContent = events.length ? 'Choose an event to see your check-in status.' : 'No published events available.';
+        $('[data-event]').addEventListener('change', () => select(events.find(event => String(event.id) === $('[data-event]').value), token));
+        $('[data-check-in]').addEventListener('click', () => checkIn(token));
+      }
     } catch (error) {
-      if (current(token)) $('[data-feedback]').textContent = error.message;
+      if (current(token) && !historyOnly) $('[data-feedback]').textContent = error.message;
     }
     if (current(token)) await loadHistory(token);
   }
